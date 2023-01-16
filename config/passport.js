@@ -30,7 +30,9 @@ module.exports = function (passport) {
       });
     })
   );
-
+  //https://stackoverflow.com/questions/27637609/understanding-passport-serialize-deserialize
+  //determines which data of the user object should be stored in the session. That data is then attached to the session
+  //EX. req.session.passport.user = {id: 'xyz'}
   passport.serializeUser((user, done) => {
     done(null, user.id);
   });
