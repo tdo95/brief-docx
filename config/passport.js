@@ -37,6 +37,7 @@ module.exports = function (passport) {
     done(null, user.id);
   });
 
+  //finds user object in database and attach it to request object as req.user
   passport.deserializeUser((id, done) => {
     User.findById(id, (err, user) => done(err, user));
   });
