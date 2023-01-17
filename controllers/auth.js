@@ -96,7 +96,7 @@ exports.postSignup = (req, res, next) => {
         return next(err);
       }
       if (existingUser) {
-        return res.resend({message: "The user already exists"});
+        return res.send({message: "The user already exists"});
       }
       user.save((err) => {
         if (err) {
