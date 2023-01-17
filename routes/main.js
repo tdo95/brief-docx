@@ -16,6 +16,6 @@ router.get("/signup", authController.getSignup);
 router.post("/signup", authController.postSignup);
 
 //Test route 
-router.get("/api/customers", (req, res) => res.json({customers: ['Justin', 'Mark', 'Julia', 'Olufemi', 'Rashaad', 'Edgar']}))
+router.get("/api/customers", (req, res) => res.json({customers: ['Justin', 'Mark', 'Julia', 'Olufemi', 'Rashaad', 'Edgar'], user: req.user}))
 
 module.exports = router;
