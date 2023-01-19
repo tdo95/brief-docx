@@ -2,9 +2,7 @@ import logo from './assets/logo.svg';
 import './App.css';
 import React from 'react';
 import { Routes, Route, } from 'react-router-dom'
-import { usePrompt } from './components/Hooks/prompt.blocker'
 
-console.log(usePrompt)
 function App() {
   return (
     <div className="App">
@@ -13,7 +11,7 @@ function App() {
         <Route exact path='/' element={''}>
           <Route index element={''} />
           <Route path='new' element={''} />
-          {/* TODO: Require Template Auth Method */}
+          {/* TODO: Require Template Auth Method  */}
           <Route path='create' element={''} />
         </Route>
         <Route path='/product'element={''}/>
