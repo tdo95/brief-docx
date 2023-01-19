@@ -2,7 +2,7 @@ import { useContext, createContext, React, useState } from 'react'
 
 const Document = createContext(null);
 
-const DocumentProvider = ({ children }) => {
+export const DocumentProvider = ({ children }) => {
     const [editing, setEditing] = useState(null);
 
     //TODO: API call to create new document in database
