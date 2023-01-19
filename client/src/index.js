@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom/client';
 //https://github.com/remix-run/react-router/issues/8139#issuecomment-1247080906
 import { BrowserRouter, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom'
 import { createBrowserHistory  } from 'history';
+import { AuthProvider } from './components/hooks/auth';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -13,7 +14,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <HistoryRouter history={createBrowserHistory({ window })}>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </HistoryRouter>
   </React.StrictMode>
 );
