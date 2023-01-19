@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom'
 import { createBrowserHistory  } from 'history';
 import { AuthProvider } from './components/hooks/auth';
+import { DocumentProvider } from './components/hooks/document';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -15,7 +16,9 @@ root.render(
   <React.StrictMode>
     <HistoryRouter history={createBrowserHistory({ window })}>
       <AuthProvider>
-        <App />
+        <DocumentProvider>
+          <App />
+        </DocumentProvider>
       </AuthProvider>
     </HistoryRouter>
   </React.StrictMode>
