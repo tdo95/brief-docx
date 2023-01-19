@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-//connects the URL in our broswer to our react application
-import { BrowserRouter } from 'react-router-dom'
+//BrowserRouter connects the URL in our broswer to our react application.
+// I am using HistoryRouter instead to allow support for the use of custom hooks that need to use the navigator.block function. This throws an error with BrowserRouter in react v6.6. The history package which supports access to navigation.block is used to create browser history instead.
+//https://github.com/remix-run/react-router/issues/8139#issuecomment-1247080906
+import { BrowserRouter, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom'
+import { createBrowserHistory  } from 'history';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -9,9 +12,9 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HistoryRouter history={createBrowserHistory({ window })}>
       <App />
-    </BrowserRouter>
+    </HistoryRouter>
   </React.StrictMode>
 );
 
