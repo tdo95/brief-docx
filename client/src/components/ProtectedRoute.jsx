@@ -1,11 +1,12 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
-import { useAuth } from './hooks/userAuth'
+import { useAuth } from './hooks/auth'
 import { useDocument } from './hooks/document'
 
 const ProtectedRoute = ({children, required}) => {
     const auth = useAuth()
     const document = useDocument()
+    //returns new nagivation route if required operation is denied
     const operations = {
         login: () => {
             if (!auth.user) return <Navigate to='/login' />
@@ -15,8 +16,7 @@ const ProtectedRoute = ({children, required}) => {
             if (!document.editing) return <Navigate to='/new' />
         }
     }
-    if (operations[required]) operations[required]();
-  return children
+  return operations[required]() || children;
 }
 
 export default ProtectedRoute
