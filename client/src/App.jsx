@@ -1,8 +1,9 @@
 import logo from './assets/logo.svg';
 import './App.css';
 import React from 'react';
-import { Routes, Route, } from 'react-router-dom'
-import { useAuth } from './components/hooks/userAuth'
+import { Routes, Route, Outlet } from 'react-router-dom'
+import { useAuth } from './components/hooks/auth'
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   const auth = useAuth()
@@ -10,18 +11,17 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        {/* TODO: This route will be protected by login */}
-        <Route exact path='/' element={''}>
-          <Route index element={''} />
-          <Route path='new' element={''} />
-          {/* TODO: Require Template Auth Method  */}
-          <Route path='create' element={''} />
+        <Route exact path='/' element={<ProtectedRoute required='login'><div>Home Page <Outlet></Outlet></div></ProtectedRoute>}>
+          <Route index element={<div>Dashbord Page</div>} />
+          <Route path='new' element={<div>New Document Page</div>} />
+          {/* TODO: This route should be protected and require a template  */}
+          <Route path='create' element={<div>Edit Document Page</div>} />
         </Route>
-        <Route path='/product'element={''}/>
-        <Route path='/about'element={''}/>
-        <Route path='/signin'element={''}/>
-        <Route path='/signup'element={''}/>
-        <Route path='*'element={''}/>
+        <Route path='/product'element={<div>Product Page</div>}/>
+        <Route path='/about'element={<div>About Page</div>}/>
+        <Route path='/login'element={<div>Login Page</div>}/>
+        <Route path='/signup'element={<div>Signup Page</div>}/>
+        <Route path='*'element={<div>404 Page</div>}/>
       </Routes>
     </div>
   );
