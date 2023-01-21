@@ -9,7 +9,7 @@ const ProtectedRoute = ({children, required}) => {
     //returns new nagivation route if required operation is denied
     const operations = {
         login: () => {
-            if (!auth.user) return <Navigate to='/login' />
+            if (!auth.user) return <Navigate to='/product' />
         },
         //TODO: implement global context to store template currently being edited
         template: () => {
