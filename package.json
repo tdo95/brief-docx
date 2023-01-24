@@ -13,9 +13,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
-    "@mui/material": "^5.11.5",
     "bcrypt": "^5.0.1",
     "cloudinary": "^1.25.1",
     "concurrently": "^7.6.0",
