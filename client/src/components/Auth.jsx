@@ -6,7 +6,6 @@ import { useAuth } from './hooks/auth';
 const Auth = ({ login }) => {
     const [authForm, setAuthForm] = useState({
         _name: '',
-        _username: '',
         _password: '',
         _passwordConfirm: '',
         _email: '' 
@@ -30,10 +29,10 @@ const Auth = ({ login }) => {
         { login ? <Box autoComplete='off' component='form' sx={{display: 'flex', flexDirection:'column', alignItems:'center', p: 2, '& > *': {m:'10px', width: '25ch'}}}>
             <TextField 
                required
-               label='username'
-               name='_username'
+               label='email'
+               name='_email'
                id='outlined-input'
-               value={authForm['_username']}
+               value={authForm['_email']}
                onChange={handleFormInput}
                
             />
@@ -61,14 +60,6 @@ const Auth = ({ login }) => {
                name='_email'
                id='outlined-input'
                value={authForm['_email']}
-               onChange={handleFormInput}
-            />
-            <TextField 
-               required
-               label='username'
-               name='_username'
-               id='outlined-input'
-               value={authForm['_username']}
                onChange={handleFormInput}
             />
             <TextField 
