@@ -27,7 +27,7 @@ const Auth = ({ login }) => {
     return (
     <Container sx={{pt:3, display: 'flex', flexDirection:'column', alignItems:'center'}}>
         <Typography sx={{textAlign: 'center'}} variant='h3'>{login ? 'Login' : 'Sign Up' }</Typography>
-        { login ? <Box autoComplete='off' component='form' sx={{display: 'flex', flexDirection:'column', alignItems:'center', p: 2, '& > *': {m:1, width: '25ch'}}}>
+        { login ? <Box autoComplete='off' component='form' sx={{display: 'flex', flexDirection:'column', alignItems:'center', p: 2, '& > *': {m:'10px', width: '25ch'}}}>
             <TextField 
                required
                label='username'
@@ -46,7 +46,7 @@ const Auth = ({ login }) => {
                onChange={handleFormInput}
             />
         </Box> :
-        <Box autoComplete='off' component='form' sx={{display: 'flex', flexDirection:'column', alignItems:'center', p: 2, '& > *': {m:1, width: '25ch'}}}>
+        <Box autoComplete='off' component='form' sx={{display: 'flex', flexDirection:'column', alignItems:'center', p: 2, '& > *': {m:'10px', width: '25ch'}}}>
             <TextField 
                required
                label='name'
