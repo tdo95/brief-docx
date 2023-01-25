@@ -4,6 +4,7 @@ import { Routes, Route, Outlet } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute';
 import Product from './components/Product';
 import Navbar from './components/Navbar';
+import Auth from './components/Auth';
 
 function App() {
   return (
@@ -18,8 +19,8 @@ function App() {
         </Route>
         <Route path='/product'element={<Product/>}/>
         <Route path='/about'element={<div>About Page</div>}/>
-        <Route path='/login'element={<div>Login Page</div>}/>
-        <Route path='/signup'element={<div>Signup Page</div>}/>
+        <Route path='/login'element={<Auth login={true}/>}/>
+        <Route path='/signup'element={<Auth login={false}/>}/>
         <Route path='*'element={<div>404 Page</div>}/>
       </Routes>
     </div>
