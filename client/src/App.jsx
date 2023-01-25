@@ -5,6 +5,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Product from './components/Product';
 import Navbar from './components/Navbar';
 import Auth from './components/Auth';
+import About from './components/About';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Route path='create' element={<div>Edit Document Page</div>} />
         </Route>
         <Route path='/product'element={<Product/>}/>
-        <Route path='/about'element={<div>About Page</div>}/>
+        <Route path='/about'element={<About />}/>
         <Route path='/login'element={<Auth login={true}/>}/>
         <Route path='/signup'element={<Auth login={false}/>}/>
         <Route path='*'element={<div>404 Page</div>}/>
