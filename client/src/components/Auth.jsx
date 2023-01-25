@@ -4,6 +4,7 @@ import { Container, Box, Typography, TextField, Button } from '@mui/material'
 import { useAuth } from './hooks/auth';
 
 const Auth = ({ login }) => {
+    const auth = useAuth()
     const [authForm, setAuthForm] = useState({
         _name: '',
         _password: '',
@@ -18,15 +19,16 @@ const Auth = ({ login }) => {
         event.preventDefault()
         console.log('Submitting form! (:')
         //TODO: Add logic to submit form
+        if (login) auth.login(authForm['_email'], authForm['_password']);
     }
-    const auth = useAuth()
+    
     //Redirects from login page to dashbaord if user is logged in
     if (login && auth.user) { return <Navigate to='/'/>}
     
     return (
     <Container sx={{pt:3, display: 'flex', flexDirection:'column', alignItems:'center'}}>
         <Typography sx={{textAlign: 'center'}} variant='h3'>{login ? 'Login' : 'Sign Up' }</Typography>
-        { login ? <Box autoComplete='off' component='form' sx={{display: 'flex', flexDirection:'column', alignItems:'center', p: 2, '& > *': {m:'10px', width: '25ch'}}}>
+        { login ? <Box autoComplete='off' component='form' sx={{display: 'flex', flexDirection:'column', alignItems:'center', p: 2, '& > *.MuiFormControl-root': {m:'10px', width: '25ch'}}}>
             <TextField 
                required
                label='email'
@@ -45,7 +47,7 @@ const Auth = ({ login }) => {
                onChange={handleFormInput}
             />
         </Box> :
-        <Box autoComplete='off' component='form' sx={{display: 'flex', flexDirection:'column', alignItems:'center', p: 2, '& > *': {m:'10px', width: '25ch'}}}>
+        <Box autoComplete='off' component='form' sx={{display: 'flex', flexDirection:'column', alignItems:'center', p: 2, '& > *.MuiFormControl-root': {m:'10px', width: '25ch'}}}>
             <TextField 
                required
                label='name'
