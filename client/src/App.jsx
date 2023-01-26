@@ -1,18 +1,19 @@
 import './App.css';
 import React from 'react';
-import { Routes, Route, Outlet } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute';
 import Product from './components/Product';
 import Navbar from './components/Navbar';
 import Auth from './components/Auth';
 import About from './components/About';
+import Home from './components/Home';
 
 function App() {
   return (
     <div className="App">
       <Navbar/>
       <Routes>
-        <Route exact path='/' element={<ProtectedRoute required='login'><div>Home Page <Outlet></Outlet></div></ProtectedRoute>}>
+        <Route exact path='/' element={<ProtectedRoute required={'login'}><Home /></ProtectedRoute>}>
           <Route index element={<div>Dashbord Page</div>} />
           <Route path='new' element={<div>New Document Page</div>} />
           {/* TODO: This route should be protected and require a template  */}
