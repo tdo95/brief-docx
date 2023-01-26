@@ -4,22 +4,20 @@ const User = require("../models/User");
 
 exports.getLogin = (req, res) => {
   if (req.user) {
-    return res.send({user: req.user});
+    return res.send({user: {email: req.user.email, name: req.user.name}});
   }
-  res.render("login", {
-    title: "Login",
-  });
+  else res.send({user: null})
 };
 
 exports.postLogin = (req, res, next) => {
-  const validationErrors = [];
+  const validationErrors = {};
   if (!validator.isEmail(req.body.email))
-    validationErrors.push({ message: "Please enter a valid email address." });
+    validationErrors['email'] = "Please enter a valid email address.";
   if (validator.isEmpty(req.body.password))
-    validationErrors.push({ message: "Password cannot be blank." });
+    validationErrors['password'] = "Password cannot be blank.";
 
-  if (validationErrors.length) {
-    return res.resend({message: validationErrors});
+  if (Object.keys(validationErrors).length) {
+    return res.send({errors: validationErrors});
   }
   req.body.email = validator.normalizeEmail(req.body.email, {
     gmail_remove_dots: false,
@@ -30,15 +28,13 @@ exports.postLogin = (req, res, next) => {
       return next(err);
     }
     if (!user) {
-      
-      return res.send({message: 'Cannot find user', info});
+      return res.send({errors: 'Cannot find user', info});
     }
     req.logIn(user, (err) => {
       if (err) {
         return next(err);
       }
-      req.send( { message: "Success! You are logged in." });
-      res.redirect(req.session.returnTo || "/profile");
+      res.send( { success: "Success! You are logged in.", user: {email: user.email, name: user.name} });
     });
   })(req, res, next);
 };
@@ -51,7 +47,7 @@ exports.logout = (req, res) => {
     if (err)
       console.log("Error : Failed to destroy the session during logout.", err);
     req.user = null;
-    res.redirect("/");
+    res.send({success: 'User logged'});
   });
 };
 
@@ -64,39 +60,39 @@ exports.getSignup = (req, res) => {
 };
 
 exports.postSignup = (req, res, next) => {
-  const validationErrors = [];
-  if (!validator.isEmail(req.body.email))
-    validationErrors.push({ message: "Please enter a valid email address." });
-  if (!validator.isLength(req.body.password, { min: 8 }))
-    validationErrors.push({
-      message: "Password must be at least 8 characters long",
-    });
-  // if (req.body.password !== req.body.confirmPassword)
-  //   validationErrors.push({ message: "Passwords do not match" });
 
-  if (validationErrors.length) {
-    // req.flash("errors", validationErrors);
-    return res.send("An error Occured");
+  const validationErrors = {};
+  if (validator.isEmpty(req.body.name))
+    validationErrors['name'] = "Please enter a valid name."
+  if (!validator.isEmail(req.body.email))
+    validationErrors['email'] = "Please enter a valid email address.";
+  if (!validator.isLength(req.body.password, { min: 8 }))
+    validationErrors['password'] = "Password must be at least 8 characters long.";
+  if (req.body.password !== req.body.passwordConfirm)
+    validationErrors['passwordConfirm'] = "Passwords do not match.";
+
+  if (Object.keys(validationErrors).length) {
+    return res.send({errors: validationErrors});
   }
   req.body.email = validator.normalizeEmail(req.body.email, {
     gmail_remove_dots: false,
   });
 
   const user = new User({
-    userName: req.body.userName,
+    name: req.body.name,
     email: req.body.email,
     password: req.body.password,
   });
-  console.log(req, user)
+  console.log(user)
 
   User.findOne(
-    { $or: [{ email: req.body.email }, { userName: req.body.userName }] },
+    { email: req.body.email },
     (err, existingUser) => {
       if (err) {
         return next(err);
       }
       if (existingUser) {
-        return res.send({message: "The user already exists"});
+        return res.send({errors: "The user already exists"});
       }
       user.save((err) => {
         if (err) {
@@ -106,7 +102,8 @@ exports.postSignup = (req, res, next) => {
           if (err) {
             return next(err);
           }
-          res.send("User registered and logged in");
+
+          res.send({success: "User registered and logged in", user: {email: user.email, name: user.name}});
         });
       });
     }
