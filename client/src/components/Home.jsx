@@ -4,7 +4,7 @@ import { Container } from '@mui/material'
 
 const Home = () => {
   return (
-    <Container sx={{px: 10, pt: 3}}>
+    <Container sx={{px: 10, py: 3}}>
       <Outlet></Outlet>
     </Container>
   )
