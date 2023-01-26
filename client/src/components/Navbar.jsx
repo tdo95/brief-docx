@@ -1,12 +1,14 @@
 import { React, useState, useEffect } from 'react'
 import { NavLink, useLocation, Link } from 'react-router-dom'
-import { AppBar, Typography, Toolbar, Box, IconButton, Menu, MenuItem } from '@mui/material'
+import { useAuth } from './context/auth'
+import { AppBar, Typography, Toolbar, Box, IconButton, Menu, MenuItem, Button } from '@mui/material'
 import DescriptionIcon from '@mui/icons-material/Description'
 import MenuIcon from '@mui/icons-material/Menu'
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
 
 const Navbar = () => {
+    const auth = useAuth()
     const [anchorElNav, setAnchorElNav] = useState(null);
     const openNavMenu = (event) => {
         setAnchorElNav(event.currentTarget)
@@ -18,6 +20,10 @@ const Navbar = () => {
     useEffect(()=> {
         setAnchorElNav(null);
     }, [location])
+    const logoutUser = () => {
+        auth.logout()
+            
+    }
   return (
     <AppBar position="static">
         
@@ -47,9 +53,22 @@ const Navbar = () => {
                     </Menu>
                 </Box>
             </> :
-            <IconButton size='large' color='inherit' sx={{ml:'auto'}}>
-                <AccountCircle  />
-            </IconButton>
+            <Toolbar sx={{ml:'auto'}}>
+                <Button variant='outlined' sx={{ color: 'white', borderColor: 'white', mr:3}} component={ Link } to='/new'>New Document</Button>
+                <IconButton onClick={openNavMenu} size='large' color='inherit' >
+                    <AccountCircle  />
+                </IconButton>
+                <Menu
+                        open={Boolean(anchorElNav)}
+                        onClose={() => setAnchorElNav(null)}
+                        anchorEl={anchorElNav}
+                    >
+                        <MenuItem component={ Link } to='/'>Home</MenuItem>
+                        <MenuItem onClick={logoutUser}>Logout</MenuItem>
+                        
+                    </Menu>
+            </Toolbar>
+            
             }
         </Toolbar>
     </AppBar>
