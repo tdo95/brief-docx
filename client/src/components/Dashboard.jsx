@@ -4,9 +4,20 @@ import { Container, Typography, Stack, Box, Card } from '@mui/material'
 
 const Dashboard = () => {
     const auth = useAuth();
+    const current = new Date().toLocaleString(undefined, {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    }) + "";
+    
   return (
     <Container>
-        <Typography variant='h4' sx={{my: 2}}> Welcome {auth.user.name ? auth.user.name : 'Back'} </Typography>
+        <Box sx={{display: 'flex', alignItems: 'center', mb:2}}>
+        <Typography variant='h4' sx={{my: 2}}> Welcome {auth.user.name ? auth.user.name : 'Back'}</Typography>
+        <Typography sx={{ml:'auto'}} varaint='subtitle1'>{current}</Typography>
+        </Box>
+        
         <Box sx={{borderRadius: '10px', backgroundColor: 'rgb(231,235,241)', py:2, px:3}}>
             <Typography variant='h6' sx={{ mb:1, color: 'black'}}>Recent</Typography>
             <Stack sx={{flexDirection: 'row'}}>
