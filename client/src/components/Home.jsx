@@ -1,9 +1,13 @@
 import React from 'react'
-
 import { Outlet } from 'react-router-dom'
- 
+import { Container } from '@mui/material' 
+
 const Home = () => {
-  return (<div>Home Page <Outlet></Outlet></div>)
+  return (
+    <Container sx={{px: 10, pt: 3}}>
+      <Outlet></Outlet>
+    </Container>
+  )
 }
 
 export default Home
