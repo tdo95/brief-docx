@@ -48,8 +48,17 @@ export const AuthProvider = ({ children }) => {
         }
         
     }
-    function logout() {
-        //TODO: make api call to log out user
+    async function logout() {
+        //make api call to log out user
+        console.log('Logging out user')
+        const res = await fetch('/auth/logout');
+        const data = await res.json();
+
+        //set state and local storage for user data to null
+        setUser(null)
+        localStorage.setItem('user', null)
+
+        console.log(data)
     }
     async function signup({ _name: name, _email: email, _password: password, _passwordConfirm: passwordConfirm}) {
         //TODO: make api call to signup user
