@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import { Navigate, redirect, useLocation } from 'react-router-dom';
 import { Container, Box, Typography, TextField, Button } from '@mui/material'
-import { useAuth } from './hooks/auth';
+import { useAuth } from './context/auth';
 
 const Auth = ({ login }) => {
     const auth = useAuth()

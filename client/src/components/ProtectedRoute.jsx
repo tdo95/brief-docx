@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
-import { useAuth } from './hooks/auth'
-import { useDocument } from './hooks/document'
+import { useAuth } from './context/auth'
+import { useDocument } from './context/document'
 
 const ProtectedRoute = ({children, required}) => {
     
