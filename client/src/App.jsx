@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import Auth from './components/Auth';
 import About from './components/About';
 import Home from './components/Home';
+import Dashboard from './components/Dashboard';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
       <Navbar/>
       <Routes>
         <Route exact path='/' element={<ProtectedRoute required={'login'}><Home /></ProtectedRoute>}>
-          <Route index element={<div>Dashbord Page</div>} />
+          <Route index element={<Dashboard />} />
           <Route path='new' element={<div>New Document Page</div>} />
           {/* TODO: This route should be protected and require a template  */}
           <Route path='create' element={<div>Edit Document Page</div>} />
