@@ -8,7 +8,7 @@ const methodOverride = require("method-override");
 const flash = require("express-flash");
 const logger = require("morgan");
 const connectDB = require("./config/database");
-const mainRoutes = require("./routes/main");
+const authRoutes = require("./routes/main");
 const postRoutes = require("./routes/posts");
 
 //Use .env file in config folder
@@ -54,7 +54,7 @@ app.use(passport.session());
 app.use(flash());
 
 //Setup Routes For Which The Server Is Listening
-app.use("/home", mainRoutes);
+app.use("/auth", authRoutes);
 app.use("/post", postRoutes);
 
 //Server Running
