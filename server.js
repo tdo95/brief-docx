@@ -8,6 +8,7 @@ const methodOverride = require("method-override");
 const logger = require("morgan");
 const connectDB = require("./config/database");
 const authRoutes = require("./routes/auth");
+const documentRoutes = require("./routes/documents");
 const postRoutes = require("./routes/posts");
 
 //Use .env file in config folder
@@ -45,6 +46,7 @@ app.use(passport.session());
 
 //Setup Routes For Which The Server Is Listening
 app.use("/auth", authRoutes);
+app.use("/document", documentRoutes);
 app.use("/post", postRoutes);
 
 //Server Running
