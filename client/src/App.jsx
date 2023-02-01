@@ -8,6 +8,7 @@ import Auth from './components/Auth';
 import About from './components/About';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
+import NewDocument from './components/NewDocument';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
       <Routes>
         <Route exact path='/' element={<ProtectedRoute required={'login'}><Home /></ProtectedRoute>}>
           <Route index element={<Dashboard />} />
-          <Route path='new' element={<div>New Document Page</div>} />
+          <Route path='new' element={<NewDocument />} />
           {/* TODO: This route should be protected and require a template  */}
           <Route path='create' element={<div>Edit Document Page</div>} />
         </Route>
