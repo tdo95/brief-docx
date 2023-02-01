@@ -5,10 +5,9 @@ const passport = require("passport");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const methodOverride = require("method-override");
-const flash = require("express-flash");
 const logger = require("morgan");
 const connectDB = require("./config/database");
-const authRoutes = require("./routes/main");
+const authRoutes = require("./routes/auth");
 const postRoutes = require("./routes/posts");
 
 //Use .env file in config folder
@@ -19,12 +18,6 @@ require("./config/passport")(passport);
 
 //Connect To Database
 connectDB();
-
-//Using EJS for views
-app.set("view engine", "ejs");
-
-//Static Folder
-app.use(express.static("public"));
 
 //Body Parsing
 app.use(express.urlencoded({ extended: true }));
@@ -50,14 +43,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-//Use flash messages for errors, info, ect...
-app.use(flash());
-
 //Setup Routes For Which The Server Is Listening
 app.use("/auth", authRoutes);
 app.use("/post", postRoutes);
 
 //Server Running
 app.listen(process.env.PORT, () => {
-  console.log("Server is running, you better catch it!");
+  console.log(`Server is running on Port ${process.env.PORT}, you better catch it!`);
 });
