@@ -28,7 +28,7 @@ export const DocumentProvider = ({ children }) => {
 
     }
     //TODO: Function that saves changes made to document within the database
-    return (<Document.Provider value={{editing, createDocument, addGlobalDocument, removeGlobalDocument}}>{ children }</Document.Provider>)
+    return (<Document.Provider value={{editing, setEditing, createDocument, addGlobalDocument, removeGlobalDocument}}>{ children }</Document.Provider>)
 }
 
 export const useDocument = () => {
