@@ -1,4 +1,5 @@
 import { React, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Container, Typography, FormControl, InputLabel, Select, MenuItem, Button, FormHelperText } from '@mui/material'
 import { useDocument } from './context/document'
 
@@ -6,17 +7,34 @@ const NewDocument = () => {
     const [template, setTemplate] = useState('')
     const [error, setError] = useState('')
     const document = useDocument()
+    const navigate = useNavigate()
     
     const handleTemplateSelect = (event) => setTemplate(event.target.value)
     const submitTemplate = () => {
+        //Reset error
+        setError("");
+        
         if (!template) return setError('Please select a template.');
-        //TODO: Fetch request to API to create a new document within the database
+        
+        //Fetch request to API to create a new document within the database
+        createDoc()
+    }
+
+    const createDoc = async () => {
+        const res = await document.createDocument(template);
+        
+        console.log(res, Boolean(res.success))
+        //if successful navigate to the create page
+        if (res.success) 
+            navigate('/create')
+        else if (res.error) 
+            return setError('Hmm, something went wrong. Please try again later')
     }
 
   return (
     <Container sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <Typography variant='h4' sx={{textAlign: 'center'}}>Select a Template</Typography>
-        <FormControl sx={{width: '50%', marginTop: 4}} error={error}>
+        <FormControl sx={{width: '50%', marginTop: 4}} error={Boolean(error)}>
             <InputLabel id='template'>Template</InputLabel>
             <Select
                 labelId='template'
