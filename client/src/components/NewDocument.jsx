@@ -25,9 +25,10 @@ const NewDocument = () => {
         
         console.log(res, Boolean(res.success))
         //if successful navigate to the create page
-        if (res.success) 
+        if (res.success) {
+            document.setEditing(true)
             navigate('/create')
-        else if (res.error) 
+        } else if (res.error) 
             return setError('Hmm, something went wrong. Please try again later')
     }
 
