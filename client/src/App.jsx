@@ -9,6 +9,7 @@ import About from './components/About';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
 import NewDocument from './components/NewDocument';
+import CreateDocument from './components/CreateDocument';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path='new' element={<NewDocument />} />
           {/* TODO: This route should be protected and require a template  */}
-          <Route path='create' element={<div>Edit Document Page</div>} />
+          <Route path='create' element={<ProtectedRoute required={'template'}><CreateDocument /></ProtectedRoute>} />
         </Route>
         <Route path='/product'element={<Product/>}/>
         <Route path='/about'element={<About />}/>
