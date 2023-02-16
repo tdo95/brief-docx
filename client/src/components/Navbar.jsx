@@ -53,7 +53,7 @@ const Navbar = () => {
                     </Menu>
                 </Box>
             </> :
-            <Toolbar sx={{ml:'auto'}}>
+            <Toolbar sx={{ml:'auto', p: '0px !important'}}>
                 <Button variant='outlined' sx={{ color: 'white', borderColor: 'white', mr:3}} component={ Link } to='/new'>New Document</Button>
                 <IconButton onClick={openNavMenu} size='large' color='inherit' >
                     <AccountCircle  />
