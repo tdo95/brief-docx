@@ -1,4 +1,5 @@
 const Document = require("../models/Document");
+const path = require('path')
 
 module.exports = {
   getDocuments: async (req, res) => {
@@ -26,4 +27,15 @@ module.exports = {
       res.send({error: `Error creating document: ${err}`})
     }
   },
+  getTemplate: async (req, res) => {
+    const templateName = req.params.name.toLowerCase()
+    if (templateName === 'allogene') {
+      const filePath = path.join(__dirname, '../templates/tag-example.docx')
+      res.sendFile(filePath, {}, (error) => {
+        if (error) next(error)
+        else console.log('Sent:', filePath)
+      })
+    }
+    else res.send({error: `${templateName} template doesnt exist`})
+  }
 };
