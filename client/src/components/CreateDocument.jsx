@@ -5,17 +5,21 @@ import Docxtemplater from 'docxtemplater'
 import PizZip from 'pizzip'
 import PizZipUtils from 'pizzip/utils/index.js'
 import { saveAs } from 'file-saver'
-
+// import expressionParser from 'docxtemplater/expressions.js'
+import LinkModule from 'docxtemplater-link-module/browser/docxtemplater-link-module.v0.2.3.js'
 function loadFile(url, callback) {
     PizZipUtils.getBinaryContent(url, callback);
 }
 
 const CreateDocument = () => {
+    const current = new Date().toLocaleString(undefined, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    }) + "";
     const getTemplate = async () => {
         //TODO: Template name in fetch statement is derived from template name stored in context or from document info pulled from database
         const res = await fetch('/document/template/allogene')
-        const data = await res.json();
-        if (data.error) return alert(`${data.error}`)
 
         const blob = await res.blob()
         return blob;
@@ -31,15 +35,46 @@ const CreateDocument = () => {
             const content = event.target.result;
 
             const zip = new PizZip(content);
-            const doc = new Docxtemplater(zip, {
-                paragraphLoop: true, 
-                linebreaks: true
-            })
+            const doc = new Docxtemplater(zip)
+            const linkMod = new LinkModule();
+            doc.attachModule(linkMod)
             doc.setData({
-                first_name: 'Tee',
-                last_name: 'O',
-                phone: '09090909',
-                description: 'This is a test, please hold your horses and pray that it works.',
+                date: current,
+                hasCompetitor: true,
+                hasCorp: true,
+                corp: [
+                    {
+                        link: { 
+                            text: 'This Is A Test Title For What A Potential Title Might Look Like', 
+                            url: "http://google.com"
+                        }, 
+                        description: 'More words here to simulate an actual description with actual words, but for now there is just an empty void filling this space and not really making much sense so here is my manifesto yeah I said it.', 
+                        source: 'Test Inc.', 
+                        date: '2/13/2023'
+                    },
+                ],
+                competitor: [
+                    {
+                        link: { 
+                            text: 'This Is A Test Title For What A Potential Title Might Look Like', 
+                            url: "http://google.com"
+                        }, 
+                        description: 'More words here to simulate an actual description with actual words, but for now there is just an empty void filling this space and not really making much sense so here is my manifesto yeah I said it.', 
+                        source: 'Test Inc.', 
+                        date: '2/13/2023'
+                    },
+                    {
+                        link: {
+                            text: 'A Tester Titler For A Potential Title', 
+                            url: "http://youtube.com"
+                        }, 
+                        description: 'More words here to simulate an actual description with actual words, but for now there is just an empty void filling this space and not really making much sense so here is my manifesto yeah I said it.', 
+                        source: 'Testering Inc.', 
+                        date: '2/14/2023'
+                    },
+                    
+                ],
+
             })
             try {
                 // render the document and replace all occurence of the template placeholders with the data
@@ -71,7 +106,12 @@ const CreateDocument = () => {
 
         }
     }
+    const serverGen = async () => {
+        const res = await fetch('/document/generate/allogene')
+        const out = await res.blob()
+        saveAs(out, 'tes.pdf')
 
+    }
     const onLeavePrompt = `Are you sure you want to leave?\nAny changes not yet saved will be lost.`;
     const document = useDocument();
 
@@ -87,7 +127,7 @@ const CreateDocument = () => {
     useBlocker(useCallback(confirmNavigation, []))
 
   return (
-    <div><button onClick={generateDocument}>Generate Document</button></div>
+    <div><button onClick={serverGen}>Generate Document</button></div>
   )
 }
 
