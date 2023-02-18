@@ -4,6 +4,7 @@ config/.env
 .vscode
 
 dist
+tmp/
 
 # Editor directories and files
 .vscode/*
