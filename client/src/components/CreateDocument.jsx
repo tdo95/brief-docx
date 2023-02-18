@@ -1,16 +1,30 @@
-import { React, useCallback } from 'react'
+import { React, useCallback, useState } from 'react'
 import { useBlocker } from './hooks/prompt.blocker'
 import { useDocument } from './context/document'
 import { saveAs } from 'file-saver'
-
+import { Document, Page } from 'react-pdf/dist/esm/entry.webpack5';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
+import testPDF from './test/outpdf.pdf'
 
 const CreateDocument = () => {
-    
+    const [pdf, setPdf] = useState(null);
+    const [numPages, setNumPages] = useState(null);
+    const [pageNumber, setPageNumber] = useState(1);
+    function onDocumentLoadSuccess({ numPages }) {
+        setNumPages(numPages);
+      }
     const serverGen = async () => {
         const res = await fetch('/document/generate/allogene')
-        const out = await res.blob()
-        saveAs(out, 'tes.pdf')
-
+        const data = await res.blob()
+        const reader = new FileReader()
+        reader.readAsDataURL(data)
+        reader.onerror = function (event) {
+            console.log('Error reading file: ', event)
+        }
+        reader.onload = function (event) {
+            setPdf(event.target.result)
+        }
     }
     const onLeavePrompt = `Are you sure you want to leave?\nAny changes not yet saved will be lost.`;
     const document = useDocument();
@@ -27,7 +41,17 @@ const CreateDocument = () => {
     useBlocker(useCallback(confirmNavigation, []))
 
   return (
-    <div><button onClick={serverGen}>Generate Document</button></div>
+    <div className='docContainer'>
+        <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess}>
+        {Array.from(new Array(numPages), (el, index) => (
+              <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+        ))}
+      </Document>
+      <p>
+        Page {pageNumber} of {numPages}
+      </p>
+        <button onClick={serverGen}>Generate Document</button>
+    </div>
   )
 }
 
