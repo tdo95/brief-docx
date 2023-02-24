@@ -13,10 +13,14 @@ const docxConverter = require('docx-pdf');
 module.exports = {
   getDocuments: async (req, res) => {
     try {
+      console.log(req.user)
       const documents = await Document.find({ creator: req.user.id });
+      console.log(documents)
+      res.send(documents)
       
     } catch (err) {
       console.log(err);
+      res.send({error: err})
     }
   },
   createDocument: async (req, res) => {
@@ -29,6 +33,7 @@ module.exports = {
         template: template, 
         lastEdited: now, 
         sections: {}, 
+        creator: req.user._id
       });
       console.log(`${template} document created`)
       res.send({document: doc})
