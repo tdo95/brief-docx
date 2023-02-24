@@ -1,9 +1,14 @@
-import React from 'react'
+import { React, useState, useEffect } from 'react'
 import { useAuth } from './context/auth'
+import { useDocument } from './context/document'
 import { Container, Typography, Stack, Box, Card } from '@mui/material'
+import DocumentCard from './DocumentCard'
+
 
 const Dashboard = () => {
+    const [userDocuments, setUserDocuments] = useState(null)
     const auth = useAuth();
+    const document = useDocument();
     const current = new Date().toLocaleString(undefined, {
         weekday: 'long',
         year: 'numeric',
@@ -11,6 +16,15 @@ const Dashboard = () => {
         day: 'numeric'
     }) + "";
     
+    useEffect(() => {
+       getDocuments()
+    }, [])
+    const getDocuments = async () => {
+        const docs = await document.getUserDocuments(auth._id);
+        setUserDocuments(docs)
+    }
+    const documentCards = userDocuments ?  userDocuments.map((doc) => <DocumentCard key={doc._id}/>) : [];
+
   return (
     <Container>
         <Box sx={{display: 'flex', alignItems: 'center', mb:2}}>
@@ -21,15 +35,13 @@ const Dashboard = () => {
         <Box sx={{borderRadius: '10px', backgroundColor: 'rgb(231,235,241)', py:2, px:3}}>
             <Typography variant='h6' sx={{ mb:1, color: 'black'}}>Recent</Typography>
             <Stack sx={{flexDirection: 'row'}}>
-                <Card sx={{width: 120, minHeight: 150, m:1}}></Card>
+                { documentCards.slice(0,6) }
             </Stack>
         </Box>
         <Box sx={{mt:5}}>
             <Typography variant='h4' sx={{my:1}}>Documents</Typography>
             <Stack sx={{flexDirection: 'row', flexWrap: 'wrap', p:1, borderRadius: '10px', '& > *': {backgroundColor: 'rgb(231,235,241)', boxShadow: '1px 1px 1px rgb(25, 117, 210)'}}}>
-            <Card sx={{width: 120, minHeight: 150, m:1}}></Card>
-            <Card sx={{width: 120, minHeight: 150, m:1}}></Card>
-            <Card sx={{width: 120, minHeight: 150, m:1}}></Card>
+            { documentCards }
             </Stack>
         </Box>
         
