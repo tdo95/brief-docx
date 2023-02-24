@@ -24,10 +24,8 @@ const NewDocument = () => {
         //TODO: Send document ID with the response so that it can be stored within the context and referenced to make edits
         const res = await document.createDocument(template);
         
-        console.log(res, Boolean(res.success))
         //if successful navigate to the create page
-        if (res.success) {
-            document.setEditing(true)
+        if (res.document) {
             navigate('/create')
         } else if (res.error) 
             return setError('Hmm, something went wrong. Please try again later')
