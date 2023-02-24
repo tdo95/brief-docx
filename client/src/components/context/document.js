@@ -1,5 +1,4 @@
 import { useContext, createContext, React, useState } from 'react'
-
 const Document = createContext(null);
 
 export const DocumentProvider = ({ children }) => {
@@ -32,7 +31,18 @@ export const DocumentProvider = ({ children }) => {
 
     }
     //TODO: Function that saves changes made to document within the database
-    return (<Document.Provider value={{editing, setEditing, createDocument, addGlobalDocument, removeGlobalDocument}}>{ children }</Document.Provider>)
+    
+    //Retreive users documents
+    async function getUserDocuments(userId) {
+        const res = await fetch(`/document/${userId}`);
+        const data = await res.json()
+    
+        //sort documents by last edited, Note: consider reverse method over sort for potential performance optimaization
+        data.sort((a,b) => new Date(b.lastEdited) - new Date(a.lastEdited))
+        return data;
+    }
+    
+    return (<Document.Provider value={{editing, setEditing, createDocument, addGlobalDocument, removeGlobalDocument, getUserDocuments}}>{ children }</Document.Provider>)
 }
 
 export const useDocument = () => {
