@@ -4,7 +4,7 @@ const User = require("../models/User");
 
 exports.getLogin = (req, res) => {
   if (req.user) {
-    return res.send({user: {email: req.user.email, name: req.user.name}});
+    return res.send({user: {email: req.user.email, name: req.user.name, _id: req.user._id }});
   }
   else res.send({user: null})
 };
