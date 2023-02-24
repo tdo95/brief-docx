@@ -21,16 +21,17 @@ module.exports = {
   },
   createDocument: async (req, res) => {
     const { template } = req.body
-    const now = new Date()
+    const now = new Date();
+    let doc;
     try {
-      await Document.create({ 
+      doc = await Document.create({ 
         title: template, 
         template: template, 
         lastEdited: now, 
         sections: {}, 
       });
       console.log(`${template} document created`)
-      res.send({success: `${template} document created`})
+      res.send({document: doc})
     } catch (err) {
       console.log(err);
       res.send({error: `Error creating document: ${err}`})
