@@ -41,8 +41,21 @@ export const DocumentProvider = ({ children }) => {
         data.sort((a,b) => new Date(b.lastEdited) - new Date(a.lastEdited))
         return data;
     }
+
+    //Update document
+    async function updateDocument(info) {
+        const res = await fetch(`/document/update/${editing._id}`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(info),
+        })
+        const data = await res.json();
+        if (data.error) return data;
+    }
     
-    return (<Document.Provider value={{editing, setEditing, createDocument, addGlobalDocument, removeGlobalDocument, getUserDocuments}}>{ children }</Document.Provider>)
+    return (<Document.Provider value={{editing, setEditing, createDocument, updateDocument, addGlobalDocument, removeGlobalDocument, getUserDocuments}}>{ children }</Document.Provider>)
 }
 
 export const useDocument = () => {
