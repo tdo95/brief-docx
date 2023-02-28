@@ -23,6 +23,29 @@ module.exports = {
       res.send({error: err})
     }
   },
+  updateDocument: async (req, res) => {
+    try {
+      const { docId } = req.params;
+      const now = Date.now()
+      const update = {...req.body, lastEdited: now}
+      const document = await Document.findOneAndUpdate({ _id: docId }, update);
+      res.end()
+      
+    } catch (err) {
+      console.log(err);
+      res.send({error: err})
+    }
+  },
+  deleteDocument: async (req, res) => {
+    try {
+      console.log(req.user)
+      
+      
+    } catch (err) {
+      console.log(err);
+      res.send({error: err})
+    }
+  },
   createDocument: async (req, res) => {
     const { template } = req.body
     const now = new Date();
@@ -53,7 +76,7 @@ module.exports = {
     }
     else res.send({error: `${templateName} template doesnt exist`})
   },
-  generateDoc: async (req, res) => {
+  generateDocument: async (req, res) => {
     
     const templateName = req.params.template.toLowerCase()
     const current = new Date().toLocaleString(undefined, {
