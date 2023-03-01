@@ -1,6 +1,5 @@
 import { React, useCallback, useState } from 'react'
-import { TextField, IconButton, Stack, Alert } from '@mui/material'
-import EditIcon from '@mui/icons-material/Edit';
+import { Alert } from '@mui/material'
 import { useBlocker } from './hooks/prompt.blocker'
 import { useDocument } from './context/document'
 import { saveAs } from 'file-saver'
@@ -9,6 +8,7 @@ import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import testPDF from './test/outpdf.pdf'
 import TitleEditor from './TitleEditor';
+import SectionEditor from './SectionEditor'
 
 const CreateDocument = () => {
     const onLeavePrompt = `Are you sure you want to leave?\nAny changes not yet saved will be lost.`;
@@ -84,6 +84,7 @@ const CreateDocument = () => {
         setDocumentForm={setDocumentForm}
         updateDoc={updateDoc}
        />
+       <SectionEditor />
       <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess}>
         {Array.from(new Array(numPages), (el, index) => (
               <Page key={`page_${index + 1}`} pageNumber={index + 1} />
