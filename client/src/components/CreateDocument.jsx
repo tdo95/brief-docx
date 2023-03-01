@@ -8,6 +8,7 @@ import { Document, Page } from 'react-pdf/dist/esm/entry.webpack5';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import testPDF from './test/outpdf.pdf'
+import TitleEditor from './TitleEditor';
 
 const CreateDocument = () => {
     const onLeavePrompt = `Are you sure you want to leave?\nAny changes not yet saved will be lost.`;
@@ -16,7 +17,6 @@ const CreateDocument = () => {
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
     const [error, setError] = useState(null);
-    const [editingTitle, setEditingTitle] = useState(false);
     
     const [documentForm, setDocumentForm] = useState({
       documentTitle: document.editing.title,
@@ -46,21 +46,6 @@ const CreateDocument = () => {
       const data = await res.json()
       if (data.error) setError('Oops! Looks like we couldn\'t save your changes. Please try again later.')
 
-    }
-    const saveInput = () => {
-      console.log('User has clicked away!')
-      //Set placeholder if input is empty
-      if(!documentForm.documentTitle) {
-        setDocumentForm(prev => ({
-          ...prev,
-          documentTitle: 'Untitled'
-        }))
-      }
-      //Update title in database
-      updateDoc({title: documentForm.documentTitle})
-
-      //Set editing to false
-      setEditingTitle(false)
     }
     function onDocumentLoadSuccess({ numPages }) {
         setNumPages(numPages);
@@ -93,37 +78,12 @@ const CreateDocument = () => {
   return (
     <div className='docContainer'>
       {error && <Alert severity='error'>{error}</Alert>}
-      <Stack sx={{alignItems: 'center', flexDirection:'row'}}>
-        <TextField
-          sx={{
-            '.Mui-disabled:not(input), .Mui-disabled > *:not(input)': {
-              color: 'transparent !important',
-              'border-color': 'transparent !important',
-              
-            },
-            'input.Mui-disabled, input': {
-              'font-size':'30px !important',
-              '-webkit-text-fill-color': 'black',
-            },
-            width: '50%'
-          }}
-          id='title'
-          disabled={!editingTitle}
-          name='documentTitle'
-          variant='outlined'
-          size='small'
-          label='Title'
-          value={ editingTitle || documentForm.documentTitle.length < 30 ? documentForm.documentTitle :  documentForm.shortDocTitle}
-          onChange={handleForm}
-          helperText={!(documentForm.documentTitle) && editingTitle &&'Please enter a title.'}
-          onBlur={saveInput}
-          error={!(documentForm.documentTitle) && editingTitle}
-          inputRef={input => input && input.focus()}>
-        </TextField>
-        {!editingTitle && <IconButton aria-label='save' onClick={() => setEditingTitle(prev => !prev)}>
-          <EditIcon />
-        </IconButton>}
-      </Stack>
+      <TitleEditor 
+        handleForm={handleForm} 
+        documentForm={documentForm} 
+        setDocumentForm={setDocumentForm}
+        updateDoc={updateDoc}
+       />
       <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess}>
         {Array.from(new Array(numPages), (el, index) => (
               <Page key={`page_${index + 1}`} pageNumber={index + 1} />
