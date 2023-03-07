@@ -1,6 +1,7 @@
 import { React, useState } from 'react'
 import { Tabs, Tab, Box } from '@mui/material'
 import TabPanel from './TabPanel'
+import SectionPage from './SectionPage'
 
 const SectionEditor = () => {
   const [value, setValue] = useState(0);
@@ -17,7 +18,9 @@ const SectionEditor = () => {
           <Tab label='industry'>Industry</Tab>
           <Tab label='opinion'>Opinion Leader</Tab>
         </Tabs>
-        <TabPanel value={value} index={0}>Corp</TabPanel>
+        <TabPanel value={value} index={0}>
+          <SectionPage sectionName={'Corp'} />
+        </TabPanel>
         <TabPanel value={value} index={1}>Competitor</TabPanel>
         <TabPanel value={value} index={2}>Industry</TabPanel>
         <TabPanel value={value} index={3}>Opinion</TabPanel>
