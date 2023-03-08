@@ -8,7 +8,7 @@ const TabPanel = ({children, value, index}) => {
         aria-labelledby={`section-tab-${index}`}
     >
         <Box sx={{p:4}}>
-            <Typography>{children}</Typography>
+            <Box>{children}</Box>
         </Box>
     </div>
   )
