@@ -54,8 +54,22 @@ export const DocumentProvider = ({ children }) => {
         const data = await res.json();
         if (data.error) return data;
     }
-    
-    return (<Document.Provider value={{editing, setEditing, createDocument, updateDocument, addGlobalDocument, removeGlobalDocument, getUserDocuments}}>{ children }</Document.Provider>)
+    async function addSummary(formData) {
+        const res = await fetch(`/summaries/new`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({...formData, docId: editing._id}),
+
+        })
+        const data = await res.json()
+        console.log(data)
+        return data;
+    }
+
+
+    return (<Document.Provider value={{editing, setEditing, createDocument, updateDocument, addGlobalDocument, removeGlobalDocument, getUserDocuments, addSummary}}>{ children }</Document.Provider>)
 }
 
 export const useDocument = () => {
