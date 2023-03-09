@@ -19,7 +19,7 @@ const SectionEditor = () => {
           <Tab label='opinion'>Opinion Leader</Tab>
         </Tabs>
         <TabPanel value={value} index={0}>
-          <SectionPage sectionName={'Corp'} />
+          <SectionPage sectionName={'corp'} />
         </TabPanel>
         <TabPanel value={value} index={1}>Competitor</TabPanel>
         <TabPanel value={value} index={2}>Industry</TabPanel>
