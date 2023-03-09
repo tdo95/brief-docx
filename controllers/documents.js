@@ -51,22 +51,14 @@ module.exports = {
     const now = new Date();
     let doc;
     let title = 'Untitled';
-    let sections = {};
     if (template === 'Allogene') {
-      sections = {
-        corp: [],
-        competitor: [],
-        industry: [],
-        opinion: [],
-      };
       title = `Allogene Daily Media Monitoring - ${now.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}`
     }
     try {
       doc = await Document.create({ 
         title: title, 
         template: template, 
-        lastEdited: now, 
-        sections: sections, 
+        lastEdited: now,  
         creator: req.user._id
       });
       console.log(`${template} document created`)
