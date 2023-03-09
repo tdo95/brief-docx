@@ -21,10 +21,6 @@ const DocumentSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  sections: {
-    type: Map,
-    required: true,
-  }
 });
 
 module.exports = mongoose.model("Document", DocumentSchema);
