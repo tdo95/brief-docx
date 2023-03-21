@@ -68,8 +68,19 @@ export const DocumentProvider = ({ children }) => {
         return data;
     }
 
+    async function getDocumentSummaries(docId) {
+        
+        const res = await fetch(`/summaries/${docId}`);
+        const data = await res.json()
+        console.log("api context:", data)
+        return data;
+        
+        
+        
+    }
 
-    return (<Document.Provider value={{editing, setEditing, createDocument, updateDocument, addGlobalDocument, removeGlobalDocument, getUserDocuments, addSummary}}>{ children }</Document.Provider>)
+
+    return (<Document.Provider value={{editing, setEditing, createDocument, updateDocument, addGlobalDocument, removeGlobalDocument, getUserDocuments, addSummary, getDocumentSummaries}}>{ children }</Document.Provider>)
 }
 
 export const useDocument = () => {
