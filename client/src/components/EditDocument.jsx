@@ -10,7 +10,7 @@ import testPDF from './test/outpdf.pdf'
 import TitleEditor from './TitleEditor';
 import SectionEditor from './SectionEditor'
 
-const CreateDocument = () => {
+const EditDocument = () => {
     const onLeavePrompt = `Are you sure you want to leave?\nAny changes not yet saved will be lost.`;
     const document = useDocument();  
     const [pdf, setPdf] = useState(null);
@@ -98,4 +98,4 @@ const CreateDocument = () => {
   )
 }
 
-export default CreateDocument
+export default EditDocument
