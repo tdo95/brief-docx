@@ -1,8 +1,10 @@
 import {React, useState} from 'react'
 import { Button } from '@mui/material'
 import Form from './Form'
-const SectionPage = ({sectionName, sectionSummary}) => {
+const SectionPage = ({sectionName, sectionSummaries}) => {
+    const today = new Date();
     const [toggleForm, setToggleForm] = useState(false)
+    const [lastEnteredDate, setLastEnteredDate] = useState({regular: today.toLocaleDateString('en-CA'), formatted: today.toLocaleDateString('en-US')})
   return (
     <div>
         <Button 
@@ -11,7 +13,7 @@ const SectionPage = ({sectionName, sectionSummary}) => {
         >       
           {toggleForm ? 'X' : 'Add Story'}
         </Button>
-        { toggleForm && <Form section={sectionName} /> }
+        { toggleForm && <Form section={sectionName} lastEnteredDate={lastEnteredDate} setLastEnteredDate={setLastEnteredDate} /> }
     </div>
   )
 }

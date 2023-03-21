@@ -2,9 +2,9 @@ import { React, useState, useEffect } from 'react'
 import { TextField, Box, Button, Alert } from '@mui/material'
 import { useDocument } from './context/document'
 
-const Form = ({ section }) => {
+const Form = ({ section, lastEnteredDate, setLastEnteredDate }) => {
     const document = useDocument();
-    const today = new Date();
+    
     const [alert, setAlert] = useState(false)
     const [message, setMessage] = useState({
         error: '',
@@ -15,8 +15,8 @@ const Form = ({ section }) => {
         link: '',
         description: '',
         source: '',
-        date: today.toLocaleDateString('en-CA'),
-        dateFormatted: today.toLocaleDateString('en-US'),
+        date: lastEnteredDate.regular,
+        dateFormatted: lastEnteredDate.formatted,
     })
     const handleForm = (e) => {
         const { name, value } = e.target;
@@ -26,7 +26,13 @@ const Form = ({ section }) => {
             if(name === 'date'){ 
                 let date = value.split('-')
                 date.push(date.shift())
-                newForm['dateFormatted'] = date.join('/')
+                let formatted = date.join('/');
+                newForm['dateFormatted'] = formatted
+                //save last entered date
+                setLastEnteredDate({
+                    regular: value,
+                    formatted: formatted
+                })
             }
             
             return newForm
@@ -69,7 +75,7 @@ const Form = ({ section }) => {
         
     }
     useEffect(() => {
-        console.log('Timer going boi')
+        console.log('Form Alert Timer going boi')
         const timer = setTimeout(() => {
             //Reset error
             setMessage({error: '', success: ''})
@@ -77,7 +83,7 @@ const Form = ({ section }) => {
         return () => clearTimeout(timer);
     }, [alert])
   return (
-    <Box sx={{'& > *':{mb:2}, my:2}}>
+    <Box sx={{'& > *':{mb:'24px'}, my:2}}>
         {(message.error || message.success) && <Alert severity={message.error ? 'error' : 'success'}>{message.error ? message.error : message.success}</Alert> }
         <TextField
             name='title'
