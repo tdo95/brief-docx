@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react'
 import { TextField, Box, Button, Alert } from '@mui/material'
 import { useDocument } from './context/document'
 
-const Form = ({ section, lastEnteredDate, setLastEnteredDate }) => {
+const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummaries }) => {
     const document = useDocument();
     
     const [alert, setAlert] = useState(false)
@@ -71,6 +71,7 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate }) => {
                 description: '',
                 source: '',
             }))
+            setChangeInSummaries(prev => !prev)
         }  
         
     }
