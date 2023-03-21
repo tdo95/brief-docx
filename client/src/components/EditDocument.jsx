@@ -1,4 +1,4 @@
-import { React, useCallback, useState } from 'react'
+import { React, useCallback, useState, useEffect } from 'react'
 import { Alert } from '@mui/material'
 import { useBlocker } from './hooks/prompt.blocker'
 import { useDocument } from './context/document'
@@ -17,7 +17,8 @@ const EditDocument = () => {
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
     const [error, setError] = useState(null);
-    
+    const [summaries, setSummaries] = useState([])
+    const [changeInSummaries, setChangeInSummaries] = useState(false)
     const [documentForm, setDocumentForm] = useState({
       documentTitle: document.editing.title,
       shortDocTitle: document.editing.title.slice(0,30) + '...',
@@ -39,7 +40,19 @@ const EditDocument = () => {
         return updateForm
       })
     }
-    
+    useEffect(() => {
+      console.log('gettting summaries')
+      getSummaries()
+    }, [changeInSummaries])
+  
+    const getSummaries = async () => {
+      //fetch summaries for document from the database
+      const results = await document.getDocumentSummaries(document.editing._id)
+      console.log(results, 'Error:', (!!results.error))
+      if (results.error) setError('Looks like there was an issue retriving your document summaries. Please exit the editor and try again later.')
+      else setSummaries(results);
+  
+    }
     const updateDoc = async (info) => {
       console.log('updating document', info)
       const res = await document.updateDocument(info);
@@ -84,7 +97,10 @@ const EditDocument = () => {
         setDocumentForm={setDocumentForm}
         updateDoc={updateDoc}
        />
-       <SectionEditor />
+       <SectionEditor
+        summaries={summaries} 
+        setChangeInSummaries={setChangeInSummaries}
+       />
       <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess}>
         {Array.from(new Array(numPages), (el, index) => (
               <Page key={`page_${index + 1}`} pageNumber={index + 1} />

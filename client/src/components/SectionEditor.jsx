@@ -3,11 +3,13 @@ import { Tabs, Tab, Box } from '@mui/material'
 import TabPanel from './TabPanel'
 import SectionPage from './SectionPage'
 
-const SectionEditor = () => {
+const SectionEditor = ({setChangeInSummaries, summaries}) => {
+  
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
+  
   return (
     <Box>
       <Box>
@@ -19,7 +21,11 @@ const SectionEditor = () => {
           <Tab label='opinion'>Opinion Leader</Tab>
         </Tabs>
         <TabPanel value={value} index={0}>
-          <SectionPage sectionName={'corp'} />
+          <SectionPage 
+            sectionName={'corp'}
+            setChangeInSummaries={setChangeInSummaries} 
+            summaries={summaries} 
+          />
         </TabPanel>
         <TabPanel value={value} index={1}>Competitor</TabPanel>
         <TabPanel value={value} index={2}>Industry</TabPanel>
