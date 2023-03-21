@@ -25,4 +25,19 @@ module.exports = {
             res.send({error: `Error creating summary: ${err}`})
         }
     },
+    getDocumentSummaries: async (req, res) => {
+        const { docId } = req.params
+        console.log(docId)
+        try {
+            const summaries = await Summary.find({docId: docId});
+            console.log(summaries)
+            res.send(summaries)
+
+        } catch (err) {
+            console.log(err)
+            res.send({error: `Error getting summaries: ${err}`})
+        }
+        
+
+    },
 }
