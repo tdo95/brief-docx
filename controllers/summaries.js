@@ -29,7 +29,7 @@ module.exports = {
         const { docId } = req.params
         console.log(docId)
         try {
-            const summaries = await Summary.find({docId: docId});
+            const summaries = await Summary.find({docId: docId}).sort({ createdAt: "desc" }).lean();
             console.log(summaries)
             res.send(summaries)
 
