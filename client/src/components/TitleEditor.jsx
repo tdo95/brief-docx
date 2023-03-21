@@ -26,11 +26,11 @@ const TitleEditor = ({documentForm, setDocumentForm, updateDoc, handleForm}) => 
         sx={{
           '.Mui-disabled:not(input), .Mui-disabled > *:not(input)': {
             color: 'transparent !important',
-            'border-color': 'transparent !important',
+            'borderColor': 'transparent !important',
             
           },
           'input.Mui-disabled, input': {
-            'font-size':'clamp(15px, 4vw, 35px) !important',
+            'fontSize':'clamp(15px, 4vw, 35px) !important',
             '-webkit-text-fill-color': 'black',
           },
           width: '100%',
