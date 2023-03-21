@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Container, Typography, FormControl, InputLabel, Select, MenuItem, Button, FormHelperText } from '@mui/material'
 import { useDocument } from './context/document'
 
-const NewDocument = () => {
+const CreateDocument = () => {
     const [template, setTemplate] = useState('')
     const [error, setError] = useState('')
     const document = useDocument()
@@ -55,4 +55,4 @@ const NewDocument = () => {
   )
 }
 
-export default NewDocument
+export default CreateDocument

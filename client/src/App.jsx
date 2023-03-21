@@ -8,8 +8,8 @@ import Auth from './components/Auth';
 import About from './components/About';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
-import NewDocument from './components/NewDocument';
 import CreateDocument from './components/CreateDocument';
+import EditDocument from './components/EditDocument';
 
 function App() {
   return (
@@ -18,9 +18,9 @@ function App() {
       <Routes>
         <Route exact path='/' element={<ProtectedRoute required={'login'}><Home /></ProtectedRoute>}>
           <Route index element={<Dashboard />} />
-          <Route path='new' element={<NewDocument />} />
+          <Route path='new' element={<CreateDocument />} />
           {/* TODO: This route should be protected and require a template  */}
-          <Route path='create' element={<ProtectedRoute required={'template'}><CreateDocument /></ProtectedRoute>} />
+          <Route path='create' element={<ProtectedRoute required={'template'}><EditDocument /></ProtectedRoute>} />
         </Route>
         <Route path='/product'element={<Product/>}/>
         <Route path='/about'element={<About />}/>
