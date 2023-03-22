@@ -40,4 +40,32 @@ module.exports = {
         
 
     },
+    updateSummary: async (req, res) => {
+        const { summaryId, title, description, source, date, docId, link, section } = req.body
+
+        try {
+            const update = await Summary.findOneAndUpdate({_id: summaryId}, {
+                title, 
+                description,
+                source,
+                link,
+                section,
+                date
+            })
+            res.send({success: update})
+
+        } catch (err) {
+            console.log(err)
+            res.send({error: `Error updating summary: ${err}`})
+        }
+    },
+    deleteSummary: async (req, res) => {
+        try {
+            await Summary.remove({ _id: req.params.summaryId});
+            res.send({success: 'Summary has been removed'})
+        } catch (err) {
+            console.log(err)
+            res.send({error: `${err}`})
+        }
+    },
 }
