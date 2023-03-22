@@ -83,7 +83,7 @@ export const DocumentProvider = ({ children }) => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({...formData, summaryId: summaryId}),
+            body: JSON.stringify({...formData, summaryId: summaryId, docId: editing._id}),
         })
         const data = await res.json()
         console.log("api context update summary:", data)

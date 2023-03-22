@@ -52,6 +52,10 @@ module.exports = {
                 section,
                 date
             })
+            //Update document lastEdited feild
+            const now = Date.now()
+            await Document.findOneAndUpdate({ _id: docId }, {lastEdited: now});
+
             res.send({success: update})
 
         } catch (err) {
