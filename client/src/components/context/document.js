@@ -91,7 +91,7 @@ export const DocumentProvider = ({ children }) => {
     }
 
     async function deleteSummary(summaryId) {
-        const res = await fetch(`/summaries/delete/${summaryId}`, {
+        const res = await fetch(`/summaries/delete/${document.editing._id}/${summaryId}`, {
             method: 'DELETE',
             headers: {
                 "Content-Type": "application/json"
