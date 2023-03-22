@@ -1,6 +1,7 @@
 import {React, useState} from 'react'
 import { Button } from '@mui/material'
 import Form from './Form'
+import SummaryItem from './SummaryItem'
 const SectionPage = ({sectionName, summaries, setChangeInSummaries}) => {
     const today = new Date();
     const [toggleForm, setToggleForm] = useState(false)
@@ -21,7 +22,7 @@ const SectionPage = ({sectionName, summaries, setChangeInSummaries}) => {
            setChangeInSummaries={setChangeInSummaries} 
           /> 
         }
-        {summaries.map(item => <p>{item.title}</p>)}
+        {summaries.map((item,i) => <SummaryItem key={i} summaryData={item} setChangeInSummaries={setChangeInSummaries} />)}
     </div>
   )
 }
