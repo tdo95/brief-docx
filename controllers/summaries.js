@@ -66,6 +66,11 @@ module.exports = {
     deleteSummary: async (req, res) => {
         try {
             await Summary.remove({ _id: req.params.summaryId});
+
+            //Update document lastEdited feild
+            const now = Date.now()
+            await Document.findOneAndUpdate({ _id: req.params.docId }, {lastEdited: now});
+
             res.send({success: 'Summary has been removed'})
         } catch (err) {
             console.log(err)
