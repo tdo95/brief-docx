@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react'
 import { TextField, Box, Button, Alert } from '@mui/material'
 import { useDocument } from './context/document'
 
-const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummaries }) => {
+const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummaries, summaryData = {}, editingSummary = false }) => {
     const document = useDocument();
     
     const [alert, setAlert] = useState(false)
@@ -11,12 +11,12 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummari
         success: ''
     })
     const [form, setForm] = useState({
-        title: '',
-        link: '',
-        description: '',
-        source: '',
-        date: lastEnteredDate.regular,
-        dateFormatted: lastEnteredDate.formatted,
+        title: summaryData.title || '',
+        link: summaryData.link || '',
+        description: summaryData.description || '',
+        source: summaryData.source || '',
+        date: summaryData.date ? new Date(summaryData.date).toLocaleDateString('en-CA') : lastEnteredDate.regular,
+        formattedDate: summaryData.date || lastEnteredDate.formatted,
     })
     const handleForm = (e) => {
         const { name, value } = e.target;
@@ -27,7 +27,7 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummari
                 let date = value.split('-')
                 date.push(date.shift())
                 let formatted = date.join('/');
-                newForm['dateFormatted'] = formatted
+                newForm['formattedDate'] = formatted
                 //save last entered date
                 setLastEnteredDate({
                     regular: value,
@@ -47,33 +47,57 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummari
             return;
         }
         //TODO: Check that link adheres to 'https://' format
-        //Save summary in database
-        const res = await document.addSummary({
-            title: form.title,
-            description: form.description,
-            date: form.dateFormatted,
-            source: form.source,
-            link: form.link,
-            section: section,
-        })
-        if (res.error) {
-            setAlert(prev => !prev)
-            setMessage({success: '', error: 'Opps. An error occured while trying to save your summary, please try again later.' })
-        }
-        else if (res.summary) {
-            setAlert(prev => !prev)
-            setMessage({error: '', success: 'Success! Summary has been added' })
-            //clear form
-            setForm(prev => ({
-                ...prev,
-                title: '',
-                link: '',
-                description: '',
-                source: '',
-            }))
-            setChangeInSummaries(prev => !prev)
-        }  
         
+        if(editingSummary) {
+            //Save summary edits in database
+            const res = await document.updateSummary(summaryData._id, {
+                title: form.title,
+                description: form.description,
+                date: form.formattedDate,
+                source: form.source,
+                link: form.link,
+                section: section,
+            })
+            if (res.error) {
+                setAlert(prev => !prev)
+                setMessage({success: '', error: 'Opps. An error occured while trying to save your summary, please try again later.' })
+
+            } else {
+                setAlert(prev => !prev)
+                setMessage({error: '', success: 'Success! Summary has been updated' })
+
+                setChangeInSummaries(prev => !prev)
+            }
+
+        } else {
+
+            //Save summary in database
+            const res = await document.addSummary({
+                title: form.title,
+                description: form.description,
+                date: form.formattedDate,
+                source: form.source,
+                link: form.link,
+                section: section,
+            })
+            if (res.error) {
+                setAlert(prev => !prev)
+                setMessage({success: '', error: 'Opps. An error occured while trying to save your summary, please try again later.' })
+            }
+            else if (res.summary) {
+                setAlert(prev => !prev)
+                setMessage({error: '', success: 'Success! Summary has been added' })
+                //clear form
+                setForm(prev => ({
+                    ...prev,
+                    title: '',
+                    link: '',
+                    description: '',
+                    source: '',
+                }))
+                setChangeInSummaries(prev => !prev)
+            }  
+        }
     }
     useEffect(() => {
         console.log('Form Alert Timer going boi')
