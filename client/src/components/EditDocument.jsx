@@ -40,10 +40,6 @@ const EditDocument = () => {
         return updateForm
       })
     }
-    useEffect(() => {
-      console.log('gettting summaries')
-      getSummaries()
-    }, [changeInSummaries])
   
     const getSummaries = async () => {
       //fetch summaries for document from the database
@@ -75,7 +71,12 @@ const EditDocument = () => {
             setPdf(event.target.result)
         }
     }
-    
+    useEffect(() => {
+      console.log('gettting summaries')
+      getSummaries()
+      console.log('generating document')
+      serverGen()
+    }, [changeInSummaries])
 
    //Prompts user to confirm navigation and sets editing to false if user chooses to navigate away
     const confirmNavigation = (tx) => {
