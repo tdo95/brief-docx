@@ -11,22 +11,25 @@ const SummaryItem = ({summaryData, setChangeInSummaries }) => {
     const document = useDocument() 
     const [editingSummary, setEditingSummary] = useState(false)
     const [anchorElNav, setAnchorElNav] = useState(null);
-    const [setModalFunction, setModalContent, setOpenModal] = useOutletContext()
+    const [setModalFunction, setModalContent, setOpenModal, setPurpose] = useOutletContext()
     const openOptions = (event) => {
         setAnchorElNav(event.currentTarget)
     };
     const deleteSummary = async () => {
       //delete summary
       const res = await document.deleteSummary(summaryData._id);
-      setChangeInSummaries(prev => !prev)
-      return res
+      if (res.success) {
+        setChangeInSummaries(prev => !prev)
+        return ({success: 'Success! Summary has been removed'})
+      }
+      else return ({error: 'Opps! An error occured while trying to delete this summary. Please try again later.'})
     }
-    const setupModal = () => {
-      console.log(setModalFunction)
+    const triggerModal = () => {
       //close more options menu
       setAnchorElNav(null)
       setModalFunction(() => deleteSummary)
       setModalContent(summaryData.title)
+      setPurpose('summaryDelete')
       setOpenModal(true)
     }
   return (
@@ -44,7 +47,7 @@ const SummaryItem = ({summaryData, setChangeInSummaries }) => {
               onClose={() => setAnchorElNav(null)}
               anchorEl={anchorElNav}
             >
-              <MenuItem sx={{color:'red', fontWeight: 'medium'}} onClick={setupModal}>Delete Summary</MenuItem>
+              <MenuItem sx={{color:'red', fontWeight: 'medium'}} onClick={triggerModal}>Delete Summary</MenuItem>
             </Menu>
         </Stack>
         {editingSummary && <Form summaryData={summaryData} editingSummary={true} setChangeInSummaries={setChangeInSummaries} />}
