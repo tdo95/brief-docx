@@ -1,4 +1,5 @@
 const Document = require("../models/Document");
+const Summary = require("../models/Summary");
 const path = require('path');
 const fs = require('fs')
 const alloTemplate = fs.readFileSync(path.join(__dirname, '../templates/allo-test.docx'), 'binary')
@@ -80,7 +81,6 @@ module.exports = {
     else res.send({error: `${templateName} template doesnt exist`})
   },
   generateDocument: async (req, res) => {
-    console.log('Doc ID:',req.params.docId)
     const templateName = req.params.template.toLowerCase()
     const current = new Date().toLocaleString(undefined, {
       year: 'numeric',
@@ -90,10 +90,35 @@ module.exports = {
 
     if (templateName === 'allogene') {
       //get document info from database
+      const docInfo = await Document.findById({_id: req.params.docId})
       //get all summaries associated with the document sorted by date
+      const summaries = await Summary.find({docId: req.params.docId}).sort({createdAt: "desc"})
       //format summaries into section catagories and format links
+      const docData = summaries.reduce((obj, item) => {
+        if (!obj[item.section]) obj[item.section] = [];
+        //add formatted summary to section
+        obj[item.section].push({
+          descripion: item.description,
+          source: item.source,
+          date: item.date,
+          link: {
+            text: item.title,
+            url: item.link
+          }
+        })
+        return obj
+      }, {})
+      
+      //add document creation date formatted Month, Day, Year
+      docData.date = docInfo.creationDate.toLocaleString(undefined, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }).toString()
+      console.log(docData)
 
-      const linkModule = new LinkModule();
+
+      const linkModule = new LinkModule()
       const zip = new PizZip(alloTemplate)
       const doc = new Docxtemplater(zip)
         doc.attachModule(linkModule)
@@ -148,6 +173,7 @@ module.exports = {
       const inpath = path.join(__dirname, '../tmp/outdocx.docx');
       const outpath = path.join(__dirname, '../tmp/outpdf.pdf');
       fs.writeFileSync(inpath, docxBuf)
+      //Note: this function logs a random array to the console... not sure what that's about lol
       docxConverter(inpath,outpath, function(err,result){
         if(err){
           return console.log(err);
