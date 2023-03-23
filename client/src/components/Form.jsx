@@ -15,8 +15,8 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummari
         link: summaryData.link || '',
         description: summaryData.description || '',
         source: summaryData.source || '',
-        date: summaryData.date?.toLocaleDateString('en-CA') || lastEnteredDate.regular,
-        formattedDate: summaryData.date?.toLocaleDateString('en-US') || lastEnteredDate.formatted,
+        date: summaryData.date ? new Date(summaryData.date).toLocaleDateString('en-CA') : lastEnteredDate.regular,
+        formattedDate: summaryData.date ? new Date(summaryData.date).toLocaleDateString('en-US') : lastEnteredDate.formatted,
     })
     const handleForm = (e) => {
         const { name, value } = e.target;
