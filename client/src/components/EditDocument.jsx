@@ -1,4 +1,5 @@
 import { React, useCallback, useState, useEffect } from 'react'
+import { useOutletContext } from "react-router-dom";
 import { Alert, Button, Stack } from '@mui/material'
 import { useBlocker } from './hooks/prompt.blocker'
 import { useDocument } from './context/document'
@@ -12,6 +13,7 @@ import SectionEditor from './SectionEditor'
 
 const EditDocument = () => {
     const onLeavePrompt = `Are you sure you want to leave?\nAny changes not yet saved will be lost.`;
+    const [setModalFunction, setModalContent, setOpenModal, setPurpose] = useOutletContext()
     const document = useDocument();  
     const [pdf, setPdf] = useState(null);
     const [numPages, setNumPages] = useState(null);
@@ -60,7 +62,7 @@ const EditDocument = () => {
         setNumPages(numPages);
       }
     const serverGen = async () => {
-        const res = await fetch(`/document/generate/allogene/${document.editing._id}`)
+        const res = await fetch(`/document/generate/allogene/${document.editing._id}/pdf`)
         const data = await res.blob()
         const reader = new FileReader()
         reader.readAsDataURL(data)
@@ -70,6 +72,33 @@ const EditDocument = () => {
         reader.onload = function (event) {
             setPdf(event.target.result)
         }
+    }
+    const downloadDocument = async () => {
+        const wordMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        const res = await fetch(`/document/generate/allogene/${document.editing._id}/word`)
+        let isDoc = false
+        //find content type header and check if response is a word document. 
+        //Note: The headers property within response objects is a Headers object. The only way to view values within a headers object is to use one of the methods provided on the interface that returns an iterator. The iterator can then be used to iterate over each item. See: https://developer.mozilla.org/en-US/docs/Web/API/Response/headers
+        for (const [property, value] of res.headers.entries()) {
+          if (property === 'content-type') {
+            if (value === wordMimeType) isDoc = true
+            break
+          }
+        }
+        if (isDoc) {
+          const blob = await res.blob()
+          saveAs(blob, documentForm.documentTitle + '.docx')
+          return {success: 'Success! Document downloaded.'}
+        }
+        return {error: 'Opps! An error occured while trying to download this document. Please try again later.'}
+
+        
+    }
+    const triggerModal = () => {
+      setModalFunction(() => downloadDocument)
+      setModalContent(null)
+      setPurpose('downloadDocument')
+      setOpenModal(true)
     }
     useEffect(() => {
       console.log('gettting summaries')
@@ -98,8 +127,15 @@ const EditDocument = () => {
           documentForm={documentForm}
           setDocumentForm={setDocumentForm}
           updateDoc={updateDoc}
-         />
-         <Button sx={{ml:'auto'}} variant='contained' color='success'>Finished</Button>
+        />
+        <Button 
+          sx={{ml:'auto'}} 
+          variant='contained' 
+          color='success' 
+          onClick={triggerModal}
+        >
+          Finished
+        </Button>
       </Stack>
        <SectionEditor
         summaries={summaries} 
