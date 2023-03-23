@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import { TextField, Box, Button, Alert } from '@mui/material'
 import { useDocument } from './context/document'
+import { isValidHttpUrl } from './hooks/validateUrl'
 
 const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummaries, summaryData = {}, editingSummary = false }) => {
     const document = useDocument();
@@ -32,8 +33,7 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummari
                     regular: value,
                     formatted: formatted
                 })
-            }
-            
+            }  
             return newForm
         })
     }
@@ -43,10 +43,14 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummari
             //Note: Im using the alert state variable as a trigger for the use effect to clear the alert after a few seconds, there it probably a better way to go about this, but this will do for now.
             setAlert(prev => !prev)
             setMessage({success: '', error: 'Please fill out each feild in the form' })
-            return;
+            return
+        //Check that link adheres to 'https://' format
+        } else if (!isValidHttpUrl(form.link)) {
+            setAlert(prev => !prev)
+            setMessage({success: '', error: 'Please enter your link in "https://" format' })
+            return
         }
-        //TODO: Check that link adheres to 'https://' format
-        
+
         if(editingSummary) {
             //Save summary edits in database
             const res = await document.updateSummary(summaryData._id, {
