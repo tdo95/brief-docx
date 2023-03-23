@@ -82,23 +82,18 @@ module.exports = {
   },
   generateDocument: async (req, res) => {
     const templateName = req.params.template.toLowerCase()
-    const current = new Date().toLocaleString(undefined, {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    }) + "";
-
+    
     if (templateName === 'allogene') {
       //get document info from database
       const docInfo = await Document.findById({_id: req.params.docId})
       //get all summaries associated with the document sorted by date
       const summaries = await Summary.find({docId: req.params.docId}).sort({createdAt: "desc"})
-      //format summaries into section catagories and format links
+      //format summaries into section catagories and format links to be compatible with docxtemplater link module
       const docData = summaries.reduce((obj, item) => {
         if (!obj[item.section]) obj[item.section] = [];
         //add formatted summary to section
         obj[item.section].push({
-          descripion: item.description,
+          description: item.description,
           source: item.source,
           date: item.date,
           link: {
@@ -108,56 +103,19 @@ module.exports = {
         })
         return obj
       }, {})
-      
+
       //add document creation date formatted Month, Day, Year
       docData.date = docInfo.creationDate.toLocaleString(undefined, {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
       }).toString()
-      console.log(docData)
-
 
       const linkModule = new LinkModule()
       const zip = new PizZip(alloTemplate)
       const doc = new Docxtemplater(zip)
         doc.attachModule(linkModule)
-        doc.setData({
-          date: current,
-          hasCompetitor: true,
-          hasCorp: true,
-          corp: [
-              {
-                  link: { 
-                      text: 'This Is A Test Title For What A Potential Title Might Look Like', 
-                      url: "http://google.com"
-                  }, 
-                  description: 'More words here to simulate an actual description with actual words, but for now there is just an empty void filling this space and not really making much sense so here is my manifesto yeah I said it.', 
-                  source: 'Test Inc.', 
-                  date: '2/13/2023'
-              },
-          ],
-          competitor: [
-              {
-                  link: { 
-                      text: 'This Is A Test Title For What A Potential Title Might Look Like', 
-                      url: "http://google.com"
-                  }, 
-                  description: 'More words here to simulate an actual description with actual words, but for now there is just an empty void filling this space and not really making much sense so here is my manifesto yeah I said it.', 
-                  source: 'Test Inc.', 
-                  date: '2/13/2023'
-              },
-              {
-                  link: {
-                      text: 'A Tester Titler For A Potential Title', 
-                      url: "http://youtube.com"
-                  }, 
-                  description: 'More words here to simulate an actual description with actual words, but for now there is just an empty void filling this space and not really making much sense so here is my manifesto yeah I said it.', 
-                  source: 'Testering Inc.', 
-                  date: '2/14/2023'
-              },
-          ]
-        })
+        doc.setData(docData)
         doc.render()
 
       const docxBuf = doc.getZip().generate({
