@@ -4,7 +4,6 @@ import { useDocument } from './context/document'
 
 const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummaries, summaryData = {}, editingSummary = false }) => {
     const document = useDocument();
-    
     const [alert, setAlert] = useState(false)
     const [message, setMessage] = useState({
         error: '',
@@ -15,8 +14,8 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummari
         link: summaryData.link || '',
         description: summaryData.description || '',
         source: summaryData.source || '',
-        date: summaryData.date ? new Date(summaryData.date).toLocaleDateString('en-CA') : lastEnteredDate.regular,
-        formattedDate: summaryData.date || lastEnteredDate.formatted,
+        date: summaryData.date?.toLocaleDateString('en-CA') || lastEnteredDate.regular,
+        formattedDate: summaryData.date?.toLocaleDateString('en-US') || lastEnteredDate.formatted,
     })
     const handleForm = (e) => {
         const { name, value } = e.target;
@@ -53,7 +52,7 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummari
             const res = await document.updateSummary(summaryData._id, {
                 title: form.title,
                 description: form.description,
-                date: form.formattedDate,
+                date: new Date(form.formattedDate),
                 source: form.source,
                 link: form.link,
                 section: section,
@@ -75,7 +74,7 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummari
             const res = await document.addSummary({
                 title: form.title,
                 description: form.description,
-                date: form.formattedDate,
+                date: new Date(form.formattedDate),
                 source: form.source,
                 link: form.link,
                 section: section,
@@ -125,6 +124,9 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummari
             value={form.link}
             onChange={handleForm}
             fullWidth
+            inputProps={{
+                type: 'url'
+            }}
         />
         <TextField
             name='description'
