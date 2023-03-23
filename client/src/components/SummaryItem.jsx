@@ -23,6 +23,8 @@ const SummaryItem = ({summaryData, setChangeInSummaries }) => {
     }
     const setupModal = () => {
       console.log(setModalFunction)
+      //close more options menu
+      setAnchorElNav(null)
       setModalFunction(() => deleteSummary)
       setModalContent(summaryData.title)
       setOpenModal(true)
