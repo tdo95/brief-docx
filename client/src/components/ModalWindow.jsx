@@ -1,17 +1,35 @@
 import { React, useState } from 'react'
 import { Modal, Box, Typography, Alert, Button } from '@mui/material'
 
-const ModalWindow = ({ executionFunction, contentTitle, open, setOpen}) => {
+const ModalWindow = ({ executionFunction, content, open, setOpen, purpose}) => {
     const [alert, setAlert] = useState(null)
-    const deleteSum = () => console.log('delete')
-    const deleteItem = async () => {
-        console.log('deleting item from modal')
-        console.log(executionFunction)
+    const processFunction = async () => {
         const res = await executionFunction()
-        // console.log(res)
-        if (res.success) setAlert({type:'success', message: 'Success! Your item has been deleted.'})
-        else setAlert({type:'error', message: 'Opps! An error occured while trying to delete your item. Please try again later.'}) 
-        
+        console.log(res)
+        if (res.success) setAlert({type:'success', message: res.success})
+        else if (res.error) setAlert({type:'error', message: res.error}) 
+    }
+    const componentsFor = {
+        summaryDelete: 
+            <Box>
+                <Typography variant='body'>Are you sure you want to delete?</Typography>
+                <Typography variant='h6'>{content}</Typography>
+                <Button variant='outlined' onClick={() => setOpen(false)}>Cancel</Button>
+                <Button variant='contained' onClick={processFunction}>Yes</Button>
+            </Box>,
+        downloadDocument: 
+            <Box
+                sx={{
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: '20px'
+                }}
+            >
+                <Button variant='contained' onClick={() => setOpen(false)}>Continue Editing</Button>
+                <Button variant='contained' color='success' onClick={processFunction}>Download Document</Button>
+            </Box>,
     }
     return (
     <Modal
@@ -26,15 +44,18 @@ const ModalWindow = ({ executionFunction, contentTitle, open, setOpen}) => {
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: 400,
+                minWidth: '300px',
+                width: '50%',
+                minHeight: 300,
+                display: 'flex',
+                justifyContent:'center',
+                alignItems: 'center',
                 backgroundColor: 'white',
+                borderRadius: '10px',
                 boxShadow: 24,
             }}>
-                <Typography variant='body'>Are you sure you want to delete?</Typography>
-                <Typography variant='h6'>{contentTitle}</Typography>
-                <Button variant='outlined' onClick={() => setOpen(false)}>Cancel</Button>
-                <Button variant='contained' onClick={deleteItem}>Yes</Button>
                 
+                {componentsFor[purpose]}
             </Box>}
         
 
