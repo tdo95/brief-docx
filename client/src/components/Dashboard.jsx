@@ -20,7 +20,7 @@ const Dashboard = () => {
        getDocuments()
     }, [])
     const getDocuments = async () => {
-        const docs = await document.getUserDocuments(auth._id);
+        const docs = await document.getUserDocuments(auth.user._id);
         setUserDocuments(docs)
     }
     const documentCards = userDocuments ?  userDocuments.map((doc) => <DocumentCard key={doc._id}/>) : [];
