@@ -31,7 +31,7 @@ const TitleEditor = ({documentForm, setDocumentForm, updateDoc, handleForm}) => 
           },
           'input.Mui-disabled, input': {
             'fontSize':'clamp(15px, 4vw, 35px) !important',
-            '-webkit-text-fill-color': 'black',
+            'WebkitTextFillColor': 'black',
           },
           width: '100%',
          
