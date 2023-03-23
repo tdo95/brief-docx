@@ -87,7 +87,7 @@ module.exports = {
       //get document info from database
       const docInfo = await Document.findById({_id: req.params.docId})
       //get all summaries associated with the document sorted by date
-      const summaries = await Summary.find({docId: req.params.docId}).sort({createdAt: "desc"})
+      const summaries = await Summary.find({docId: req.params.docId}).sort({date: "desc"})
       //format summaries into section catagories and format links to be compatible with docxtemplater link module
       const docData = summaries.reduce((obj, item) => {
         if (!obj[item.section]) obj[item.section] = [];
@@ -95,7 +95,7 @@ module.exports = {
         obj[item.section].push({
           description: item.description,
           source: item.source,
-          date: item.date,
+          date: item.date.toLocaleDateString('en-US'),
           link: {
             text: item.title,
             url: item.link
