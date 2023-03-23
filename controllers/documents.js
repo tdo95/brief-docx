@@ -80,7 +80,7 @@ module.exports = {
     else res.send({error: `${templateName} template doesnt exist`})
   },
   generateDocument: async (req, res) => {
-    
+    console.log('Doc ID:',req.params.docId)
     const templateName = req.params.template.toLowerCase()
     const current = new Date().toLocaleString(undefined, {
       year: 'numeric',
@@ -89,6 +89,10 @@ module.exports = {
     }) + "";
 
     if (templateName === 'allogene') {
+      //get document info from database
+      //get all summaries associated with the document sorted by date
+      //format summaries into section catagories and format links
+
       const linkModule = new LinkModule();
       const zip = new PizZip(alloTemplate)
       const doc = new Docxtemplater(zip)

@@ -64,7 +64,7 @@ const EditDocument = () => {
         setNumPages(numPages);
       }
     const serverGen = async () => {
-        const res = await fetch('/document/generate/allogene')
+        const res = await fetch(`/document/generate/allogene/${document.editing._id}`)
         const data = await res.blob()
         const reader = new FileReader()
         reader.readAsDataURL(data)

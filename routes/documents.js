@@ -9,7 +9,7 @@ router.put("/update/:docId", documentsController.updateDocument);
 router.delete("/delete/:docId", documentsController.deleteDocument);
 
 router.get("/template/:name", documentsController.getTemplate);
-router.get("/generate/:template", documentsController.generateDocument);
+router.get("/generate/:template/:docId", documentsController.generateDocument);
 
 
 module.exports = router;
