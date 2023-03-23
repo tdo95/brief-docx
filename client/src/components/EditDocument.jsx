@@ -1,5 +1,5 @@
 import { React, useCallback, useState, useEffect } from 'react'
-import { Alert } from '@mui/material'
+import { Alert, Button, Stack } from '@mui/material'
 import { useBlocker } from './hooks/prompt.blocker'
 import { useDocument } from './context/document'
 import { saveAs } from 'file-saver'
@@ -92,12 +92,15 @@ const EditDocument = () => {
   return (
     <div className='docContainer'>
       {error && <Alert severity='error'>{error}</Alert>}
-      <TitleEditor 
-        handleForm={handleForm} 
-        documentForm={documentForm} 
-        setDocumentForm={setDocumentForm}
-        updateDoc={updateDoc}
-       />
+      <Stack sx={{flexDirection: 'row', alignItems:'center'}}>
+        <TitleEditor
+          handleForm={handleForm}
+          documentForm={documentForm}
+          setDocumentForm={setDocumentForm}
+          updateDoc={updateDoc}
+         />
+         <Button sx={{ml:'auto'}} variant='contained' color='success'>Finished</Button>
+      </Stack>
        <SectionEditor
         summaries={summaries} 
         setChangeInSummaries={setChangeInSummaries}
