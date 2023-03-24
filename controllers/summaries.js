@@ -77,4 +77,57 @@ module.exports = {
             res.send({error: `${err}`})
         }
     },
+    addSimilar: async (req, res) => {
+        const {summaryId, story} = req.body
+        try {
+            console.log(req.body)
+            await Summary.findOneAndUpdate({_id: summaryId}, {$push: {similarStories: story}})
+
+            //Update document lastEdited feild
+            const now = Date.now()
+            await Document.findOneAndUpdate({ _id: req.params.docId }, {lastEdited: now});
+
+            res.send({success: 'Success! Similar story has been added.'})
+
+        } catch (err) {
+            console.log(err) 
+            res.send({error: `${err}`})
+        }
+    },
+    updateSimilar: async (req, res) => {
+        const {summaryId, story, similarId} = req.body
+        try {
+            console.log(req.body)
+            const data = await Summary.findOneAndUpdate({"similarStories._id": similarId}, {$set: {"similarStories.$": story}})
+            console.log(data)
+
+            //Update document lastEdited feild
+            const now = Date.now()
+            await Document.findOneAndUpdate({ _id: req.params.docId }, {lastEdited: now});
+            
+            res.send({success: 'Success! Similar story has been updated.'})
+
+        } catch (err) {
+            console.log(err) 
+            res.send({error: `${err}`})
+        }
+    },
+    deleteSimilar: async (req, res) => {
+        const {summaryId, similarId} = req.params
+        try {
+            console.log(req.params)
+            const data = await Summary.findOneAndUpdate({_id: summaryId}, {$pull: {"similarStories": {"_id": similarId}}})
+            console.log(data)
+
+            //Update document lastEdited feild
+            const now = Date.now()
+            await Document.findOneAndUpdate({ _id: req.params.docId }, {lastEdited: now});
+            
+            res.send({success: 'Success! Similar story has been deleted.'})
+
+        } catch (err) {
+            console.log(err) 
+            res.send({error: `${err}`})
+        }
+    }
 }
