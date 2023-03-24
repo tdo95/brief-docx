@@ -15,10 +15,10 @@ const SectionEditor = ({setChangeInSummaries, summaries}) => {
       <Box>
         {/* TODO: Dynamically generate tabs and tab panels */}
         <Tabs value={value} onChange={handleChange}>
-          <Tab label='corp'>Corp</Tab>
-          <Tab label='competitor'>Competitor</Tab>
-          <Tab label='industry'>Industry</Tab>
-          <Tab label='opinion'>Opinion Leader</Tab>
+          <Tab label='corp'></Tab>
+          <Tab label='competitor'></Tab>
+          <Tab label='industry'></Tab>
+          <Tab label='opinion'></Tab>
         </Tabs>
         <TabPanel value={value} index={0}>
           <SectionPage 
