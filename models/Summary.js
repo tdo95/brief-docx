@@ -1,5 +1,12 @@
 const mongoose = require("mongoose");
-
+const similarSubDoc = new mongoose.Schema({
+  link: {
+    title: String,
+    url: String
+  },
+  source: String,
+  date: Date
+})
 const SummarySchema = new mongoose.Schema({
   title: {
     type: String,
@@ -32,7 +39,8 @@ const SummarySchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  similarStories: [similarSubDoc]
   
 });
 
