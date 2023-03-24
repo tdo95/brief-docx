@@ -7,7 +7,7 @@ import { React, useState } from 'react'
 import { useOutletContext } from "react-router-dom";
 import { useDocument } from './context/document'
 import SimilarForm from './SimilarForm';
-import SimilarItem from '../SimilarItem';
+import SimilarItem from './SimilarItem';
 
 const SummaryItem = ({summaryData, setChangeInSummaries, lastEnteredDate }) => {
     const document = useDocument() 
@@ -65,9 +65,9 @@ const SummaryItem = ({summaryData, setChangeInSummaries, lastEnteredDate }) => {
         {editingSummary && <Form summaryData={summaryData} editingSummary={true} setChangeInSummaries={setChangeInSummaries} />}
         {/* TODO: Render similar stories here */}
         <Stack sx={{ml: '40px'}}>
-          <SimilarItem />
+          {summaryData.similarStories.map(story => <SimilarItem key={story._id} similarData={story} lastEnteredDate={lastEnteredDate} setChangeInSummaries={setChangeInSummaries} setCreatingSimilar={setCreatingSimilar} summaryId={summaryData._id} />)}
         </Stack>
-        {creatingSimilar && <SimilarForm lastEnteredDate={lastEnteredDate} setCreatingSimilar={setCreatingSimilar} setChangeInSummaries={setChangeInSummaries}/>}
+        {creatingSimilar && <SimilarForm summaryId={summaryData._id} lastEnteredDate={lastEnteredDate} creatingSimilar={creatingSimilar}setCreatingSimilar={setCreatingSimilar} setChangeInSummaries={setChangeInSummaries}/>}
         
     </Box>
   )
