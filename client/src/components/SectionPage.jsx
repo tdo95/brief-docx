@@ -12,7 +12,7 @@ const SectionPage = ({sectionName, summaries, setChangeInSummaries}) => {
           variant='contained' 
           onClick={() => setToggleForm(prev => !prev)}
         >       
-          {toggleForm ? 'X' : 'Add Story'}
+          {toggleForm ? 'X' : 'Add Summary'}
         </Button>
         { toggleForm && 
           <Form 
@@ -22,7 +22,8 @@ const SectionPage = ({sectionName, summaries, setChangeInSummaries}) => {
            setChangeInSummaries={setChangeInSummaries} 
           /> 
         }
-        {summaries.map((item,i) => <SummaryItem key={i} summaryData={item} setChangeInSummaries={setChangeInSummaries} />)}
+        {summaries.map((item,i) => <SummaryItem key={i} summaryData={item} setChangeInSummaries={setChangeInSummaries}
+        lastEnteredDate={lastEnteredDate}/>)}
     </div>
   )
 }
