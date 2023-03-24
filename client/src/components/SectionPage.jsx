@@ -1,6 +1,6 @@
 import {React, useState} from 'react'
 import { Button } from '@mui/material'
-import Form from './Form'
+import Form from './SummaryForm'
 import SummaryItem from './SummaryItem'
 const SectionPage = ({sectionName, summaries, setChangeInSummaries}) => {
     const today = new Date();
