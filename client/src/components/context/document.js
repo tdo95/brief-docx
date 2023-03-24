@@ -101,8 +101,51 @@ export const DocumentProvider = ({ children }) => {
         return data
     }
 
+    async function addSimilar(summaryId, similarData) {
+        const res = await fetch(`/summaries/similar/new`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                summaryId: summaryId,
+                story: similarData, 
+                docId: editing._id
+            })
+        })
+        const data = await res.json()
+        return data
+    }
 
-    return (<Document.Provider value={{editing, setEditing, createDocument, updateDocument, addGlobalDocument, removeGlobalDocument, getUserDocuments, addSummary, getDocumentSummaries, updateSummary, deleteSummary}}>{ children }</Document.Provider>)
+    async function updateSimilar(summaryId, similarData, similarId) {
+        const res = await fetch(`/summaries/similar/update`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                summaryId: summaryId,
+                story: similarData,
+                similarId: similarId,
+                docId: editing._id
+            })
+        })
+        const data = await res.json()
+        return data
+    }
+    async function deleteSimilar(similarId, summaryId) {
+        const res = await fetch(`/summaries/similar/delete/${similarId}/${summaryId}/${editing._id}`, {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json"
+            },
+        })
+        const data = await res.json()
+        return data
+    }
+
+
+    return (<Document.Provider value={{editing, setEditing, createDocument, updateDocument, addGlobalDocument, removeGlobalDocument, getUserDocuments, addSummary, getDocumentSummaries, updateSummary, deleteSummary, addSimilar, updateSimilar, deleteSimilar}}>{ children }</Document.Provider>)
 }
 
 export const useDocument = () => {
