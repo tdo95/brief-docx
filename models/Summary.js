@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 const similarSubDoc = new mongoose.Schema({
   link: {
-    title: String,
+    source: String,
     url: String
   },
-  source: String,
+  title: String,
   date: Date
 })
 const SummarySchema = new mongoose.Schema({
