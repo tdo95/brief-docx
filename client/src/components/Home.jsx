@@ -8,15 +8,18 @@ const Home = () => {
     const [modalFunction, setModalFunction] = useState(null)
     const [modalContent, setModalContent] = useState(null)
     const [purpose, setPurpose] = useState(null)
+    const [modalAlert, setModalAlert] = useState(null)
   return (
     <Container sx={{px: 10, py: 3}}>
-      <Outlet context={[setModalFunction, setModalContent, setOpenModal, setPurpose]}></Outlet>
+      <Outlet context={[setModalFunction, setModalContent, setOpenModal, setPurpose, setModalAlert]}></Outlet>
       <ModalWindow 
         open={openModal} 
         setOpen={setOpenModal} 
         content={modalContent} 
         executionFunction={modalFunction} 
         purpose={purpose}
+        alert={modalAlert}
+        setAlert={setModalAlert}
       />
     </Container>
   )

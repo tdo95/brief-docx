@@ -1,8 +1,7 @@
 import { React, useState } from 'react'
 import { Modal, Box, Typography, Alert, Button } from '@mui/material'
 
-const ModalWindow = ({ executionFunction, content, open, setOpen, purpose}) => {
-    const [alert, setAlert] = useState(null)
+const ModalWindow = ({ executionFunction, content, open, setOpen, purpose, alert, setAlert}) => {
     const processFunction = async () => {
         const res = await executionFunction()
         console.log(res)
