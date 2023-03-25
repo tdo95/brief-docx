@@ -1,4 +1,4 @@
-import { Typography, Stack, IconButton, Box, Menu, MenuItem } from '@mui/material'
+import { Typography, Stack, IconButton, Box, Menu, MenuItem, FormControl, InputLabel } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import CloseIcon from '@mui/icons-material/Close';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -8,13 +8,14 @@ import { useOutletContext } from "react-router-dom";
 import { useDocument } from './context/document'
 import SimilarForm from './SimilarForm';
 import SimilarItem from './SimilarItem';
+import Dropdown from './Dropdown';
 
-const SummaryItem = ({summaryData, setChangeInSummaries, lastEnteredDate }) => {
+const SummaryItem = ({summaryData, setChangeInSummaries, lastEnteredDate, sectionsList }) => {
     const document = useDocument() 
     const [editingSummary, setEditingSummary] = useState(false)
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [creatingSimilar, setCreatingSimilar] = useState(false)
-    const [setModalFunction, setModalContent, setOpenModal, setPurpose] = useOutletContext()
+    const [setModalFunction, setModalContent, setOpenModal, setPurpose, setModalAlert] = useOutletContext()
     const openOptions = (event) => {
         setAnchorElNav(event.currentTarget)
     };
@@ -40,6 +41,20 @@ const SummaryItem = ({summaryData, setChangeInSummaries, lastEnteredDate }) => {
       setEditingSummary(false)
       setCreatingSimilar(true)
     }
+    const changeSection = (newSection) => {
+      setAnchorElNav(null)
+      const res = document.changeSummarySection(summaryData._id, summaryData, newSection);
+    
+      if (res.error) {
+        //open modal with error message
+        setModalAlert({type:'error', message: 'Opps! There was an error changing the summary section. Please try again later.'})
+        setOpenModal(true)
+      } else {
+        //trigger re-render
+        setChangeInSummaries(prev => !prev)
+      }
+
+    }
   return (
     <Box>
         <Stack sx={{alignItems: 'center', flexDirection:'row'}}>
@@ -56,14 +71,17 @@ const SummaryItem = ({summaryData, setChangeInSummaries, lastEnteredDate }) => {
               anchorEl={anchorElNav}
             >
               <MenuItem sx={{
-                color: 'dimgray',
-                fontWeight: 'medium'
+                color: '#066fd5',
+                fontWeight: 'medium', opacity: '.8'
               }} onClick={openSimilarForm}>Add Similar Story</MenuItem>
               <MenuItem sx={{color:'red', fontWeight: 'medium', opacity: '.6'}} onClick={triggerModal}>Delete Summary</MenuItem>
+              <MenuItem sx={{'&:hover': {backgroundColor: 'transparent'}}}>
+                <Dropdown items={sectionsList} labelName='Change Sections' labelId='change-section' onClickFunction={changeSection}/>
+              </MenuItem>
             </Menu>
         </Stack>
         {editingSummary && <Form summaryData={summaryData} editingSummary={true} setChangeInSummaries={setChangeInSummaries} />}
-        {/* TODO: Render similar stories here */}
+        {/* Rendering similar stories here */}
         <Stack sx={{ml: '40px'}}>
           {summaryData.similarStories.map(story => <SimilarItem key={story._id} similarData={story} lastEnteredDate={lastEnteredDate} setChangeInSummaries={setChangeInSummaries} setCreatingSimilar={setCreatingSimilar} summaryId={summaryData._id} />)}
         </Stack>
