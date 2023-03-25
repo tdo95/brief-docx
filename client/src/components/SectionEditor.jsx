@@ -40,6 +40,7 @@ const SectionEditor = ({setChangeInSummaries, summaries}) => {
               sectionName={label}
               setChangeInSummaries={setChangeInSummaries}
               summaries={(sections[label] || [])}
+              sectionsList={(sections?.list || [])}
             />
           </TabPanel>
         )}

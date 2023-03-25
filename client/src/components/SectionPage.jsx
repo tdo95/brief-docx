@@ -2,7 +2,7 @@ import {React, useState} from 'react'
 import { Button } from '@mui/material'
 import Form from './SummaryForm'
 import SummaryItem from './SummaryItem'
-const SectionPage = ({sectionName, summaries, setChangeInSummaries}) => {
+const SectionPage = ({sectionName, summaries, setChangeInSummaries, sectionsList}) => {
     const today = new Date();
     const [toggleForm, setToggleForm] = useState(false)
     const [lastEnteredDate, setLastEnteredDate] = useState({regular: today.toLocaleDateString('en-CA'), formatted: today.toLocaleDateString('en-US')})
@@ -23,7 +23,7 @@ const SectionPage = ({sectionName, summaries, setChangeInSummaries}) => {
           /> 
         }
         {summaries.map((item,i) => <SummaryItem key={i} summaryData={item} setChangeInSummaries={setChangeInSummaries}
-        lastEnteredDate={lastEnteredDate}/>)}
+        lastEnteredDate={lastEnteredDate} sectionsList={sectionsList.filter(name => name !== sectionName)}/>)}
     </div>
   )
 }
