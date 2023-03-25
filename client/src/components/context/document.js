@@ -144,8 +144,30 @@ export const DocumentProvider = ({ children }) => {
         return data
     }
 
+    async function changeSummarySection(summaryId, formData, newSection) {
+        const res = await fetch(`/summaries/update/`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ 
+                summaryId: summaryId, 
+                docId: editing._id,
+                link: formData.link,
+                section: newSection,
+                source: formData.source,
+                description: formData.description,
+                title: formData.title,
+                date: formData.date
+            }),
+        })
+        const data = await res.json()
+        console.log("api context update summary:", data)
+        return data;
+    }
 
-    return (<Document.Provider value={{editing, setEditing, createDocument, updateDocument, addGlobalDocument, removeGlobalDocument, getUserDocuments, addSummary, getDocumentSummaries, updateSummary, deleteSummary, addSimilar, updateSimilar, deleteSimilar}}>{ children }</Document.Provider>)
+
+    return (<Document.Provider value={{editing, setEditing, createDocument, updateDocument, addGlobalDocument, removeGlobalDocument, getUserDocuments, addSummary, getDocumentSummaries, updateSummary, deleteSummary, addSimilar, updateSimilar, deleteSimilar, changeSummarySection}}>{ children }</Document.Provider>)
 }
 
 export const useDocument = () => {
