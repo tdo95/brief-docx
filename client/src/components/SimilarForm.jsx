@@ -14,9 +14,9 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
         success: ''
     })
     const [form, setForm] = useState({
-        title: similarData.link?.title || '',
+        title: similarData.title || '',
         link: similarData.link?.url || '',
-        source: similarData.source || '',
+        source: similarData.link?.source || '',
         date: similarData.date ? new Date(similarData.date).toLocaleDateString('en-CA') : lastEnteredDate.regular,
         formattedDate: similarData.date ? new Date(similarData.date).toLocaleDateString('en-US') : lastEnteredDate.formatted,
     })
@@ -52,10 +52,10 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
             summaryId,
             {
                 link: {
-                    title: form.title,
+                    source: form.source,
                     url: form.link
                 },
-                source: form.source,
+                title: form.title,
                 date: new Date(form.date)
             }
 

@@ -31,14 +31,14 @@ const SimilarItem = ({ summaryId, similarData = {}, lastEnteredDate, setChangeIn
       //Close similar story form if open
       setCreatingSimilar(false)
       setModalFunction(() => deleteSimilar)
-      setModalContent(similarData.link.title)
+      setModalContent(similarData.title)
       setPurpose('summaryDelete')
       setOpenModal(true)
     }
   return (
     <Box sx={{opacity: '.5'}}>
         <Stack sx={{alignItems: 'center', flexDirection:'row'}}>
-            <Typography variant='body2'>{similarData.link.title}</Typography>
+            <Typography variant='body2'>{similarData.title}</Typography>
             <IconButton aria-label='more options' onClick={toggleFunctions}>
                 {editingSimilar ? <CloseIcon /> : <MoreHorizIcon />}
             </IconButton>
