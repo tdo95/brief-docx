@@ -2,6 +2,7 @@ const Document = require("../models/Document");
 const Summary = require("../models/Summary");
 const { generateWordDocBuffer, generatePdfAndSend } = require( "../utilities/docCreationUtils");
 const path = require('path');
+const docxPath = path.join(__dirname, '../tmp/outdocx.docx');
 
 module.exports = {
   getDocuments: async (req, res) => {
@@ -79,23 +80,28 @@ module.exports = {
       try {
         //get document info from database
         const docInfo = await Document.findById({_id: docId})
+        
         //get all summaries associated with the document sorted by date
         const summaries = await Summary.find({docId: req.params.docId}).sort({date: "desc"})
-        //format summaries into section catagories and format links to be compatible with docxtemplater link module
+        
+        //format summaries into section catagories to be compatible with docx-templates engine
         const docData = summaries.reduce((obj, item) => {
-          if (!obj[item.section]) obj[item.section] = [];
+          //add items section if it doesnt exist
+          if (!obj.sections[item.section]) obj.sections[item.section] = [];
           //add formatted summary to section
-          obj[item.section].push({
+          obj.sections[item.section].push({
             description: item.description,
             source: item.source,
             date: item.date.toLocaleDateString('en-US'),
             link: {
               text: item.title,
               url: item.link
-            }
-          })
+            },
+            similarStories: item.similarStories
+          })  
           return obj
-        }, {})
+        }, {sections: {}})
+
         //add document creation date formatted Month, Day, Year
         docData.date = docInfo.creationDate.toLocaleString(undefined, {
           year: 'numeric',
@@ -103,11 +109,13 @@ module.exports = {
           day: 'numeric'
         }).toString()
 
-        const docxBuf = generateWordDocBuffer(docData)
+        const docxBuf = await generateWordDocBuffer(docData)
+
         if (docType === 'word') {
           res.type('application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-          res.send(docxBuf)
+          res.sendFile(docxPath)
         } else generatePdfAndSend(docxBuf, res)
+
       } catch (err) {
         res.send({error:`Couldn't generate document: ${err}`})
       }
