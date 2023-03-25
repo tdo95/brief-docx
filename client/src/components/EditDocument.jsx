@@ -74,26 +74,16 @@ const EditDocument = () => {
         }
     }
     const downloadDocument = async () => {
-        const wordMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      try {
         const res = await fetch(`/document/generate/allogene/${document.editing._id}/word`)
-        let isDoc = false
-        //find content type header and check if response is a word document. 
-        //Note: The headers property within response objects is a Headers object. The only way to view values within a headers object is to use one of the methods provided on the interface that returns an iterator. The iterator can then be used to iterate over each item. See: https://developer.mozilla.org/en-US/docs/Web/API/Response/headers
-        for (const [property, value] of res.headers.entries()) {
-          if (property === 'content-type') {
-            if (value === wordMimeType) isDoc = true
-            break
-          }
-        }
-        if (isDoc) {
-          const blob = await res.blob()
-          saveAs(blob, documentForm.documentTitle + '.docx')
-          return {success: 'Success! Document downloaded.'}
-        }
-        return {error: 'Opps! An error occured while trying to download this document. Please try again later.'}
-
-        
+        const data = await res.blob()
+        saveAs(data, documentForm.documentTitle + '.docx')
+        return {success: 'Success! Document downloaded.'}
+      } catch (err) {
+        return {error: 'Opps! An error occured while trying to download this document. Please try again later.'}        
+      }
     }
+    
     const triggerModal = () => {
       setModalFunction(() => downloadDocument)
       setModalContent(null)
