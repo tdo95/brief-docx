@@ -9,9 +9,10 @@ const Home = () => {
     const [modalContent, setModalContent] = useState(null)
     const [purpose, setPurpose] = useState(null)
     const [modalAlert, setModalAlert] = useState(null)
+    const [modalPdfId, setModalPdfId] = useState(null)
   return (
     <Container sx={{px: 10, py: 3}}>
-      <Outlet context={[setModalFunction, setModalContent, setOpenModal, setPurpose, setModalAlert]}></Outlet>
+      <Outlet context={[setModalFunction, setModalContent, setOpenModal, setPurpose, setModalAlert, setModalPdfId]}></Outlet>
       <ModalWindow 
         open={openModal} 
         setOpen={setOpenModal} 
@@ -20,6 +21,8 @@ const Home = () => {
         purpose={purpose}
         alert={modalAlert}
         setAlert={setModalAlert}
+        pdfId={modalPdfId}
+
       />
     </Container>
   )
