@@ -22,15 +22,18 @@ export const DocumentProvider = ({ children }) => {
 
         return data;
     }
-    //TODO: API call to find document created in database and store globally within application 
-    function addGlobalDocument(id) {
 
+    //delete document
+    async function deleteDocument(docId) {
+        const res = await fetch(`/document/delete/${docId}`, {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json"
+            },
+        })
+        const data = await res.json()
+        return data
     }
-    //TODO: Remove globally stored document value
-    function removeGlobalDocument() {
-
-    }
-    //TODO: Function that saves changes made to document within the database
     
     //Retreive users documents
     async function getUserDocuments(userId) {
@@ -167,7 +170,7 @@ export const DocumentProvider = ({ children }) => {
     }
 
 
-    return (<Document.Provider value={{editing, setEditing, createDocument, updateDocument, addGlobalDocument, removeGlobalDocument, getUserDocuments, addSummary, getDocumentSummaries, updateSummary, deleteSummary, addSimilar, updateSimilar, deleteSimilar, changeSummarySection}}>{ children }</Document.Provider>)
+    return (<Document.Provider value={{editing, setEditing, createDocument, deleteDocument, updateDocument, getUserDocuments, addSummary, getDocumentSummaries, updateSummary, deleteSummary, addSimilar, updateSimilar, deleteSimilar, changeSummarySection}}>{ children }</Document.Provider>)
 }
 
 export const useDocument = () => {

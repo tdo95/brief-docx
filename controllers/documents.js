@@ -7,9 +7,7 @@ const docxPath = path.join(__dirname, '../tmp/outdocx.docx');
 module.exports = {
   getDocuments: async (req, res) => {
     try {
-      console.log(req.user)
       const documents = await Document.find({ creator: req.user.id });
-      console.log(documents)
       res.send(documents)
       
     } catch (err) {
@@ -33,8 +31,8 @@ module.exports = {
   deleteDocument: async (req, res) => {
     try {
       console.log(req.user)
-      
-      
+      await Document.remove({ _id: req.params.docId });
+      res.send({success: 'Success! Document removed.'})
     } catch (err) {
       console.log(err);
       res.send({error: err})
