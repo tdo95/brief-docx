@@ -6,7 +6,9 @@ import DocumentCard from './DocumentCard'
 
 
 const Dashboard = () => {
-    const [userDocuments, setUserDocuments] = useState(null)
+    const [documentCards, setDocumentCards] = useState([])
+    console.log(documentCards)
+    const [refresh, setRefresh] = useState(false)
     const auth = useAuth();
     const document = useDocument();
     const current = new Date().toLocaleString(undefined, {
@@ -18,12 +20,13 @@ const Dashboard = () => {
     
     useEffect(() => {
        getDocuments()
-    }, [])
+    }, [refresh])
     const getDocuments = async () => {
         const docs = await document.getUserDocuments(auth.user._id);
-        setUserDocuments(docs)
+        setDocumentCards(() => {
+            return docs.map((doc) => <DocumentCard key={doc._id} info={doc} setRefresh={setRefresh} />)
+        })
     }
-    const documentCards = userDocuments ?  userDocuments.map((doc) => <DocumentCard key={doc._id}/>) : [];
 
   return (
     <Container>
