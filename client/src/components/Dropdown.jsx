@@ -4,7 +4,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 
 
-const Dropdown = ({ items, labelName, labelId, onClickFunction }) => {
+const Dropdown = ({ items, labelName, labelId, onClickFunction, icon, color, px }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const handleClick = (e) => {
         setAnchorEl(e.currentTarget)
@@ -13,20 +13,21 @@ const Dropdown = ({ items, labelName, labelId, onClickFunction }) => {
         setAnchorEl(null)
         onClickFunction(name)
     }
-    console.log('items',items)
+
   return (
     <Box>
         <Button
             sx={{
                 backgroundColor: 'white',
-                color: 'dimgrey',
+                color: color ? color : 'dimgrey',
                 fontWeight:'medium',
                 fontSize: '16px',
-                px: '0',
+                px: px ? px : '0',
                 textTransform: 'capitalize',
                 '&:hover': {
                     backgroundColor: 'lightgrey'
-                }
+                },
+               
             }}
             id={labelId}
             aria-controls={anchorEl ? `${labelId}-menu` : undefined}
@@ -35,7 +36,7 @@ const Dropdown = ({ items, labelName, labelId, onClickFunction }) => {
             variant='contained'
             disableElevation
             onClick={handleClick}
-            endIcon={<KeyboardArrowDownIcon />}
+            endIcon={icon ? icon : <KeyboardArrowDownIcon />}
         >
             {labelName}
         </Button>
@@ -63,18 +64,6 @@ const Dropdown = ({ items, labelName, labelId, onClickFunction }) => {
             {items.length ? items.map((item, i) => <MenuItem key={i} onClick={() => executionFunction(item)}>{item && item[0].toUpperCase() + item.slice(1)}</MenuItem>) : <MenuItem disabled>{'No Options'}</MenuItem>}
         </Menu>
     </Box>
-
-    // <FormControl fullWidth>
-    //     <InputLabel id={labelId}>{labelName}</InputLabel>
-    //     <Select 
-    //         labelId={labelId}
-    //         value={value}
-    //         label={labelName}
-    //         onChange={handleChange}
-    //     >
-    //         {items.length ? items.map((item, i) => <MenuItem value={item}>{item[0].toUpperCase() + item.slice(1)}</MenuItem>) : 'No Sections'}
-    //     </Select>
-    // </FormControl>
   )
 }
 
