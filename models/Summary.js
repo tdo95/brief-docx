@@ -18,7 +18,6 @@ const SummarySchema = new mongoose.Schema({
   }, 
   link: {
     type: String,
-    required: true,
   },
   description: {
     type: String,
@@ -26,11 +25,9 @@ const SummarySchema = new mongoose.Schema({
   },
   source: {
     type: String,
-    required: true,
   },
   date: {
     type: Date,
-    required: true,
   },
   section: {
     type: String,
