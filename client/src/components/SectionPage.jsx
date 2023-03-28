@@ -2,7 +2,7 @@ import {React, useState} from 'react'
 import { Button } from '@mui/material'
 import Form from './SummaryForm'
 import SummaryItem from './SummaryItem'
-import { useDocument } from './context/document'
+import { useDocument } from '../context/document'
 const SectionPage = ({sectionName, summaries, setChangeInSummaries, sectionsList}) => {
     const today = new Date();
     const document = useDocument()

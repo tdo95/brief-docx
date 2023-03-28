@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import { TextField, Alert, Box, Button, Typography, IconButton, Stack } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { useDocument } from './context/document';
+import { useDocument } from '../context/document';
 import { isValidHttpUrl } from './hooks/validateUrl';
 
 const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,

@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react'
 import { Tabs, Tab, Box, Typography, Button, TextField, IconButton } from '@mui/material'
 import TabPanel from './TabPanel'
 import SectionPage from './SectionPage'
-import { useDocument } from './context/document'
+import { useDocument } from '../context/document'
 import CloseIcon from '@mui/icons-material/Close';
 
 const SectionEditor = ({setChangeInSummaries, summaries}) => {

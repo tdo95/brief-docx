@@ -3,7 +3,7 @@ import { Card, Stack, Typography } from '@mui/material'
 import ArticleIcon from '@mui/icons-material/Article';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useOutletContext, useNavigate } from 'react-router-dom';
-import { useDocument } from './context/document'
+import { useDocument } from '../context/document'
 
 const DocumentCard = ({ info, setRefresh }) => {
   const navigate = useNavigate()

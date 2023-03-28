@@ -4,7 +4,7 @@ import SimilarForm from './SimilarForm'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import CloseIcon from '@mui/icons-material/Close'
 import { useOutletContext } from 'react-router-dom'
-import { useDocument } from './context/document'
+import { useDocument } from '../context/document'
 
 const SimilarItem = ({ summaryId, similarData = {}, lastEnteredDate, setChangeInSummaries, setCreatingSimilar }) => {
     const document = useDocument()

@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react'
 import { useAuth } from './context/auth'
-import { useDocument } from './context/document'
+import { useDocument } from '../context/document'
 import { Container, Typography, Stack, Box, Card } from '@mui/material'
 import DocumentCard from './DocumentCard'
 

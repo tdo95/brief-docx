@@ -5,7 +5,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Form from './SummaryForm'
 import { React, useState } from 'react'
 import { useOutletContext } from "react-router-dom";
-import { useDocument } from './context/document'
+import { useDocument } from '../context/document'
 import SimilarForm from './SimilarForm';
 import SimilarItem from './SimilarItem';
 import Dropdown from './Dropdown';

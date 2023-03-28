@@ -1,7 +1,7 @@
 import { React, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Container, Typography, FormControl, InputLabel, Select, MenuItem, Button, FormHelperText } from '@mui/material'
-import { useDocument } from './context/document'
+import { useDocument } from '../context/document'
 
 const CreateDocument = () => {
     const [template, setTemplate] = useState('')
