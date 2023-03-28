@@ -2,17 +2,21 @@ const fs = require('fs')
 const path = require('path');
 const inpath = path.join(__dirname, '../tmp/outdocx.docx');
 const outpath = path.join(__dirname, '../tmp/outpdf.pdf');
-const template = fs.readFileSync(path.join(__dirname, '../templates/allo-temp.docx'))
+const work = fs.readFileSync(path.join(__dirname, '../templates/allo-temp.docx'))
+const notes = fs.readFileSync(path.join(__dirname, '../templates/notes-temp.docx'))
 const { createReport } = require('docx-templates')
 const docxConverter = require('docx-pdf');
 // const libre = require('libreoffice-convert');
 // const libreConvert = require('util').promisify(libre.convert);
 
 module.exports = {
-    generateWordDocBuffer: async function(docData) {
-      console.log(docData)
-      
-      try{
+    generateWordDocBuffer: async function(docData, templateName) {
+
+      console.log(docData, templateName)
+      let template
+      if (templateName === 'allogene') template = work;
+      if (templateName === 'notes') template = notes;
+      try {
         const buffer = await createReport({
           template,
           data: docData

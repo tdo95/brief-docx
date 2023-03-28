@@ -73,8 +73,9 @@ module.exports = {
   },
   generateDocument: async (req, res) => {
     const { template, docType, docId } = req.params
+    const acceptedTemplates = ['allogene', 'notes']
+    if (!acceptedTemplates.includes(template.toLowerCase())) res.send({error: `${templateName} template doesnt exist`})
     
-    if (template.toLowerCase() === 'allogene') {
       try {
         //get document info from database
         const docInfo = await Document.findById({_id: docId})
@@ -91,6 +92,7 @@ module.exports = {
             description: item.description,
             source: item.source,
             date: item.date.toLocaleDateString('en-US'),
+            //TODO: Change this to be not so confusing in template and here
             link: {
               text: item.title,
               url: item.link
@@ -100,14 +102,25 @@ module.exports = {
           return obj
         }, {sections: {}})
 
+        if (template.toLowerCase() === 'notes') {
+          // Format sections into an array
+          const sectionList = [];
+          for (const section in docData.sections) 
+            sectionList.push({title: section, summaries: docData.sections[section]})
+          console.log(sectionList)
+          docData.sections = sectionList
+        }
+
         //add document creation date formatted Month, Day, Year
         docData.date = docInfo.creationDate.toLocaleString(undefined, {
           year: 'numeric',
           month: 'long',
           day: 'numeric'
         }).toString()
+        //add document title
+        docData.title = docInfo.title
 
-        const docxBuf = await generateWordDocBuffer(docData)
+        const docxBuf = await generateWordDocBuffer(docData, template.toLowerCase())
 
         if (docType === 'word') {
           res.type('application/vnd.openxmlformats-officedocument.wordprocessingml.document')
@@ -117,7 +130,7 @@ module.exports = {
       } catch (err) {
         res.send({error:`Couldn't generate document: ${err}`})
       }
-    }
-    else res.send({error: `${templateName} template doesnt exist`})
+    
+    
   },
 };
