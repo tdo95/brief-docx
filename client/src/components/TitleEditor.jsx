@@ -2,7 +2,7 @@ import { React, useState } from 'react'
 import { TextField, IconButton, Stack } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 
-const TitleEditor = ({documentForm, setDocumentForm, updateDoc, handleForm}) => {
+const TitleEditor = ({documentForm, setDocumentForm, updateDoc, handleForm, setChangeInSummaries}) => {
   const [editingTitle, setEditingTitle] = useState(false);
   const saveInput = () => {
     console.log('User has clicked away!')
@@ -15,7 +15,8 @@ const TitleEditor = ({documentForm, setDocumentForm, updateDoc, handleForm}) => 
     }
     //Update title in database
     updateDoc({title: documentForm.documentTitle})
-
+    //Update document
+    setChangeInSummaries(prev => !prev)
     //Set editing to false
     setEditingTitle(false)
   }
