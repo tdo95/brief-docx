@@ -1,9 +1,27 @@
 import { React, useState } from 'react'
 import { TextField, IconButton, Stack } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
+import { useDocument } from '../context/document'
 
-const TitleEditor = ({documentForm, setDocumentForm, updateDoc, handleForm, setRefreshDocumentocument}) => {
+const TitleEditor = ({updateDoc,  setRefreshDocumentocument}) => {
+  const document = useDocument();
   const [editingTitle, setEditingTitle] = useState(false);
+  const [documentForm, setDocumentForm] = useState({
+    documentTitle: document.editing.title,
+    shortDocTitle: document.editing.title.slice(0,30) + '...',
+  });
+  const handleForm = (e) => {
+    const { value, name } = e.target;
+    console.log(value)
+    setDocumentForm(prev => {
+      const updateForm = {...prev};
+      updateForm[name] = value;
+      if (name === 'documentTitle') {
+        updateForm['shortDocTitle'] = value.slice(0,30) + '...'
+      }
+      return updateForm
+    })
+  }
   const saveInput = () => {
     console.log('User has clicked away!')
     //Set placeholder if input is empty

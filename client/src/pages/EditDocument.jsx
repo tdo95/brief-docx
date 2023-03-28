@@ -20,27 +20,6 @@ const EditDocument = () => {
     const [error, setError] = useState(null);
     const [summaries, setSummaries] = useState([])
     const [refreshDocument, setRefreshDocumentocument] = useState(false)
-    const [documentForm, setDocumentForm] = useState({
-      documentTitle: document.editing.title,
-      shortDocTitle: document.editing.title.slice(0,30) + '...',
-      storyTitle: '',
-      storyDescription: '',
-      storySource: '',
-      storyDate: '',
-      storyLink: '',
-    });
-    const handleForm = (e) => {
-      const { value, name } = e.target;
-      console.log(value)
-      setDocumentForm(prev => {
-        const updateForm = {...prev};
-        updateForm[name] = value;
-        if (name === 'documentTitle') {
-          updateForm['shortDocTitle'] = value.slice(0,30) + '...'
-        }
-        return updateForm
-      })
-    }
   
     const getSummaries = async () => {
       //fetch summaries for document from the database
@@ -112,9 +91,6 @@ const EditDocument = () => {
       {error && <Alert severity='error'>{error}</Alert>}
       <Stack sx={{flexDirection: 'row', alignItems:'center'}}>
         <TitleEditor
-          handleForm={handleForm}
-          documentForm={documentForm}
-          setDocumentForm={setDocumentForm}
           updateDoc={updateDoc}
           setRefreshDocumentocument={setRefreshDocumentocument}
         />
