@@ -21,9 +21,9 @@ const SimilarItem = ({ summaryId, similarData = {}, lastEnteredDate, setChangeIn
       console.log(res)
       if (res.success) {
         setChangeInSummaries(prev => !prev)
-        return ({success: 'Success! Summary has been removed'})
+        return ({success: 'Success! Item has been removed'})
       }
-      else return ({error: 'Opps! An error occured while trying to delete this similar story. Please try again later.'})
+      else return ({error: 'Opps! An error occured while trying to delete this item. Please try again later.'})
     }
     const triggerModal = () => {
       //close more options menu
@@ -35,10 +35,11 @@ const SimilarItem = ({ summaryId, similarData = {}, lastEnteredDate, setChangeIn
       setPurpose('summaryDelete')
       setOpenModal(true)
     }
+    console.log('SIMILAR:',similarData)
   return (
     <Box sx={{opacity: '.5'}}>
         <Stack sx={{alignItems: 'center', flexDirection:'row'}}>
-            <Typography variant='body2'>{similarData.title}</Typography>
+            <Typography variant='body2'>{similarData.title || similarData.link.source}</Typography>
             <IconButton aria-label='more options' onClick={toggleFunctions}>
                 {editingSimilar ? <CloseIcon /> : <MoreHorizIcon />}
             </IconButton>
@@ -50,7 +51,7 @@ const SimilarItem = ({ summaryId, similarData = {}, lastEnteredDate, setChangeIn
               <MenuItem sx={{
                 color: 'dimgray',
                 fontWeight: 'medium'
-              }} onClick={() => {setAnchorElNav(null); setCreatingSimilar(false); setEditingSimilar(true)}}>Edit Similar Story</MenuItem>
+              }} onClick={() => {setAnchorElNav(null); setCreatingSimilar(false); setEditingSimilar(true)}}>{document.editing.template === 'Allogene' ? 'Edit Similar Story' : 'Edit Reference'}</MenuItem>
               <MenuItem sx={{color:'red', fontWeight: 'medium', opacity: '.6'}} onClick={triggerModal}>Delete</MenuItem>
             </Menu>
         </Stack>
