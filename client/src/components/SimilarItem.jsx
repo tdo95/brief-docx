@@ -6,7 +6,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import { useOutletContext } from 'react-router-dom'
 import { useDocument } from '../context/document'
 
-const SimilarItem = ({ summaryId, similarData = {}, lastEnteredDate, setChangeInSummaries, setCreatingSimilar }) => {
+const SimilarItem = ({ summaryId, similarData = {}, lastEnteredDate, setRefreshDocumentocument, setCreatingSimilar }) => {
     const document = useDocument()
     const [editingSimilar, setEditingSimilar] = useState(false)
     const [anchorElNav, setAnchorElNav] = useState(null)
@@ -20,7 +20,7 @@ const SimilarItem = ({ summaryId, similarData = {}, lastEnteredDate, setChangeIn
       const res = await document.deleteSimilar(similarData._id, summaryId);
       console.log(res)
       if (res.success) {
-        setChangeInSummaries(prev => !prev)
+        setRefreshDocumentocument(prev => !prev)
         return ({success: 'Success! Item has been removed'})
       }
       else return ({error: 'Opps! An error occured while trying to delete this item. Please try again later.'})
@@ -55,7 +55,7 @@ const SimilarItem = ({ summaryId, similarData = {}, lastEnteredDate, setChangeIn
               <MenuItem sx={{color:'red', fontWeight: 'medium', opacity: '.6'}} onClick={triggerModal}>Delete</MenuItem>
             </Menu>
         </Stack>
-        {editingSimilar && <SimilarForm similarData={similarData} setChangeInSummaries={setChangeInSummaries} lastEnteredDate={lastEnteredDate} />}
+        {editingSimilar && <SimilarForm similarData={similarData} setRefreshDocumentocument={setRefreshDocumentocument} lastEnteredDate={lastEnteredDate} />}
     </Box>
   )
 }

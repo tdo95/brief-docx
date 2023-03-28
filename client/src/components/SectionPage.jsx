@@ -3,7 +3,7 @@ import { Button } from '@mui/material'
 import Form from './SummaryForm'
 import SummaryItem from './SummaryItem'
 import { useDocument } from '../context/document'
-const SectionPage = ({sectionName, summaries, setChangeInSummaries, sectionsList}) => {
+const SectionPage = ({sectionName, summaries, setRefreshDocumentocument, sectionsList}) => {
     const today = new Date();
     const document = useDocument()
     const [toggleForm, setToggleForm] = useState(false)
@@ -21,10 +21,10 @@ const SectionPage = ({sectionName, summaries, setChangeInSummaries, sectionsList
            section={sectionName} 
            lastEnteredDate={lastEnteredDate} 
            setLastEnteredDate={setLastEnteredDate}
-           setChangeInSummaries={setChangeInSummaries} 
+           setRefreshDocumentocument={setRefreshDocumentocument} 
           /> 
         }
-        {summaries.map((item,i) => <SummaryItem key={i} summaryData={item} setChangeInSummaries={setChangeInSummaries}
+        {summaries.map((item,i) => <SummaryItem key={i} summaryData={item} setRefreshDocumentocument={setRefreshDocumentocument}
         lastEnteredDate={lastEnteredDate} sectionsList={sectionsList.filter(name => name !== sectionName)}/>)}
     </div>
   )

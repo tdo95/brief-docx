@@ -19,7 +19,7 @@ const EditDocument = () => {
     const [pageNumber, setPageNumber] = useState(1);
     const [error, setError] = useState(null);
     const [summaries, setSummaries] = useState([])
-    const [changeInSummaries, setChangeInSummaries] = useState(false)
+    const [refreshDocument, setRefreshDocumentocument] = useState(false)
     const [documentForm, setDocumentForm] = useState({
       documentTitle: document.editing.title,
       shortDocTitle: document.editing.title.slice(0,30) + '...',
@@ -94,7 +94,7 @@ const EditDocument = () => {
       getSummaries()
       console.log('generating document')
       serverGen()
-    }, [changeInSummaries])
+    }, [refreshDocument])
 
    //Prompts user to confirm navigation and sets editing to false if user chooses to navigate away
     const confirmNavigation = (tx) => {
@@ -116,7 +116,7 @@ const EditDocument = () => {
           documentForm={documentForm}
           setDocumentForm={setDocumentForm}
           updateDoc={updateDoc}
-          setChangeInSummaries={setChangeInSummaries}
+          setRefreshDocumentocument={setRefreshDocumentocument}
         />
         <Button 
           sx={{ml:'auto'}} 
@@ -129,7 +129,7 @@ const EditDocument = () => {
       </Stack>
        <SectionEditor
         summaries={summaries} 
-        setChangeInSummaries={setChangeInSummaries}
+        setRefreshDocumentocument={setRefreshDocumentocument}
        />
       <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess}>
         {Array.from(new Array(numPages), (el, index) => (
