@@ -2,14 +2,14 @@ import './App.css';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute';
-import Product from './components/Product';
+import Product from './pages/Product';
 import Navbar from './components/Navbar';
-import Auth from './components/Auth';
-import About from './components/About';
-import Home from './components/Home';
-import Dashboard from './components/Dashboard';
-import CreateDocument from './components/CreateDocument';
-import EditDocument from './components/EditDocument';
+import Auth from './pages/Auth';
+import About from './pages/About';
+import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
+import CreateDocument from './pages/CreateDocument';
+import EditDocument from './pages/EditDocument';
 
 function App() {
   return (

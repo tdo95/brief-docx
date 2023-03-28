@@ -7,9 +7,8 @@ import { saveAs } from 'file-saver'
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack5';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
-import testPDF from './test/outpdf.pdf'
-import TitleEditor from './TitleEditor';
-import SectionEditor from './SectionEditor'
+import TitleEditor from '../components/TitleEditor';
+import SectionEditor from '../components/SectionEditor'
 
 const EditDocument = () => {
     const onLeavePrompt = `Are you sure you want to leave?\nAny changes not yet saved will be lost.`;

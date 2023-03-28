@@ -1,7 +1,7 @@
 import { React, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Container } from '@mui/material' 
-import ModalWindow from './ModalWindow'
+import ModalWindow from '../components/ModalWindow'
 
 const Home = () => {
     const [openModal, setOpenModal] = useState(false)
