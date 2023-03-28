@@ -25,7 +25,7 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
         const { name, value } = e.target;
         setForm(prev => {
             const newForm = {...prev}
-            newForm[name] = value;
+            newForm[name] = value.trim();
             if(name === 'date'){ 
                 let date = value.split('-')
                 date.push(date.shift())
@@ -35,18 +35,24 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
             return newForm
         })
     }
+    const showFeedback = (successMessage = '', errorMessage = '') => {
+        //Note: Im using the alert state variable as a trigger for the use effect to clear the alert after a few seconds, there it probably a better way to go about this, but this will do for now.
+        setAlert(prev => !prev)
+        setMessage({success: successMessage, error: errorMessage })
+    }
     const saveForm = async () => {
-        //Check if any form values are empty
-        if(Object.values(form).some(value => !value)){
-            //Note: Im using the alert state variable as a trigger for the use effect to clear the alert after a few seconds, there it probably a better way to go about this, but this will do for now.
-            setAlert(prev => !prev)
-            setMessage({success: '', error: 'Please fill out each feild in the form' })
-            return
+        
+        if (document.editing.template === 'Allogene') {
+            //Check if any form values are empty
+            if(Object.values(form).some(value => !value))
+                return showFeedback('', 'Please fill out each feild in the form')  
+        } else if (document.editing.template === 'Notes') {
+            if (!form.source || !form.link) 
+                return showFeedback('', 'Please fill out each feild in the form')
+        }
         //Check that link adheres to 'https://' format
-        } else if (!isValidHttpUrl(form.link)) {
-            setAlert(prev => !prev)
-            setMessage({success: '', error: 'Please enter your link in "https://" format' })
-            return
+        if (!isValidHttpUrl(form.link)) {
+            return showFeedback('', 'Please enter your link in "https://" format')
         }
         const options = [
             summaryId,
@@ -58,7 +64,6 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
                 title: form.title,
                 date: new Date(form.date)
             }
-
         ]
         let res;
         if (creatingSimilar) {
@@ -70,12 +75,10 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
             console.log(res)
         }
         if (res.success) {
-            setAlert(prev => !prev)
-            setMessage({error: '', success: res.success })
+            showFeedback(res.success)
             setChangeInSummaries(prev => !prev)
         } else {
-            setAlert(prev => !prev)
-            setMessage({success: '', error: 'Opps. An error occured while trying to save your story, please try again later.' })
+            showFeedback('', 'Opps. An error occured while trying to save, please try again later.')
         }
 
         
@@ -92,7 +95,7 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
   return (
     <Box sx={{ml: '40px', my:2}}>
         {!similarData.link && <Stack sx={{flexDirection: 'row', mb:'0',alignItems:'center'}}>
-             <Typography variant='h6'>Add Similar Story</Typography>
+             <Typography variant='h6'>{document.editing.template === 'Allogene' ? 'Add Similar Story' : 'Add Reference'}</Typography>
             <IconButton sx={{ml: 'auto'}}aria-label='close similar form' onClick={() => setCreatingSimilar(false)}>
                     <CloseIcon />
             </IconButton>
@@ -100,25 +103,16 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
 
         {(message.error || message.success) && <Alert sx={{mb: '20px'}} severity={message.error ? 'error' : 'success'}>{message.error ? message.error : message.success}</Alert> }
         
-        <TextField
-            name='title'
-            label='Title'
-            size='small'
-            fullWidth
-            value={form.title}
-            onChange={handleForm}
-        />
-        <TextField
-            name='link'
-            label='Link'
-            size='small'
-            value={form.link}
-            onChange={handleForm}
-            fullWidth
-            inputProps={{
-                type: 'url'
-            }}
-        />
+        { document.editing.template === 'Allogene' &&
+            <TextField
+                name='title'
+                label='Title'
+                size='small'
+                fullWidth
+                value={form.title}
+                onChange={handleForm}
+            />
+        }
         <TextField
             name='source'
             label='Source'
@@ -128,12 +122,25 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
             onChange={handleForm} 
         />
         <TextField
-            name='date'
-            type='date'
+            name='link'
+            label='Link'
             size='small'
+            sx={{mr:2}}
+            value={form.link}
             onChange={handleForm}
-            value={form.date}  
+            inputProps={{
+                type: 'url'
+            }}
         />
+        {document.editing.template === 'Allogene' &&
+            <TextField
+                name='date'
+                type='date'
+                size='small'
+                onChange={handleForm}
+                value={form.date}  
+            />
+        }
         <Button sx={{mx:2}} variant='contained' onClick={saveForm}>Save</Button>
     </Box>
   )

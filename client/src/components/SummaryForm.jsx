@@ -22,7 +22,7 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummari
         const { name, value } = e.target;
         setForm(prev => {
             const newForm = {...prev}
-            newForm[name] = value;
+            newForm[name] = value.trim();
             if(name === 'date'){ 
                 let date = value.split('-')
                 date.push(date.shift())
@@ -38,14 +38,26 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummari
         })
     }
     const saveForm = async () => {
-        //Check if any form values are empty
-        if(Object.values(form).some(value => !value)){
-            //Note: Im using the alert state variable as a trigger for the use effect to clear the alert after a few seconds, there it probably a better way to go about this, but this will do for now.
-            setAlert(prev => !prev)
-            setMessage({success: '', error: 'Please fill out each feild in the form' })
-            return
+        if (document.editing.template === 'Allogene') {
+            //Check if any form values are empty
+            if(Object.values(form).some(value => !value)){
+                //Note: Im using the alert state variable as a trigger for the use effect to clear the alert after a few seconds, there it probably a better way to go about this, but this will do for now.
+                setAlert(prev => !prev)
+                setMessage({success: '', error: 'Please fill out each feild in the form' })
+                return
+            }
+        
+        } else if (document.editing.template === 'Notes') {
+            if(!form.description.length || !form.title.length) {
+                setAlert(prev => !prev)
+                setMessage({success: '', error: 'Please enter a description and title.' })
+                return
+
+            }
+
+        }
         //Check that link adheres to 'https://' format
-        } else if (!isValidHttpUrl(form.link)) {
+        if (form.link && !isValidHttpUrl(form.link)) {
             setAlert(prev => !prev)
             setMessage({success: '', error: 'Please enter your link in "https://" format' })
             return
@@ -122,17 +134,6 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummari
             onChange={handleForm}
         />
         <TextField
-            name='link'
-            label='Link'
-            size='small'
-            value={form.link}
-            onChange={handleForm}
-            fullWidth
-            inputProps={{
-                type: 'url'
-            }}
-        />
-        <TextField
             name='description'
             label='Description'
             value={form.description}
@@ -140,22 +141,36 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setChangeInSummari
             multiline
             fullWidth
         />
-        <TextField
-            name='source'
-            label='Source'
-            size='small'
-            sx={{mr:2}}
-            value={form.source}
-            onChange={handleForm} 
-        />
-        <TextField
-            name='date'
-            type='date'
-            size='small'
-            onChange={handleForm}
-            value={form.date}  
-        />
-        <Button sx={{mx:2}} variant='contained' onClick={saveForm}>Save</Button>
+        { document.editing.template === 'Allogene' && 
+            <><TextField
+                name='source'
+                label='Source'
+                size='small'
+                sx={{mr:2}}
+                value={form.source}
+                onChange={handleForm} 
+            />
+            <TextField
+                name='link'
+                label='Link'
+                size='small'
+                value={form.link}
+                sx={{mr:2}}
+                onChange={handleForm}
+                inputProps={{
+                    type: 'url'
+                }}
+            />
+            <TextField
+                name='date'
+                type='date'
+                size='small'
+                sx={{mr:2}}
+                onChange={handleForm}
+                value={form.date}  
+            /></>
+        }
+        <Button sx={{ml:'auto'}} variant='contained' onClick={saveForm}>Save</Button>
     </Box>
   )
 }
