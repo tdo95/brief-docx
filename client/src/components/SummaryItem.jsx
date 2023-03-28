@@ -24,9 +24,9 @@ const SummaryItem = ({summaryData, setRefreshDocumentocument, lastEnteredDate, s
       const res = await document.deleteSummary(summaryData._id);
       if (res.success) {
         setRefreshDocumentocument(prev => !prev)
-        return ({success: 'Success! Summary has been removed'})
+        return ({success: 'Success! Item has been removed'})
       }
-      else return ({error: 'Opps! An error occured while trying to delete this summary. Please try again later.'})
+      else return ({error: 'Opps! An error occured while trying to delete this item. Please try again later.'})
     }
     const triggerModal = () => {
       //close more options menu

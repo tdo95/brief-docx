@@ -83,7 +83,7 @@ module.exports = {
             const now = Date.now()
             await Document.findOneAndUpdate({ _id: req.params.docId }, {lastEdited: now});
 
-            res.send({success: 'Summary has been removed'})
+            res.send({success: 'Success! Item has been removed'})
         } catch (err) {
             console.log(err)
             res.send({error: `${err}`})
@@ -99,7 +99,7 @@ module.exports = {
             const now = Date.now()
             await Document.findOneAndUpdate({ _id: req.params.docId }, {lastEdited: now});
 
-            res.send({success: 'Success! Similar story has been added.'})
+            res.send({success: 'Success! Item has been added.'})
 
         } catch (err) {
             console.log(err) 
@@ -117,7 +117,7 @@ module.exports = {
             const now = Date.now()
             await Document.findOneAndUpdate({ _id: req.params.docId }, {lastEdited: now});
             
-            res.send({success: 'Success! Similar story has been updated.'})
+            res.send({success: 'Success! Item has been updated.'})
 
         } catch (err) {
             console.log(err) 
@@ -135,7 +135,7 @@ module.exports = {
             const now = Date.now()
             await Document.findOneAndUpdate({ _id: req.params.docId }, {lastEdited: now});
             
-            res.send({success: 'Success! Similar story has been deleted.'})
+            res.send({success: 'Success! Item has been deleted.'})
 
         } catch (err) {
             console.log(err) 
