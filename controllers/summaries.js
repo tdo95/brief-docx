@@ -5,6 +5,9 @@ module.exports = {
     createSummary: async (req, res) => {
         const {title, description, source, date, docId, link, section} = req.body;
         try {
+            //check for summary with 
+            const duplicate = await Summary.findOne({link: link});
+            console.log(duplicate)
             const sum = await Summary.create({ 
                 title, 
                 description, 
@@ -18,8 +21,17 @@ module.exports = {
             const now = Date.now()
             const document = await Document.findOneAndUpdate({ _id: docId }, {lastEdited: now});
 
-            console.log(`summary created`)
-            res.send({summary: sum})
+            if (duplicate) {
+                res.send({warning:{ 
+                    document: duplicate.title, 
+                    date: duplicate.createdAt.toLocaleString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    })
+                }})
+            }
+            else res.send({summary: sum})
         } catch (err) {
             console.log(err);
             res.send({error: `Error creating summary: ${err}`})
