@@ -62,7 +62,7 @@ const EditDocument = () => {
         setNumPages(numPages);
       }
     const serverGen = async () => {
-        const res = await fetch(`/document/generate/allogene/${document.editing._id}/pdf`)
+        const res = await fetch(`/document/generate/${document.editing.template}/${document.editing._id}/pdf`)
         const data = await res.blob()
         const reader = new FileReader()
         reader.readAsDataURL(data)
@@ -75,7 +75,7 @@ const EditDocument = () => {
     }
     const downloadDocument = async () => {
       try {
-        const res = await fetch(`/document/generate/allogene/${document.editing._id}/word`)
+        const res = await fetch(`/document/generate/${document.editing.template}/${document.editing._id}/word`)
         const data = await res.blob()
         saveAs(data, documentForm.documentTitle + '.docx')
         return {success: 'Success! Document downloaded.'}
@@ -117,6 +117,7 @@ const EditDocument = () => {
           documentForm={documentForm}
           setDocumentForm={setDocumentForm}
           updateDoc={updateDoc}
+          setChangeInSummaries={setChangeInSummaries}
         />
         <Button 
           sx={{ml:'auto'}} 
