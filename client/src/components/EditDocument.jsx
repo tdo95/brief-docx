@@ -1,7 +1,7 @@
 import { React, useCallback, useState, useEffect } from 'react'
 import { useOutletContext } from "react-router-dom";
 import { Alert, Button, Stack } from '@mui/material'
-import { useBlocker } from './hooks/prompt.blocker'
+import { useBlocker } from '../hooks/prompt.blocker'
 import { useDocument } from '../context/document'
 import { saveAs } from 'file-saver'
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack5';

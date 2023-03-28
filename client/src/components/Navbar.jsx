@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react'
 import { NavLink, useLocation, Link } from 'react-router-dom'
-import { useAuth } from './context/auth'
+import { useAuth } from '../context/auth'
 import { AppBar, Typography, Toolbar, Box, IconButton, Menu, MenuItem, Button } from '@mui/material'
 import DescriptionIcon from '@mui/icons-material/Description'
 import MenuIcon from '@mui/icons-material/Menu'
