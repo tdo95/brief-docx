@@ -25,7 +25,7 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
         const { name, value } = e.target;
         setForm(prev => {
             const newForm = {...prev}
-            newForm[name] = value.trim();
+            newForm[name] = value;
             if(name === 'date'){ 
                 let date = value.split('-')
                 date.push(date.shift())
