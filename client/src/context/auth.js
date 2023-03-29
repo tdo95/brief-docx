@@ -7,9 +7,9 @@ const AuthContext = createContext(null)
 export const AuthProvider = ({ children }) => {
     //this will retrieve user data from the server if there is active session
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
-    console.log("user is", user)
+    
     async function getUser() {
-        console.log('getting user')
+        
         const res = await fetch('/auth/login');
         const data = await res.json()
         if (data.user) {
@@ -20,12 +20,12 @@ export const AuthProvider = ({ children }) => {
             setUser(null)
             localStorage.setItem('user', null)
         }
-        console.log(data)
+        
         
     }
     
     async function login(email, password) {
-        console.log('login function working', email, password)
+        
         //TODO: make an api call to login user
         const res = await fetch('/auth/login', {
             method: 'POST',
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
             })
         })
         const data = await res.json()
-        console.log(data)
+        
         if (data.errors) return data;
         else if (data.success){ 
             //set user object in local storage
@@ -50,20 +50,15 @@ export const AuthProvider = ({ children }) => {
     }
     async function logout() {
         //make api call to log out user
-        console.log('Logging out user')
         const res = await fetch('/auth/logout');
         const data = await res.json();
 
         //set state and local storage for user data to null
         setUser(null)
         localStorage.setItem('user', null)
-
-        console.log(data)
     }
     async function signup({ _name: name, _email: email, _password: password, _passwordConfirm: passwordConfirm}) {
-        //TODO: make api call to signup user
-        console.log('signup function working', email, password, name, passwordConfirm)
-
+        //make api call to signup user
         const res = await fetch('/auth/signup', {
             method: 'POST',
             headers: {
@@ -77,7 +72,7 @@ export const AuthProvider = ({ children }) => {
             })
         })
         const data = await res.json()
-        console.log(data)
+        
         if (data.errors) return data;
         else if (data.success){ 
             //set user object in local storage

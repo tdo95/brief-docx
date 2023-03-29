@@ -24,13 +24,12 @@ const EditDocument = () => {
     const getSummaries = async () => {
       //fetch summaries for document from the database
       const results = await document.getDocumentSummaries(document.editing._id)
-      console.log(results, 'Error:', (!!results.error))
+      
       if (results.error) setError('Looks like there was an issue retriving your document summaries. Please exit the editor and try again later.')
       else setSummaries(results);
   
     }
     const updateDoc = async (info) => {
-      console.log('updating document', info)
       const res = await document.updateDocument(info);
       if (res.error) setError('Oops! Looks like we couldn\'t save your changes. Please try again later.')
 
@@ -68,9 +67,7 @@ const EditDocument = () => {
       setOpenModal(true)
     }
     useEffect(() => {
-      console.log('gettting summaries')
       getSummaries()
-      console.log('generating document')
       serverGen()
     }, [refreshDocument])
 

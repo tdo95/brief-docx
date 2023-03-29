@@ -42,7 +42,7 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setRefreshDocument
         const parenReg = /(\(.*?\))/gi;
         //replace spaces
         const spaceReg = /  +/g;
-        console.log('cleaning text')
+        
         //remove parenthesis inside of text
         setForm(prev => ({
             ...prev,
@@ -137,7 +137,6 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setRefreshDocument
         }
     }
     useEffect(() => {
-        console.log('Form Alert Timer going boi')
         const timer = setTimeout(() => {
             //Reset error
             setMessage({type: '', message: ''})

@@ -23,7 +23,7 @@ const Auth = ({ login }) => {
     })
     //cleanup inputs on location change 
     useEffect(() => {
-        console.log('cleaning up inputs')
+        
         setAuthForm({
             _name: '',
             _password: '',
@@ -45,7 +45,6 @@ const Auth = ({ login }) => {
     //TODO: Refractor login and signup into one function
     const submitForm = (event) => {
         event.preventDefault()
-        console.log('Submitting form! (:')
         
         if (login) 
             loginUser()
@@ -54,7 +53,7 @@ const Auth = ({ login }) => {
     }
     const loginUser = async () => {
         const res = await auth.login(authForm['_email'], authForm['_password']);
-        console.log('auth component res', res)
+        
         if (res?.errors) {
             if (typeof res.errors === 'object') setError(() => ({
             email: '',
@@ -69,7 +68,7 @@ const Auth = ({ login }) => {
     }
     const signupUser = async () => {
         const res = await auth.signup(authForm)
-        console.log(res)
+        
             if (res?.errors){
                 if (typeof res.errors === 'object') 
                     setError(prev => ({

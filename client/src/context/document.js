@@ -70,7 +70,7 @@ export const DocumentProvider = ({ children }) => {
 
         })
         const data = await res.json()
-        console.log(data)
+        
         return data;
     }
 
@@ -78,7 +78,7 @@ export const DocumentProvider = ({ children }) => {
         
         const res = await fetch(`/summaries/${docId}`);
         const data = await res.json()
-        console.log("api context get summaries:", data)
+        
         return data;
         
     }
@@ -92,7 +92,7 @@ export const DocumentProvider = ({ children }) => {
             body: JSON.stringify({...formData, summaryId: summaryId, docId: editing._id}),
         })
         const data = await res.json()
-        console.log("api context update summary:", data)
+        
         return data;
     }
 
@@ -168,7 +168,7 @@ export const DocumentProvider = ({ children }) => {
             }),
         })
         const data = await res.json()
-        console.log("api context update summary:", data)
+        
         return data;
     }
 

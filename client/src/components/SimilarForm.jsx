@@ -68,11 +68,9 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
         let res;
         if (creatingSimilar) {
             res = await document.addSimilar(...options)
-            console.log(res)
         } else {
             options.push(similarData._id)
             res = await document.updateSimilar(...options)
-            console.log(res)
         }
         if (res.success) {
             showFeedback(res.success)
@@ -84,7 +82,6 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
         
     }
     useEffect(() => {
-        console.log('Similar Form Alert Timer going boi')
         const timer = setTimeout(() => {
             //Reset error
             setMessage({error: '', success: ''})

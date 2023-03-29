@@ -54,7 +54,6 @@ const ModalWindow = ({ executionFunction, content, open, setOpen, purpose, alert
     
     const processFunction = async () => {
         const res = await executionFunction()
-        console.log(res)
         if (res.success) setAlert({type:'success', message: res.success})
         else if (res.error) setAlert({type:'error', message: res.error}) 
     }
@@ -81,7 +80,7 @@ const ModalWindow = ({ executionFunction, content, open, setOpen, purpose, alert
                 To work around this I am using a component to overlay over the document component until the final pdf source has been processed and rendering is complete */}
                 <Box sx={{position: 'relative', height: '450px', width: '400px'}}>
                     {loading && <Box sx={{position: 'absolute', zIndex: 5, width: '100%', backgroundColor: 'blue', height: '100%' }}>Loading..</Box>}
-                    {<Document file={pdf} onLoadError={(error) => console.log(error,'pdf at the time:', pdf)} onLoadSuccess={onDocumentLoadSuccess}>
+                    {<Document file={pdf} onLoadError={(error) => console.log('Error loading pdf:',error)} onLoadSuccess={onDocumentLoadSuccess}>
                         {Array.from(new Array(numPages), (el, index) => (
                             <Page key={`page_${index + 1}`} pageNumber={index + 1} height={400} />
                         ))}

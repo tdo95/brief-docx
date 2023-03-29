@@ -7,7 +7,7 @@ import DocumentCard from '../components/DocumentCard'
 
 const Dashboard = () => {
     const [documentCards, setDocumentCards] = useState([])
-    console.log(documentCards)
+    
     const [refresh, setRefresh] = useState(false)
     const auth = useAuth();
     const document = useDocument();

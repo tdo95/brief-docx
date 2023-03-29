@@ -30,7 +30,6 @@ const SectionEditor = ({setRefreshDocumentocument, summaries}) => {
   useEffect(() => {
     const newSections = formatSections()
     setSections(newSections)
-    console.log('SECTIONS',sections)
   }, [summaries])
   const handleForm = (e) => {
     const { name, value } = e.target

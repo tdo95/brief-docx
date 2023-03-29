@@ -12,7 +12,7 @@ const TitleEditor = ({updateDoc,  setRefreshDocumentocument}) => {
   });
   const handleForm = (e) => {
     const { value, name } = e.target;
-    console.log(value)
+
     setDocumentForm(prev => {
       const updateForm = {...prev};
       updateForm[name] = value;
@@ -23,7 +23,7 @@ const TitleEditor = ({updateDoc,  setRefreshDocumentocument}) => {
     })
   }
   const saveInput = () => {
-    console.log('User has clicked away!')
+    
     //Set placeholder if input is empty
     if(!documentForm.documentTitle) {
       setDocumentForm(prev => ({

@@ -18,7 +18,7 @@ const SimilarItem = ({ summaryId, similarData = {}, lastEnteredDate, setRefreshD
     const deleteSimilar = async () => {
       //delete summary
       const res = await document.deleteSimilar(similarData._id, summaryId);
-      console.log(res)
+
       if (res.success) {
         setRefreshDocumentocument(prev => !prev)
         return ({success: 'Success! Item has been removed'})
@@ -35,7 +35,7 @@ const SimilarItem = ({ summaryId, similarData = {}, lastEnteredDate, setRefreshD
       setPurpose('summaryDelete')
       setOpenModal(true)
     }
-    console.log('SIMILAR:',similarData)
+    
   return (
     <Box sx={{opacity: '.5'}}>
         <Stack sx={{alignItems: 'center', flexDirection:'row'}}>

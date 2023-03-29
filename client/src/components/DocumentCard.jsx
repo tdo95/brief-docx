@@ -21,13 +21,11 @@ const DocumentCard = ({ info, setRefresh }) => {
       return info._id
     } 
     else if (action === 'editDoc') {
-      console.log('navigating to edit menu!')
       document.setEditing(info)
       setOpenModal(false)
       navigate('/create')
     } 
     else if (action === 'deleteDoc') {
-      console.log('deleting doc!')
       const res = document.deleteDocument(info._id)
       if (res.error) setModalAlert({type:'error', message:'Oops! An error occured while trying to delete this document. Please try again later.'})
       else {
