@@ -4,7 +4,7 @@ const User = require("../models/User");
 
 exports.getLogin = (req, res) => {
   if (req.user) {
-    return res.send({user: {email: req.user.email, name: req.user.name, _id: req.user._id }});
+    return res.send({user: {email: req.user.email, name: req.user.name, _id: req.user._id, admin:req.user.admin }});
   }
   else res.send({user: null})
 };
@@ -34,7 +34,7 @@ exports.postLogin = (req, res, next) => {
       if (err) {
         return next(err);
       }
-      res.send( { success: "Success! You are logged in.", user: {email: user.email, name: user.name} });
+      res.send( { success: "Success! You are logged in.", user: {email: user.email, name: user.name, admin: user.admin} });
     });
   })(req, res, next);
 };
@@ -94,7 +94,7 @@ exports.postSignup = (req, res, next) => {
         return next(err);
       }
       if (existingUser) {
-        return res.send({errors: "The user already exists"});
+        return res.status(400).send({errors: "The user already exists"});
       }
       user.save((err) => {
         if (err) {
@@ -105,7 +105,7 @@ exports.postSignup = (req, res, next) => {
             return next(err);
           }
 
-          res.send({success: "User registered and logged in", user: {email: user.email, name: user.name}});
+          res.send({success: "User registered and logged in", user: {email: user.email, name: user.name, admin: user.admin}});
         });
       });
     }
