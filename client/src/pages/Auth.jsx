@@ -1,11 +1,13 @@
 import { React, useState, useEffect } from 'react'
-import { Navigate, redirect, useLocation } from 'react-router-dom';
-import { Container, Box, Typography, TextField, Button } from '@mui/material'
+import { Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { Container, Box, Typography, TextField, Button, Alert } from '@mui/material'
 import { useAuth } from '../context/auth';
 
 const Auth = ({ login }) => {
     const auth = useAuth()
     const location = useLocation()
+    const navigate = useNavigate()
+    const [problem, setProblem] = useState('')
     //Each property has an underscore in order to avoid browser detection of input feild and autofilling values
     const [authForm, setAuthForm] = useState({
         _name: '',
@@ -34,6 +36,7 @@ const Auth = ({ login }) => {
             password: '',
             passwordConfirm: ''
         })
+        setProblem('')
     }, [location])
     const handleFormInput = (event) => setAuthForm(prev => ({
         ...prev,
@@ -52,27 +55,34 @@ const Auth = ({ login }) => {
     const loginUser = async () => {
         const res = await auth.login(authForm['_email'], authForm['_password']);
         console.log('auth component res', res)
-        if (res?.errors) setError(() => ({
+        if (res?.errors) {
+            if (typeof res.errors === 'object') setError(() => ({
             email: '',
             password: '',
             ...res.errors
-        }))
+            }))
+            else setProblem(res.errors)
+        }
         //if no errors, redirect to dashboard
-        else if (res.success) redirect('/')
+        else if (res.success) navigate('/')
 
     }
     const signupUser = async () => {
         const res = await auth.signup(authForm)
         console.log(res)
-        if (res?.errors) setError(prev => ({
-            name: '',
-            email: '',
-            password: '',
-            passwordConfirm: '',
-            ...res.errors
-        }))
+            if (res?.errors){
+                if (typeof res.errors === 'object') 
+                    setError(prev => ({
+                        name: '',
+                        email: '',
+                        password: '',
+                        passwordConfirm: '',
+                        ...res.errors
+                    }))
+                else setProblem(res.errors)
+            }
         //if no errors, redirect to dashboard
-        else if (res.success) return redirect('/')
+        else if (res.success) return navigate('/')
     }
     
     //Redirects from login page to dashbaord if user is logged in
@@ -83,6 +93,7 @@ const Auth = ({ login }) => {
     return (
     <Container sx={{pt:3, display: 'flex', flexDirection:'column', alignItems:'center'}}>
         <Typography sx={{textAlign: 'center'}} variant='h3'>{login ? 'Login' : 'Sign Up' }</Typography>
+        {problem && <Alert severity='error'>{problem}</Alert> }
         { login ? <Box autoComplete='off' component='form' sx={{display: 'flex', flexDirection:'column', alignItems:'center', p: 2, '& > *.MuiFormControl-root': {m:'10px', width: '25ch'}}}>
             <TextField 
                required
