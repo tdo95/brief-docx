@@ -32,15 +32,14 @@ const EditDocument = () => {
     const updateDoc = async (info) => {
       console.log('updating document', info)
       const res = await document.updateDocument(info);
-      const data = await res.json()
-      if (data.error) setError('Oops! Looks like we couldn\'t save your changes. Please try again later.')
+      if (res.error) setError('Oops! Looks like we couldn\'t save your changes. Please try again later.')
 
     }
     function onDocumentLoadSuccess({ numPages }) {
         setNumPages(numPages);
       }
     const serverGen = async () => {
-        const res = await fetch(`/document/generate/${document.editing.template}/${document.editing._id}/pdf`)
+        const res = await fetch(`/document/generate/pdf/${document.editing._id}`)
         const data = await res.blob()
         const reader = new FileReader()
         reader.readAsDataURL(data)
@@ -53,9 +52,9 @@ const EditDocument = () => {
     }
     const downloadDocument = async () => {
       try {
-        const res = await fetch(`/document/generate/${document.editing.template}/${document.editing._id}/word`)
+        const res = await fetch(`/document/generate/word/${document.editing._id}`)
         const data = await res.blob()
-        saveAs(data, documentForm.documentTitle + '.docx')
+        saveAs(data, document.editing.title + '.docx')
         return {success: 'Success! Document downloaded.'}
       } catch (err) {
         return {error: 'Opps! An error occured while trying to download this document. Please try again later.'}        

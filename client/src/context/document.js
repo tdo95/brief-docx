@@ -55,7 +55,10 @@ export const DocumentProvider = ({ children }) => {
             body: JSON.stringify(info),
         })
         const data = await res.json();
+        
         if (data.error) return data;
+        else setEditing(data.document)
+        return data
     }
     async function addSummary(formData) {
         const res = await fetch(`/summaries/new`, {

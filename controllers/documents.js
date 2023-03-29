@@ -20,8 +20,9 @@ module.exports = {
       const { docId } = req.params;
       const now = Date.now()
       const update = {...req.body, lastEdited: now}
-      const document = await Document.findOneAndUpdate({ _id: docId }, update);
-      res.end()
+      const document = await Document.findOneAndUpdate({ _id: docId }, update).lean();
+      console.log({...document, ...update})
+      res.send({document:{...document, ...update}})
       
     } catch (err) {
       console.log(err);
@@ -72,14 +73,16 @@ module.exports = {
     else res.send({error: `${templateName} template doesnt exist`})
   },
   generateDocument: async (req, res) => {
-    const { template, docType, docId } = req.params
+    const {docType, docId } = req.params
     const acceptedTemplates = ['allogene', 'notes']
-    if (!acceptedTemplates.includes(template.toLowerCase())) res.send({error: `${templateName} template doesnt exist`})
     
       try {
         //get document info from database
         const docInfo = await Document.findById({_id: docId})
         
+        const template = docInfo.template.toLowerCase()
+        if (!acceptedTemplates.includes(template.toLowerCase())) res.send({error: `${templateName} template doesnt exist`})
+
         //get all summaries associated with the document sorted by date
         const summaries = await Summary.find({docId: req.params.docId}).sort({date: "desc"})
         
