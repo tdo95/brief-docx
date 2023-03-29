@@ -15,7 +15,7 @@ const ModalWindow = ({ executionFunction, content, open, setOpen, purpose, alert
     }
     const getPdf = async () => {
         console.log('getting pdf')
-        const res = await fetch(`/document/generate/allogene/${pdfId}/pdf`)
+        const res = await fetch(`/document/generate/pdf/${pdfId}`)
         const data = await res.blob()
         console.log(data)
         const reader = new FileReader()
