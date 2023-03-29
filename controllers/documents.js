@@ -44,7 +44,7 @@ module.exports = {
     const now = new Date();
     let doc;
     let title = 'Untitled';
-    if (template === 'Allogene') {
+    if (template === 'work') {
       title = `Allogene Daily Media Monitoring - ${now.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}`
     }
     try {
@@ -63,7 +63,7 @@ module.exports = {
   },
   getTemplate: async (req, res) => {
     const templateName = req.params.name.toLowerCase()
-    if (templateName === 'allogene') {
+    if (templateName === 'work') {
       const filePath = path.join(__dirname, '../templates/allo-test.docx')
       res.sendFile(filePath, {}, (error) => {
         if (error) next(error)
@@ -74,7 +74,7 @@ module.exports = {
   },
   generateDocument: async (req, res) => {
     const {docType, docId } = req.params
-    const acceptedTemplates = ['allogene', 'notes']
+    const acceptedTemplates = ['work', 'notes']
     
       try {
         //get document info from database

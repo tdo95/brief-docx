@@ -14,7 +14,7 @@ module.exports = {
 
       console.log(docData, templateName)
       let template
-      if (templateName === 'allogene') template = work;
+      if (templateName === 'work') template = work;
       if (templateName === 'notes') template = notes;
       try {
         const buffer = await createReport({

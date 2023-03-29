@@ -51,7 +51,7 @@ const SimilarItem = ({ summaryId, similarData = {}, lastEnteredDate, setRefreshD
               <MenuItem sx={{
                 color: 'dimgray',
                 fontWeight: 'medium'
-              }} onClick={() => {setAnchorElNav(null); setCreatingSimilar(false); setEditingSimilar(true)}}>{document.editing.template === 'Allogene' ? 'Edit Similar Story' : 'Edit Reference'}</MenuItem>
+              }} onClick={() => {setAnchorElNav(null); setCreatingSimilar(false); setEditingSimilar(true)}}>{document.editing.template === 'work' ? 'Edit Similar Story' : 'Edit Reference'}</MenuItem>
               <MenuItem sx={{color:'red', fontWeight: 'medium', opacity: '.6'}} onClick={triggerModal}>Delete</MenuItem>
             </Menu>
         </Stack>

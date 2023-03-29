@@ -14,7 +14,7 @@ const SectionPage = ({sectionName, summaries, setRefreshDocumentocument, section
           variant='contained' 
           onClick={() => setToggleForm(prev => !prev)}
         >       
-          {toggleForm ? 'X' : document.editing.template === 'Allogene' ? 'Add Summary' : 'Add Note'}
+          {toggleForm ? 'X' : document.editing.template === 'work' ? 'Add Summary' : 'Add Note'}
         </Button>
         { toggleForm && 
           <Form 

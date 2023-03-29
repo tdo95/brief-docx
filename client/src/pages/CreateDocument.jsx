@@ -47,7 +47,7 @@ const CreateDocument = () => {
                 <MenuItem disabled value="">
                     <em>Choose a Template</em>
                 </MenuItem>
-                {auth.user.admin && <MenuItem value={'Allogene'}>Allogene</MenuItem>}
+                {auth.user.admin && <MenuItem value={'work'}>Allogene</MenuItem>}
                 <MenuItem value={'Notes'}>Notes</MenuItem>
             </Select>
             <FormHelperText>{error}</FormHelperText>

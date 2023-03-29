@@ -73,7 +73,7 @@ const SummaryItem = ({summaryData, setRefreshDocumentocument, lastEnteredDate, s
               <MenuItem sx={{
                 color: '#066fd5',
                 fontWeight: 'medium', opacity: '.8'
-              }} onClick={openSimilarForm}>{document.editing.template === 'Allogene' ? 'Add Similar Story' : 'Add Reference'}</MenuItem>
+              }} onClick={openSimilarForm}>{document.editing.template === 'work' ? 'Add Similar Story' : 'Add Reference'}</MenuItem>
               <MenuItem sx={{color:'red', fontWeight: 'medium', opacity: '.6'}} onClick={triggerModal}>Delete Summary</MenuItem>
               <MenuItem sx={{'&:hover': {backgroundColor: 'transparent'}}}>
                 <Dropdown items={sectionsList} labelName='Change Sections' labelId='change-section' onClickFunction={changeSection}/>
@@ -82,7 +82,7 @@ const SummaryItem = ({summaryData, setRefreshDocumentocument, lastEnteredDate, s
         </Stack>
         {editingSummary && <Form summaryData={summaryData} editingSummary={true} setRefreshDocumentocument={setRefreshDocumentocument} />}
         {/* Rendering similar stories here */}
-        {!!summaryData.similarStories.length && <Typography>{document.editing.template === 'Allogene' ? 'Similar:' : 'References:'}</Typography>}
+        {!!summaryData.similarStories.length && <Typography>{document.editing.template === 'work' ? 'Similar:' : 'References:'}</Typography>}
         <Stack sx={{ml: '40px'}}>
           {summaryData.similarStories.map(story => <SimilarItem key={story._id} similarData={story} lastEnteredDate={lastEnteredDate} setRefreshDocumentocument={setRefreshDocumentocument} setCreatingSimilar={setCreatingSimilar} summaryId={summaryData._id} />)}
         </Stack>

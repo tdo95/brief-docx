@@ -8,7 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 const SectionEditor = ({setRefreshDocumentocument, summaries}) => {
   const document = useDocument();
   const formatSections = () => {
-    const list = document.editing.template.toLowerCase() === 'allogene' ? ['corp', 'competitor', 'industry', 'opinion'] : sections.list;
+    const list = document.editing.template.toLowerCase() === 'work' ? ['corp', 'competitor', 'industry', 'opinion'] : sections.list;
     
     return summaries.reduce((section, summary) => {
       if (!section.list.includes(summary.section)) section.list.push(summary.section);
@@ -69,7 +69,7 @@ const SectionEditor = ({setRefreshDocumentocument, summaries}) => {
   return (
     <Box>
       {
-        document.editing.template.toLowerCase() !== 'allogene' && 
+        document.editing.template.toLowerCase() !== 'work' && 
           <Box>
             { !sections.list?.length && <Typography>Looks like you dont have any note sections yet. Add one below!</Typography>}
             <Box sx={{display:'flex', gap: '10px', alignItems:'start'}}>

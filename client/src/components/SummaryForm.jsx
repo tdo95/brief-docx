@@ -55,7 +55,7 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setRefreshDocument
         setMessage({type: type, message: message })
     }
     const saveForm = async () => {
-        if (document.editing.template === 'Allogene') {
+        if (document.editing.template === 'work') {
             //Check if any form values are empty
             if(Object.values(form).some(value => !value)){
                 //Note: Im using the alert state variable as a trigger for the use effect to clear the alert after a few seconds, there it probably a better way to go about this, but this will do for now.
@@ -166,7 +166,7 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setRefreshDocument
                 spellcheck: true
             }}
         />
-        { document.editing.template === 'Allogene' && 
+        { document.editing.template === 'work' && 
             <><TextField
                 name='source'
                 label='Source'
@@ -195,7 +195,7 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setRefreshDocument
                 value={form.date}  
             /></>
         }
-        {document.editing.template === 'Allogene' &&  <Button sx={{mr:2}} variant='outlined' onClick={cleanText}>Clean Text</Button>}
+        {document.editing.template === 'work' &&  <Button sx={{mr:2}} variant='outlined' onClick={cleanText}>Clean Text</Button>}
         <Button sx={{ml:'auto'}} variant='contained' onClick={saveForm}>Save</Button>
     </Box>
   )

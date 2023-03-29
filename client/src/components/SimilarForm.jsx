@@ -42,7 +42,7 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
     }
     const saveForm = async () => {
         
-        if (document.editing.template === 'Allogene') {
+        if (document.editing.template === 'work') {
             //Check if any form values are empty
             if(Object.values(form).some(value => !value))
                 return showFeedback('', 'Please fill out each feild in the form')  
@@ -95,7 +95,7 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
   return (
     <Box sx={{ml: '40px', my:2}}>
         {!similarData.link && <Stack sx={{flexDirection: 'row', mb:'0',alignItems:'center'}}>
-             <Typography variant='h6'>{document.editing.template === 'Allogene' ? 'Add Similar Story' : 'Add Reference'}</Typography>
+             <Typography variant='h6'>{document.editing.template === 'work' ? 'Add Similar Story' : 'Add Reference'}</Typography>
             <IconButton sx={{ml: 'auto'}}aria-label='close similar form' onClick={() => setCreatingSimilar(false)}>
                     <CloseIcon />
             </IconButton>
@@ -103,7 +103,7 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
 
         {(message.error || message.success) && <Alert sx={{mb: '20px'}} severity={message.error ? 'error' : 'success'}>{message.error ? message.error : message.success}</Alert> }
         
-        { document.editing.template === 'Allogene' &&
+        { document.editing.template === 'work' &&
             <TextField
                 name='title'
                 label='Title'
@@ -132,7 +132,7 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
                 type: 'url'
             }}
         />
-        {document.editing.template === 'Allogene' &&
+        {document.editing.template === 'work' &&
             <TextField
                 name='date'
                 type='date'
