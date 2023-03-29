@@ -2,11 +2,13 @@ import { React, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Container, Typography, FormControl, InputLabel, Select, MenuItem, Button, FormHelperText } from '@mui/material'
 import { useDocument } from '../context/document'
+import { useAuth } from '../context/auth'
 
 const CreateDocument = () => {
     const [template, setTemplate] = useState('')
     const [error, setError] = useState('')
     const document = useDocument()
+    const auth = useAuth()
     const navigate = useNavigate()
     
     const handleTemplateSelect = (event) => setTemplate(event.target.value)
@@ -45,7 +47,7 @@ const CreateDocument = () => {
                 <MenuItem disabled value="">
                     <em>Choose a Template</em>
                 </MenuItem>
-                <MenuItem value={'Allogene'}>Allogene</MenuItem>
+                {auth.user.admin && <MenuItem value={'Allogene'}>Allogene</MenuItem>}
                 <MenuItem value={'Notes'}>Notes</MenuItem>
             </Select>
             <FormHelperText>{error}</FormHelperText>
