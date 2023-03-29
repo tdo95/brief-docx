@@ -11,7 +11,6 @@ const DocumentCard = ({ info, setRefresh }) => {
   const [isHover, setIsHover] = useState(false)
   const [setModalFunction, setModalContent, setOpenModal, setPurpose, setModalAlert, setModalPdfId] = useOutletContext()
   const openMenu = () => {
-    console.log(info)
     setModalPdfId(info._id)
     setModalFunction(() => performModalActions)
     setPurpose('dashboardDocDisplay')
