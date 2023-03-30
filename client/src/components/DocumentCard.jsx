@@ -53,7 +53,7 @@ const DocumentCard = ({ info, setRefresh }) => {
       >
           { isHover ? <VisibilityIcon sx={{fontSize: '40px'}}/> : <ArticleIcon />}
       </Card>
-      <Typography  variant='caption' sx={{width:120, textAlign: 'center'}}>
+      <Typography  variant='caption' sx={{width:120, textAlign: 'center', overflowX:'hidden'}}>
         {info.title.length > 60 ? info.title.slice(0,60) + '...' : info.title}
       </Typography>
     </Stack>
