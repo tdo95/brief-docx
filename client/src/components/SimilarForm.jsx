@@ -90,55 +90,58 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
     }, [alert])
 
   return (
-    <Box sx={{ml: '40px', my:2}}>
+    <Box sx={{ my:'5px'}}>
         {!similarData.link && <Stack sx={{flexDirection: 'row', mb:'0',alignItems:'center'}}>
              <Typography variant='h6'>{document.editing.template === 'work' ? 'Add Similar Story' : 'Add Reference'}</Typography>
             <IconButton sx={{ml: 'auto'}}aria-label='close similar form' onClick={() => setCreatingSimilar(false)}>
                     <CloseIcon />
             </IconButton>
         </Stack>}
-
-        {(message.error || message.success) && <Alert sx={{mb: '20px'}} severity={message.error ? 'error' : 'success'}>{message.error ? message.error : message.success}</Alert> }
         
-        { document.editing.template === 'work' &&
+        <Stack sx={{gap:'10px'}}>
+            { document.editing.template === 'work' &&
+                <TextField
+                    name='title'
+                    label='Title'
+                    size='small'
+                    fullWidth
+                    value={form.title}
+                    onChange={handleForm}
+                />
+            }
             <TextField
-                name='title'
-                label='Title'
+                name='source'
+                label='Source'
                 size='small'
+                sx={{mr:2}}
+                value={form.source}
+                onChange={handleForm}
                 fullWidth
-                value={form.title}
-                onChange={handleForm}
             />
-        }
-        <TextField
-            name='source'
-            label='Source'
-            size='small'
-            sx={{mr:2}}
-            value={form.source}
-            onChange={handleForm} 
-        />
-        <TextField
-            name='link'
-            label='Link'
-            size='small'
-            sx={{mr:2}}
-            value={form.link}
-            onChange={handleForm}
-            inputProps={{
-                type: 'url'
-            }}
-        />
-        {document.editing.template === 'work' &&
             <TextField
-                name='date'
-                type='date'
+                name='link'
+                label='Link'
                 size='small'
+                sx={{mr:2}}
+                value={form.link}
                 onChange={handleForm}
-                value={form.date}  
+                inputProps={{
+                    type: 'url'
+                }}
+                fullWidth
             />
-        }
-        <Button sx={{mx:2}} variant='contained' onClick={saveForm}>Save</Button>
+            {document.editing.template === 'work' &&
+                <TextField
+                    name='date'
+                    type='date'
+                    size='small'
+                    onChange={handleForm}
+                    value={form.date}
+                />
+            }
+            <Button sx={{ ml:'auto'}} variant='contained' onClick={saveForm}>Save</Button>
+            {(message.error || message.success) && <Alert sx={{my: '10px'}} severity={message.error ? 'error' : 'success'}>{message.error ? message.error : message.success}</Alert> }
+        </Stack>
     </Box>
   )
 }

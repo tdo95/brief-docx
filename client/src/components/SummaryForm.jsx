@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react'
-import { TextField, Box, Button, Alert } from '@mui/material'
+import { TextField, Stack, Button, Alert } from '@mui/material'
 import { useDocument } from '../context/document'
 import { isValidHttpUrl } from '../hooks/validateUrl'
 
@@ -145,8 +145,8 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setRefreshDocument
         return () => clearTimeout(timer);
     }, [alert])
   return (
-    <Box sx={{'& > *':{mb:'24px'}, my:2}}>
-        {(message.type) && <Alert severity={message.type}>{message.message}</Alert> }
+    <Stack sx={{ gap:'10px', my:2}}>
+        
         <TextField
             name='title'
             label='Title'
@@ -197,7 +197,8 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setRefreshDocument
         }
         {document.editing.template === 'work' &&  <Button sx={{mr:2}} variant='outlined' onClick={cleanText}>Clean Text</Button>}
         <Button sx={{ml:'auto'}} variant='contained' onClick={saveForm}>Save</Button>
-    </Box>
+        {(message.type) && <Alert sx={{mt: '10px'}} severity={message.type}>{message.message}</Alert> }
+    </Stack>
   )
 }
 
