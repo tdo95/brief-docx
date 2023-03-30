@@ -6,6 +6,8 @@ import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import Dropdown from './Dropdown';
 import { Oval } from 'react-loader-spinner'
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 const ModalWindow = ({ executionFunction, content, open, setOpen, purpose, alert, setAlert, pdfId}) => {
     const [pdf, setPdf] = useState(undefined);
@@ -23,6 +25,7 @@ const ModalWindow = ({ executionFunction, content, open, setOpen, purpose, alert
             setTimer(timeout)
         }
     }
+    const changePage = (offset) => setPageNumber(prev => prev + offset)
     const getPdf = async () => {
         const res = await fetch(`/document/generate/pdf/${pdfId}`)
         const data = await res.blob()
@@ -75,11 +78,11 @@ const ModalWindow = ({ executionFunction, content, open, setOpen, purpose, alert
                 <Button variant='contained' color='success' onClick={processFunction}>Download Document</Button>
             </>,
         dashboardDocDisplay:
-            <Box>
+            <Box sx={{py:'30px'}}>
                 {/* Note: Conditional rendering does not work with the document component.For some reason, even when conditional rendering prevents the component from being displayed, it will still process the pdf source file and attempt to initite an instance of a document. Those processes dont actually execute untill it is fully rendered on the screen, and we get 'Worker was destroyed' errors for the previous times it processed the source before it was ready, then properly renders the final source on the screen. 
                 
                 To work around this I am using a component to overlay over the document component until the final pdf source has been processed and rendering is complete */}
-                <Box sx={{position: 'relative', height: '450px', width: '400px'}}>
+                <Box sx={{position: 'relative', height: '480px', width: '400px', display: 'flex', alignItems:'center', flexDirection:'column', gap:'10px'}}>
                     {loading && <Box sx={{display: 'flex', justifyContent:'center', alignItems:'center', position: 'absolute', left:'-2px', zIndex: 5, width: '105%', backgroundColor: 'white', height: '100%' }}>
                                 <Oval
                                     height={80}
@@ -99,16 +102,17 @@ const ModalWindow = ({ executionFunction, content, open, setOpen, purpose, alert
                             onLoadError={(error) => console.log('Error loading pdf:',error)} 
                             onLoadSuccess={onDocumentLoadSuccess} 
                         >
-                        {Array.from(new Array(numPages), (el, index) => (
-                            <Page key={`page_${index + 1}`} pageNumber={index + 1} width={300} />
-                        ))}
+                        <Page key={`page_${pageNumber}`} pageNumber={pageNumber} width={300}/>
                     </Document>}
+                    <Box>
+                        <Button sx={{minWidth: '30px', mr: '5px'}} size='small' startIcon={<KeyboardArrowLeftIcon/>} variant={'outlined'} onClick={() => changePage(-1)} disabled={pageNumber <= 1 }></Button>
+                        <Button sx={{minWidth: '30px'}} endIcon={<KeyboardArrowRightIcon />} size='small' variant={'outlined'} onClick={() => changePage(1)} disabled={pageNumber >= numPages }></Button>
+                    </Box>
                 </Box>
                 <Box sx={{display: 'flex', width:'100%', justifyContent: 'center', gap:'30px'}}>
                 <Button variant="contained" onClick={async () => await executionFunction('editDoc')}>Edit Document</Button>
                 <Dropdown items={['yes', 'no']} labelName={'delete'} labelId={'doc-delete'} onClickFunction={handleDropdown} icon={<DeleteIcon/>} color={'red'} px={'3px'} />
-                </Box>
-                        
+                </Box>        
             </Box>
     }
     return (
