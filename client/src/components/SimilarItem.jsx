@@ -37,10 +37,10 @@ const SimilarItem = ({ summaryId, similarData = {}, lastEnteredDate, setRefreshD
     }
     
   return (
-    <Box sx={{opacity: '.5'}}>
-        <Stack sx={{alignItems: 'center', flexDirection:'row'}}>
-            <Typography variant='body2'>{similarData.title || similarData.link.source}</Typography>
-            <IconButton aria-label='more options' onClick={toggleFunctions}>
+    <Box sx={{ width:'100%'}}>
+        <Stack sx={{alignItems: 'center', flexDirection:'row', width:'100%'}}>
+            <Typography noWrap sx={{maxWidth:'100%', opacity: '.5',}} variant='body2'>{similarData.title || similarData.link.url}</Typography>
+            <IconButton sx={{opacity: '.5',}} aria-label='more options' onClick={toggleFunctions}>
                 {editingSimilar ? <CloseIcon /> : <MoreHorizIcon />}
             </IconButton>
             <Menu

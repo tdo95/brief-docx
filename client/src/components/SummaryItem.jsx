@@ -56,9 +56,9 @@ const SummaryItem = ({summaryData, setRefreshDocumentocument, lastEnteredDate, s
 
     }
   return (
-    <Box>
-        <Stack sx={{alignItems: 'center', flexDirection:'row'}}>
-            <Typography variant='h6'>{summaryData.title}</Typography>
+    <Box sx={{width:'100%'}}>
+        <Stack sx={{alignItems: 'center', flexDirection:'row', width:'100%'}}>
+            <Typography noWrap sx={{maxWidth:'100%'}} variant='h6'>{summaryData.title}</Typography>
             <IconButton aria-label='edit summary' onClick={() => setEditingSummary(prev => !prev)}>
                 {editingSummary ? <CloseIcon /> : <EditIcon />}
             </IconButton>
@@ -82,8 +82,7 @@ const SummaryItem = ({summaryData, setRefreshDocumentocument, lastEnteredDate, s
         </Stack>
         {editingSummary && <Form summaryData={summaryData} editingSummary={true} setRefreshDocumentocument={setRefreshDocumentocument} />}
         {/* Rendering similar stories here */}
-        {!!summaryData.similarStories.length && <Typography>{document.editing.template === 'work' ? 'Similar:' : 'References:'}</Typography>}
-        <Stack sx={{ml: '40px'}}>
+        <Stack sx={{ml: '20px'}}>
           {summaryData.similarStories.map(story => <SimilarItem key={story._id} similarData={story} lastEnteredDate={lastEnteredDate} setRefreshDocumentocument={setRefreshDocumentocument} setCreatingSimilar={setCreatingSimilar} summaryId={summaryData._id} />)}
         </Stack>
         {creatingSimilar && <SimilarForm summaryId={summaryData._id} lastEnteredDate={lastEnteredDate} creatingSimilar={creatingSimilar}setCreatingSimilar={setCreatingSimilar} setRefreshDocumentocument={setRefreshDocumentocument}/>}
