@@ -1,6 +1,6 @@
 import { React, useCallback, useState, useEffect } from 'react'
 import { useOutletContext } from "react-router-dom";
-import { Alert, Button, Stack } from '@mui/material'
+import { Alert, Button, Stack, Box, Card } from '@mui/material'
 import { useBlocker } from '../hooks/prompt.blocker'
 import { useDocument } from '../context/document'
 import { saveAs } from 'file-saver'
@@ -10,6 +10,9 @@ import 'react-pdf/dist/esm/Page/TextLayer.css';
 import TitleEditor from '../components/TitleEditor';
 import SectionEditor from '../components/SectionEditor'
 import { Oval } from 'react-loader-spinner'
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const EditDocument = () => {
     const onLeavePrompt = `Are you sure you want to leave?\nAny changes not yet saved will be lost.`;
@@ -21,7 +24,7 @@ const EditDocument = () => {
     const [error, setError] = useState(null);
     const [summaries, setSummaries] = useState([])
     const [refreshDocument, setRefreshDocumentocument] = useState(false)
-  
+    const greaterThan900 = useMediaQuery('(min-width:900px)')
     const getSummaries = async () => {
       //fetch summaries for document from the database
       const results = await document.getDocumentSummaries(document.editing._id)
@@ -38,7 +41,8 @@ const EditDocument = () => {
     function onDocumentLoadSuccess({ numPages }) {
       console.log(numPages)
         setNumPages(numPages);
-      }
+    }
+    const changePage = (offset) => setPageNumber(prev => prev + offset)
     const serverGen = async () => {
         const res = await fetch(`/document/generate/pdf/${document.editing._id}`)
         const data = await res.blob()
@@ -85,9 +89,9 @@ const EditDocument = () => {
     useBlocker(useCallback(confirmNavigation, []))
 
   return (
-    <div className='docContainer'>
+    <Box>
       {error && <Alert severity='error'>{error}</Alert>}
-      <Stack sx={{flexDirection: 'row', alignItems:'center'}}>
+      <Stack sx={{flexDirection: 'row', alignItems:'center',  mb: '30px'}}>
         <TitleEditor
           updateDoc={updateDoc}
           setRefreshDocumentocument={setRefreshDocumentocument}
@@ -101,30 +105,40 @@ const EditDocument = () => {
           Finished
         </Button>
       </Stack>
-       <SectionEditor
-        summaries={summaries} 
-        setRefreshDocumentocument={setRefreshDocumentocument}
-       />
-      <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess} loading={<Oval
-                                height={80}
-                                width={80}
-                                color="#066fd5"
-                                wrapperStyle={{}}
-                                wrapperClass=""
-                                visible={true}
-                                ariaLabel='oval-loading'
-                                secondaryColor="#066fd5"
-                                strokeWidth={5}
-                            />}>
-        {Array.from(new Array(numPages), (el, index) => (
-              <Page key={`page_${index + 1}`} pageNumber={index + 1} height={400}/>
-        ))}
-      </Document>
-      <p>
-        Page {pageNumber} of {numPages}
-      </p>
-        <button onClick={serverGen}>Generate Document</button>
-    </div>
+      <Box sx={{display: greaterThan900 ? 'flex' : 'block', gap: '30px', justifyContent: 'space-around'}}>
+        <Stack sx={{alignItems: 'center'}}>
+          <Button size='small' onClick={serverGen}>Refresh Document</Button>
+          <Card sx={{width: 'fit-content', }} raised>
+              <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess} loading={<Box sx={{height: greaterThan900 ? '650px' : '500px', display: 'flex', alignItems:'center', justifyContent:'center', width: greaterThan900 ? '460px' : '360px', }}><Oval
+                                        height={80}
+                                        width={80}
+                                        color="#066fd5"
+                                        wrapperStyle={{}}
+                                        wrapperClass=""
+                                        visible={true}
+                                        ariaLabel='oval-loading'
+                                        secondaryColor="#066fd5"
+                                        strokeWidth={5}
+                                    /></Box>}>
+        
+                      <Page key={`page_${pageNumber}`} pageNumber={pageNumber} height={greaterThan900 ? 650 : 500}/>
+        
+              </Document>
+          </Card>
+          <p>
+            Page {pageNumber} of {numPages}
+          </p>
+          <Box>
+            <Button sx={{minWidth: '30px', mr: '5px'}} size='small' startIcon={<KeyboardArrowLeftIcon/>} variant={'outlined'} onClick={() => changePage(-1)} disabled={pageNumber <= 1 }></Button>
+            <Button sx={{minWidth: '30px'}} endIcon={<KeyboardArrowRightIcon />} size='small' variant={'outlined'} onClick={() => changePage(1)} disabled={pageNumber >= numPages }></Button>
+          </Box>
+        </Stack>
+        <SectionEditor
+          summaries={summaries}
+          setRefreshDocumentocument={setRefreshDocumentocument}
+         />
+      </Box>
+    </Box>
   )
 }
 
