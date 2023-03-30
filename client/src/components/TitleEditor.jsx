@@ -1,5 +1,5 @@
 import { React, useState } from 'react'
-import { TextField, IconButton, Stack } from '@mui/material'
+import { TextField, IconButton, Stack, Typography } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import { useDocument } from '../context/document'
 
@@ -40,7 +40,8 @@ const TitleEditor = ({updateDoc,  setRefreshDocumentocument}) => {
   }
   return (
     <>
-    <Stack sx={{alignItems: 'center', flexDirection:'row'}}>
+    <Stack sx={{alignItems: 'center', flexDirection:'row', width: '100%',}}>
+      { !editingTitle ? <Typography noWrap sx={{px:'14x', maxWidth: '50%'}} variant='h4'>{documentForm.documentTitle}</Typography> :
       <TextField
         sx={{
           '.Mui-disabled:not(input), .Mui-disabled > *:not(input)': {
@@ -67,7 +68,7 @@ const TitleEditor = ({updateDoc,  setRefreshDocumentocument}) => {
         onBlur={saveInput}
         error={!(documentForm.documentTitle) && editingTitle}
         inputRef={input => input && input.focus()}>
-      </TextField>
+      </TextField>}
       {!editingTitle && <IconButton aria-label='save' onClick={() => setEditingTitle(prev => !prev)}>
         <EditIcon />
       </IconButton>}
