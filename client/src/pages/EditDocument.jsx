@@ -9,6 +9,7 @@ import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import TitleEditor from '../components/TitleEditor';
 import SectionEditor from '../components/SectionEditor'
+import { Oval } from 'react-loader-spinner'
 
 const EditDocument = () => {
     const onLeavePrompt = `Are you sure you want to leave?\nAny changes not yet saved will be lost.`;
@@ -35,6 +36,7 @@ const EditDocument = () => {
 
     }
     function onDocumentLoadSuccess({ numPages }) {
+      console.log(numPages)
         setNumPages(numPages);
       }
     const serverGen = async () => {
@@ -103,9 +105,19 @@ const EditDocument = () => {
         summaries={summaries} 
         setRefreshDocumentocument={setRefreshDocumentocument}
        />
-      <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess}>
+      <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess} loading={<Oval
+                                height={80}
+                                width={80}
+                                color="#066fd5"
+                                wrapperStyle={{}}
+                                wrapperClass=""
+                                visible={true}
+                                ariaLabel='oval-loading'
+                                secondaryColor="#066fd5"
+                                strokeWidth={5}
+                            />}>
         {Array.from(new Array(numPages), (el, index) => (
-              <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+              <Page key={`page_${index + 1}`} pageNumber={index + 1} height={400}/>
         ))}
       </Document>
       <p>
