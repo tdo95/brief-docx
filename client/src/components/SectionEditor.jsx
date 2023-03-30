@@ -66,35 +66,7 @@ const SectionEditor = ({setRefreshDocumentocument, summaries}) => {
   }
 
   return (
-    <Box>
-      {
-        document.editing.template.toLowerCase() !== 'work' && 
-          <Box>
-            { !sections.list?.length && <Typography>Looks like you dont have any note sections yet. Add one below!</Typography>}
-            <Box sx={{display:'flex', gap: '10px', alignItems:'start'}}>
-              {
-                openForm &&
-                  <>
-                    <IconButton onClick={() => setOpenForm(false)}>
-                      <CloseIcon />
-                    </IconButton>
-                    <TextField
-                      name='sectionTitle'
-                      label='Section Title'
-                      placeholder='Enter section title'
-                      size='small'
-                      value={form.sectionTitle}
-                      onChange={handleForm}
-                      helperText={formError}
-                      error={!!formError}
-                    />
-                  </>
-              }
-              <Button variant='contained' onClick={addSection}>{ openForm ? 'Save' : 'Add Section'}</Button>
-            </Box>
-            
-          </Box>
-      }
+    <Box sx={{width: '100%'}}>
       {
         !!sections.list?.length &&
           <Box>
@@ -113,7 +85,34 @@ const SectionEditor = ({setRefreshDocumentocument, summaries}) => {
               </TabPanel>
             )}
           </Box> 
-          
+      }
+      {
+        document.editing.template.toLowerCase() !== 'work' && 
+          <Box sx={{display: 'flex', flexDirection:'column', alignItems:'center', gap: '20px' }}>
+            { !sections.list?.length && <Typography>Looks like you dont have any note sections yet. Add one below!</Typography>}
+            <Box sx={{display:'flex', gap: '10px', alignItems:'start', ml:!sections.list?.length ? '0' : 'auto', height: '40px'}}>
+              {
+                openForm &&
+                  <>
+                    <IconButton onClick={() => setOpenForm(false)}>
+                      <CloseIcon />
+                    </IconButton>
+                    <TextField
+                      name='sectionTitle'
+                      label='Section Title'
+                      placeholder='Enter section title'
+                      size='small'
+                      value={form.sectionTitle}
+                      onChange={handleForm}
+                      helperText={formError}
+                      error={!!formError}
+                    />
+                  </>
+              }
+              <Button variant='outlined' onClick={addSection} >{ openForm ? 'Save' : 'Add Section'}</Button>
+            </Box>
+            
+          </Box>
       }
     </Box>
   )
