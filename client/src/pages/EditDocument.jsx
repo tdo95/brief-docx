@@ -87,7 +87,19 @@ const EditDocument = () => {
         
     }
     useBlocker(useCallback(confirmNavigation, []))
-
+    const DocumentLoadingScreen = (<Box sx={{height: greaterThan900 ? '650px' : '500px', display: 'flex', alignItems:'center', justifyContent:'center', width: greaterThan900 ? '460px' : '360px', }}>
+      <Oval
+        height={80}
+        width={80}
+        color="#066fd5"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+        ariaLabel='oval-loading'
+        secondaryColor="#066fd5"
+        strokeWidth={5}
+      />
+    </Box>)
   return (
     <Box>
       {error && <Alert severity='error'>{error}</Alert>}
@@ -109,17 +121,7 @@ const EditDocument = () => {
         <Stack sx={{alignItems: 'center'}}>
           <Button size='small' onClick={serverGen}>Refresh Document</Button>
           <Card sx={{width: 'fit-content', }} raised>
-              <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess} loading={<Box sx={{height: greaterThan900 ? '650px' : '500px', display: 'flex', alignItems:'center', justifyContent:'center', width: greaterThan900 ? '460px' : '360px', }}><Oval
-                                        height={80}
-                                        width={80}
-                                        color="#066fd5"
-                                        wrapperStyle={{}}
-                                        wrapperClass=""
-                                        visible={true}
-                                        ariaLabel='oval-loading'
-                                        secondaryColor="#066fd5"
-                                        strokeWidth={5}
-                                    /></Box>}>
+              <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess} loading={DocumentLoadingScreen} noData={DocumentLoadingScreen}>
         
                       <Page key={`page_${pageNumber}`} pageNumber={pageNumber} height={greaterThan900 ? 650 : 500}/>
         
