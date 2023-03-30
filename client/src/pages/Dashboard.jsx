@@ -37,13 +37,13 @@ const Dashboard = () => {
         
         <Box sx={{borderRadius: '10px', backgroundColor: 'rgb(231,235,241)', py:2, px:3}}>
             <Typography variant='h6' sx={{ mb:1, color: 'black'}}>Recent</Typography>
-            <Stack sx={{flexDirection: 'row'}}>
+            <Stack sx={{flexDirection: 'row', overflowX:'scroll'}}>
                 { documentCards.slice(0,6) }
             </Stack>
         </Box>
-        <Box sx={{mt:5}}>
+        <Box sx={{mt:5, width: '100%'}}>
             <Typography variant='h4' sx={{my:1}}>Documents</Typography>
-            <Stack sx={{flexDirection: 'row', flexWrap: 'wrap', p:1, borderRadius: '10px', '& > *': {backgroundColor: 'rgb(231,235,241)', boxShadow: '1px 1px 1px rgb(25, 117, 210)'}}}>
+            <Stack sx={{flexDirection: 'row', flexWrap: 'wrap', p:1, gap: '20px',borderRadius: '10px', '& > *': {backgroundColor: 'rgb(231,235,241)', boxShadow: '2px 2px 1px rgb(25, 117, 210)', pb:'8px', borderRadius: '8px' }, width:'100%'}}>
             { documentCards }
             </Stack>
         </Box>
