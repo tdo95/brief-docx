@@ -11,7 +11,7 @@ const Home = () => {
     const [modalAlert, setModalAlert] = useState(null)
     const [modalPdfId, setModalPdfId] = useState(null)
   return (
-    <Container sx={{px: 10, py: 3}}>
+    <Container sx={{px: 10, pt: 5, pb: 3 }}>
       <Outlet context={[setModalFunction, setModalContent, setOpenModal, setPurpose, setModalAlert, setModalPdfId]}></Outlet>
       <ModalWindow 
         open={openModal} 
