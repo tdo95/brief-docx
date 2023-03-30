@@ -5,9 +5,12 @@ module.exports = {
     createSummary: async (req, res) => {
         const {title, description, source, date, docId, link, section} = req.body;
         try {
-            //check for summary with 
-            const duplicate = await Summary.findOne({link: link});
-            console.log(duplicate)
+            let duplicate = null;
+            if (link) {
+                //check for summary with 
+                duplicate = await Summary.findOne({link: link});
+                console.log(duplicate)
+            }
             const sum = await Summary.create({ 
                 title, 
                 description, 
