@@ -90,6 +90,7 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setRefreshDocument
                 link: form.link,
                 section: section,
             })
+            
             if (res.error) {
                 setAlert(prev => !prev)
                 setMessage({type: 'error', message: 'Opps. An error occured while trying to save your summary, please try again later.' })
@@ -162,7 +163,7 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setRefreshDocument
             multiline
             fullWidth
             inputProps={{
-                spellcheck: true
+                spellCheck: true
             }}
         />
         { document.editing.template === 'work' && 
