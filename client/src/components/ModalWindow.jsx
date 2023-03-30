@@ -5,6 +5,7 @@ import { Document, Page } from 'react-pdf/dist/esm/entry.webpack5';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import Dropdown from './Dropdown';
+import { Oval } from 'react-loader-spinner'
 
 const ModalWindow = ({ executionFunction, content, open, setOpen, purpose, alert, setAlert, pdfId}) => {
     const [pdf, setPdf] = useState(undefined);
@@ -79,10 +80,27 @@ const ModalWindow = ({ executionFunction, content, open, setOpen, purpose, alert
                 
                 To work around this I am using a component to overlay over the document component until the final pdf source has been processed and rendering is complete */}
                 <Box sx={{position: 'relative', height: '450px', width: '400px'}}>
-                    {loading && <Box sx={{position: 'absolute', zIndex: 5, width: '100%', backgroundColor: 'blue', height: '100%' }}>Loading..</Box>}
-                    {<Document file={pdf} onLoadError={(error) => console.log('Error loading pdf:',error)} onLoadSuccess={onDocumentLoadSuccess}>
+                    {loading && <Box sx={{display: 'flex', justifyContent:'center', alignItems:'center', position: 'absolute', left:'-2px', zIndex: 5, width: '105%', backgroundColor: 'white', height: '100%' }}>
+                                <Oval
+                                    height={80}
+                                    width={80}
+                                    color="#066fd5"
+                                    wrapperStyle={{}}
+                                    wrapperClass=""
+                                    visible={true}
+                                    ariaLabel='oval-loading'
+                                    secondaryColor="#066fd5"
+                                    strokeWidth={5}
+                                />
+                    </Box>}
+                    {
+                        <Document 
+                            file={pdf} 
+                            onLoadError={(error) => console.log('Error loading pdf:',error)} 
+                            onLoadSuccess={onDocumentLoadSuccess} 
+                        >
                         {Array.from(new Array(numPages), (el, index) => (
-                            <Page key={`page_${index + 1}`} pageNumber={index + 1} height={400} />
+                            <Page key={`page_${index + 1}`} pageNumber={index + 1} width={300} />
                         ))}
                     </Document>}
                 </Box>
@@ -96,7 +114,7 @@ const ModalWindow = ({ executionFunction, content, open, setOpen, purpose, alert
     return (
     <Modal
         open={open}
-        onClose={() => {setOpen(false); setAlert(null); setLoading(true); pdfId(null);}}
+        onClose={() => {setOpen(false); setAlert(null); setLoading(true);}}
     >
         {alert ? 
             <Alert severity={alert.type}>{alert.message}</Alert>
