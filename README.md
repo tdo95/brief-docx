@@ -106,6 +106,9 @@ The application is built with the following technologies:
  [![Express][Express.js]][Express.js-url]
  [![React][React.js]][React-url]
  [![React Router][React-Router]][React-Router-url]
+ [![MongoDB][MongoDB]][MongoDB-url]
+ [![Mongoose][Mongoose]][Mongoose-url]
+
 
  Libraries
  - Material UI
@@ -114,18 +117,16 @@ The application is built with the following technologies:
  - File Saver
  - History
  - Passport
- - Mongoose
  - Docx Template
  - Docx PDF
  - Bycrypt
  
 <br><br>
 
-
 <!-- GETTING STARTED -->
 ## Getting Started
 
-If you would like to use BriefDocx online, visit [#](#). 
+If you would like to use Brief Docx online, visit [#](#). 
 
 To get a local copy of the application up and running follow these simple example steps.
 
@@ -313,6 +314,10 @@ Use this space to list resources you find helpful and would like to give credit 
 [Express.js-url]: https://expressjs.com/
 [React-Router]: https://img.shields.io/badge/React%20Router-ff0000?style=for-the-badge&logo=react&logoColor=ffffff
 [React-Router-url]: https://reactrouter.com/en/main
+[Mongoose]: https://img.shields.io/badge/Mongoose-911f19?style=for-the-badge&logo=mongoose&logoColor=ffffff
+[Mongoose-url]: https://mongoosejs.com/
+[MongoDB]: https://img.shields.io/badge/MongoDB-224a12?style=for-the-badge&logo=mongodb&logoColor=ffffff
+[MongoDB-url]: https://www.mongodb.com/
 
 <!-- EXTRAS -->
 <!-- # Edit these as needed -->
