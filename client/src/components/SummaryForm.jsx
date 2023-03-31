@@ -145,7 +145,7 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setRefreshDocument
         return () => clearTimeout(timer);
     }, [alert])
   return (
-    <Stack sx={{ gap:'10px', my:2}}>
+    <Stack sx={{ flexDirection:'row', flexWrap:'wrap', gap:'10px', my:2}}>
         
         <TextField
             name='title'
@@ -195,9 +195,10 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setRefreshDocument
                 value={form.date}  
             /></>
         }
+        {(message.type) && <Alert sx={{mt: '10px', width:'100%'}} severity={message.type}>{message.message}</Alert> }
         {document.editing.template === 'work' &&  <Button sx={{mr:2}} variant='outlined' onClick={cleanText}>Clean Text</Button>}
-        <Button sx={{ml:'auto'}} variant='contained' onClick={saveForm}>Save</Button>
-        {(message.type) && <Alert sx={{mt: '10px'}} severity={message.type}>{message.message}</Alert> }
+        <Button sx={{ml:document.editing.template === 'work' ? '0':'auto'}} variant='contained' onClick={saveForm}>Save</Button>
+        
     </Stack>
   )
 }

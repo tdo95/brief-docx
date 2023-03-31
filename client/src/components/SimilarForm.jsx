@@ -139,8 +139,9 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
                     value={form.date}
                 />
             }
-            <Button sx={{ ml:'auto'}} variant='contained' onClick={saveForm}>Save</Button>
             {(message.error || message.success) && <Alert sx={{my: '10px'}} severity={message.error ? 'error' : 'success'}>{message.error ? message.error : message.success}</Alert> }
+            <Button sx={{ ml:'auto'}} variant='contained' onClick={saveForm}>Save</Button>
+            
         </Stack>
     </Box>
   )
