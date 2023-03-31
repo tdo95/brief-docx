@@ -21,23 +21,23 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="#">
+  <!-- <a href="#">
     <img src="#" alt="Logo" width="80" height="80">
-  </a>
+  </a> -->
 
-  <h3 align="center">Title</h3>
+  <h3 align="center">Breif Docx</h3>
 
   <p align="center">
-    Tagline!
+    Easily create formatted Word Documents!
     <br />
     <a href="#"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="#">View Demo</a>
+    <a href="https://github.com/tdo95/brief-docx">View Demo</a>
     ·
-    <a href="#">Report Bug</a>
+    <a href="https://github.com/tdo95/brief-docx/issues">Report Bug</a>
     ·
-    <a href="#">Request Feature</a>
+    <a href="https://github.com/tdo95/brief-docx/issues">Request Feature</a>
   </p>
 </div>
 <br />
@@ -81,12 +81,19 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![# Demo][product-screenshot]](#)
+[![# Demo][product-screenshot]](https://github.com/tdo95/brief-docx/)
 
-Full descripton.
+Breif Docx is a document formating tool that allows you to create and edit document templates in real time.
 
 ### Features
-- Feature 
+- Sign up for account and view document catalog
+- Add and remove summary information
+- Move summary information to different sections
+- Hyperlink references and sources
+- Automatically formats text to appropriate font, size, and spacing in document
+- Duplication Detection: warn if summary has already been entered
+- Text cleaning: remove filler text in brackets/parenthesis
+- Saves changes within database - revisit documents at any time
 
 ### How Its Made
 
@@ -97,6 +104,20 @@ The application is built with the following technologies:
  [![JavaScript][Javascript]][Javascript-url]
  [![Node][Node.js]][Node.js-url]
  [![Express][Express.js]][Express.js-url]
+ [![React][React.js]][React-url]
+ [![React Router][React-Router]][React-Router-url]
+
+ Libraries
+ - Material UI
+ - React Load Spinner
+ - React PDF
+ - File Saver
+ - History
+ - Passport
+ - Mongoose
+ - Docx Template
+ - Docx PDF
+ - Bycrypt
  
 <br><br>
 
@@ -104,7 +125,7 @@ The application is built with the following technologies:
 <!-- GETTING STARTED -->
 ## Getting Started
 
-If you would like to use # online, visit [#](#). 
+If you would like to use BreifDocx online, visit [#](#). 
 
 To get a local copy of the application up and running follow these simple example steps.
 
@@ -120,31 +141,22 @@ This is an example of how to list things you need to use the software and how to
 
 _Follow the steps below to set up the application locally._
 
-1. Create a Spotify account at [#](#).
-
-2. Go to the [#](#) page on the # website and register a new application to recieve an API key and secret.
-
-3. Clone the repo
+1. Clone the repo
    ```sh
    git clone #
    ```
-3. Install NPM packages
+2. Install NPM packages in the root folder and within the client folder
    ```sh
    npm install
    ```
-4. Create an `.env` file and add your API key and secret as shown below
-   ```js
-   #="ENTER YOUR SECRET"
-   #="ENTER YOUR API KEY"
+3. Create a tmp folder at the root
+   ```sh
+   /tmp 
    ```
 
 ### Usage
 
 1. To start the server, run the following command
-   ```sh
-    npm run start  
-   ```
-   Alternatively, you can run with nodemon
    ```sh
     npm run dev  
    ```
@@ -156,21 +168,43 @@ _Follow the steps below to set up the application locally._
 
 <!-- OPTIMIZATIONS -->
 ## Optimizations
-
+- Allow users to create/upload their own document templates
+  - This would require third party file storage. Users can fill out a form to define the variables within the template. The values within the form can be use to dynamically create the form component needed to edit a document generated from the template.
+- Incorporate grammerly or some similar api for writing assistance
 ### Future Improvements
 
-- Improvment
-
+- There is some latency loading the pdf in the display modal on dashboard. The reasoning for this is 3-fold
+    1. I am generating the pdf on the server which takes time (on avg 1,500ms)
+    2. I am then reading the return pdf file as URL so it it can be passed into react-pdf’s document viewer. This is an asynchronous process and takes some time.
+    3. I am using the same document viewer to render multiple different files while mounting and unmounting the component. This causes weird rendering behavior as the previous file will be loaded briefly before the current new one is shown. This flashing behavior isnt ideal for UX and can only be prevented by hiding the document viewer behind a loading screen until the final file has loaded. (edit: This may be intentially implemented by maintainer, see last reference)
+    
+    The potential solutions that I am considering for this issue are:
+    
+    1. Storing pdf and word files of the document within some third party cloud service (eg AWS 3, cloudinary) and saving the url references to those files in the database. This way I can avoid having to regenerate the pdf and read it as url, and just pass the cloud service url instead.
+        - I could also convert the buffer into a base 64 string and store in data base then pass said string into the pdf viewer [https://github.com/wojtekmaj/react-pdf/wiki/Frequently-Asked-Questions#how-do-i-load-a-pdf-from-base64](https://github.com/wojtekmaj/react-pdf/wiki/Frequently-Asked-Questions#how-do-i-load-a-pdf-from-base64)
+    2. Providing each document card it’s own document viewer. This means that each card will have its own display modal, and so I longer have to worry about rendering multiple different files in one viewer.
+    
+    I referenced these links when coming to this conclusion:
+    
+    [https://stackoverflow.com/questions/45314066/store-files-in-mongodb-with-nodejs](https://stackoverflow.com/questions/45314066/store-files-in-mongodb-with-nodejs)
+    [https://github.com/wojtekmaj/react-pdf/discussions/1212](https://github.com/wojtekmaj/react-pdf/discussions/1212)
+    [https://github.com/react-pdf-viewer/react-pdf-viewer/issues/389](https://github.com/react-pdf-viewer/react-pdf-viewer/issues/389)
+    [https://github.com/diegomura/react-pdf-site/pull/91](https://github.com/diegomura/react-pdf-site/pull/91)
+- Reduce loading time for document updates in editor
+- Use a more accurate docx to pdf converter
+- Ensure changes within title always register in document
 ### Lessons Learned
 
-- Lesson Learned
+- Can perform functions on a collection of data within mongoDB documents using the $function aggregation expression. However using the $function operator may slow down performance and should only be used if other pipline operators can not fulfill the needs of your application https://www.mongodb.com/docs/manual/reference/operator/aggregation/function/  https://www.mongodb.com/community/forums/t/how-to-update-an-sub-array-with-map-operation-by-index-in-array/143070/2
+- Use text-overflow: ellipis to truncate text that has overflowed the boundaries of it’s container. Other settings like overflow:hidden are required https://css-tricks.com/snippets/css/truncate-string-with-ellipsis/
 
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Roadmap Item
-- [] Roadmap Item
+- [ ]  Fix delay in summary fetching when entering the editor→ somehow fetch them before the component loads
+- [ ]  Create a hook for modal functions instead of having to import context and create state every time
+- [ ]  revisit error and success message states in modal. Are they needed ? or can they be passed by the execution function
 
 <!-- See the [open issues](https://github.com/tdo95/discolist/issues) for a list of proposed features (and known issues). -->
 
@@ -248,7 +282,7 @@ Use this space to list resources you find helpful and would like to give credit 
 
 <!-- DEMO IMAGE -->
 <!-- EXAMPLE: [product-screenshot]: /discolist-demo.gif -->
-[product-screenshot]: #
+[product-screenshot]: /client/public/bf-demo-fast.gif
 
 <!-- LIBRARIES BADGES -->
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
@@ -277,6 +311,8 @@ Use this space to list resources you find helpful and would like to give credit 
 [Node.js-url]: https://nodejs.org/en/
 [Express.js]: https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB
 [Express.js-url]: https://expressjs.com/
+[React-Router]: https://img.shields.io/badge/React%20Router-ff0000?style=for-the-badge&logo=react&logoColor=ffffff
+[React-Router-url]: https://reactrouter.com/en/main
 
 <!-- EXTRAS -->
 <!-- # Edit these as needed -->
