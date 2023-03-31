@@ -117,8 +117,8 @@ const EditDocument = () => {
           Finished
         </Button>
       </Stack>
-      <Box sx={{display: greaterThan900 ? 'flex' : 'block', gap: '30px', justifyContent: 'space-around'}}>
-        <Stack sx={{alignItems: 'center'}}>
+      <Box sx={{display: greaterThan900 ? 'flex' : 'block', gap: '30px', justifyContent: 'space-around', }}>
+        <Stack sx={{alignItems: 'center', width: greaterThan900 ? '460px' : '360px', margin: 'auto'}}>
           <Button size='small' onClick={serverGen}>Refresh Document</Button>
           <Card sx={{width: 'fit-content', }} raised>
               <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess} loading={DocumentLoadingScreen} noData={DocumentLoadingScreen} error={<Box sx={{height: greaterThan900 ? '650px' : '500px', display: 'flex', alignItems:'center', justifyContent:'center', width: greaterThan900 ? '460px' : '360px', }}>Failed to Load File.</Box>}>
@@ -135,10 +135,12 @@ const EditDocument = () => {
             <Button sx={{minWidth: '30px'}} endIcon={<KeyboardArrowRightIcon />} size='small' variant={'outlined'} onClick={() => changePage(1)} disabled={pageNumber >= numPages }></Button>
           </Box>
         </Stack>
-        <SectionEditor
-          summaries={summaries}
-          setRefreshDocument={setRefreshDocument}
-         />
+        <Box sx={{flex:'1'}}>
+          <SectionEditor
+            summaries={summaries}
+            setRefreshDocument={setRefreshDocument}
+           />
+        </Box>
       </Box>
     </Box>
   )
