@@ -58,7 +58,7 @@ const SummaryItem = ({summaryData, setRefreshDocument, lastEnteredDate, setLastE
   return (
     <Box sx={{width:'100%'}}>
         <Stack sx={{alignItems: 'center', flexDirection:'row', width:'100%'}}>
-            <Typography noWrap sx={{maxWidth:'100%'}} variant='h6'>{summaryData.title}</Typography>
+            <Typography noWrap sx={{maxWidth:'300px'}} variant='h6'>{summaryData.title}</Typography>
             <IconButton aria-label='edit summary' onClick={() => setEditingSummary(prev => !prev)}>
                 {editingSummary ? <CloseIcon /> : <EditIcon />}
             </IconButton>
