@@ -37,7 +37,7 @@ const Dashboard = () => {
         
         <Box sx={{borderRadius: '10px', backgroundColor: 'rgb(231,235,241)', py:2, px:3}}>
             <Typography variant='h6' sx={{ mb:1, color: 'black'}}>Recent</Typography>
-            <Stack sx={{flexDirection: 'row', overflowX:'scroll'}}>
+            <Stack sx={{flexDirection: 'row', overflowX:'auto'}}>
                 { documentCards.slice(0,6) }
             </Stack>
         </Box>
