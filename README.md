@@ -25,7 +25,7 @@
     <img src="#" alt="Logo" width="80" height="80">
   </a> -->
 
-  <h3 align="center">Breif Docx</h3>
+  <h3 align="center">Brief Docx</h3>
 
   <p align="center">
     Easily create formatted Word Documents!
@@ -83,7 +83,7 @@
 
 [![# Demo][product-screenshot]](https://github.com/tdo95/brief-docx/)
 
-Breif Docx is a document formating tool that allows you to create and edit document templates in real time.
+Brief Docx is a document formating tool that allows you to create and edit document templates in real time.
 
 ### Features
 - Sign up for account and view document catalog
@@ -125,7 +125,7 @@ The application is built with the following technologies:
 <!-- GETTING STARTED -->
 ## Getting Started
 
-If you would like to use BreifDocx online, visit [#](#). 
+If you would like to use BriefDocx online, visit [#](#). 
 
 To get a local copy of the application up and running follow these simple example steps.
 

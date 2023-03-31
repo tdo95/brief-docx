@@ -29,7 +29,7 @@ const Navbar = () => {
         
         <Toolbar>
             <DescriptionIcon sx={{mr:1}} />
-            <Typography variant='h5' sx={{mr:3, fontWeight: 'bold'}}>Breif Docx</Typography>
+            <Typography variant='h5' sx={{mr:3, fontWeight: 'bold'}}>Brief Docx</Typography>
             { onProduct ? <> 
                 <Toolbar sx={{ml:'auto', p: '0px !important', display: {xs: 'none', sm: 'flex'}, '& .active': {textDecoration: 'underline'}, '& > *': { textDecoration:'none', color: 'white', mr:'25px !important' }}}>
                     <Typography component={ NavLink } to='/product' variant='subtitle1'>Home</Typography>
