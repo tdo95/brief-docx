@@ -121,7 +121,7 @@ const EditDocument = () => {
         <Stack sx={{alignItems: 'center'}}>
           <Button size='small' onClick={serverGen}>Refresh Document</Button>
           <Card sx={{width: 'fit-content', }} raised>
-              <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess} loading={DocumentLoadingScreen} noData={DocumentLoadingScreen}>
+              <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess} loading={DocumentLoadingScreen} noData={DocumentLoadingScreen} error={<Box sx={{height: greaterThan900 ? '650px' : '500px', display: 'flex', alignItems:'center', justifyContent:'center', width: greaterThan900 ? '460px' : '360px', }}>Failed to Load File.</Box>}>
         
                       <Page key={`page_${pageNumber}`} pageNumber={pageNumber} height={greaterThan900 ? 650 : 500}/>
         
