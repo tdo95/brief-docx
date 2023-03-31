@@ -10,7 +10,7 @@ import SimilarForm from './SimilarForm';
 import SimilarItem from './SimilarItem';
 import Dropdown from './Dropdown';
 
-const SummaryItem = ({summaryData, setRefreshDocumentocument, lastEnteredDate, sectionsList }) => {
+const SummaryItem = ({summaryData, setRefreshDocument, lastEnteredDate, setLastEnteredDate, sectionsList }) => {
     const document = useDocument() 
     const [editingSummary, setEditingSummary] = useState(false)
     const [anchorElNav, setAnchorElNav] = useState(null);
@@ -23,7 +23,7 @@ const SummaryItem = ({summaryData, setRefreshDocumentocument, lastEnteredDate, s
       //delete summary
       const res = await document.deleteSummary(summaryData._id);
       if (res.success) {
-        setRefreshDocumentocument(prev => !prev)
+        setRefreshDocument(prev => !prev)
         return ({success: 'Success! Item has been removed'})
       }
       else return ({error: 'Opps! An error occured while trying to delete this item. Please try again later.'})
@@ -51,7 +51,7 @@ const SummaryItem = ({summaryData, setRefreshDocumentocument, lastEnteredDate, s
         setOpenModal(true)
       } else {
         //trigger re-render
-        setRefreshDocumentocument(prev => !prev)
+        setRefreshDocument(prev => !prev)
       }
 
     }
@@ -80,12 +80,12 @@ const SummaryItem = ({summaryData, setRefreshDocumentocument, lastEnteredDate, s
               </MenuItem>
             </Menu>
         </Stack>
-        {editingSummary && <Form summaryData={summaryData} editingSummary={true} setRefreshDocumentocument={setRefreshDocumentocument} />}
+        {editingSummary && <Form summaryData={summaryData} editingSummary={true} setRefreshDocument={setRefreshDocument} setLastEnteredDate={setLastEnteredDate} section={summaryData.section} />}
         {/* Rendering similar stories here */}
         <Stack sx={{ml: '20px'}}>
-          {summaryData.similarStories.map(story => <SimilarItem key={story._id} similarData={story} lastEnteredDate={lastEnteredDate} setRefreshDocumentocument={setRefreshDocumentocument} setCreatingSimilar={setCreatingSimilar} summaryId={summaryData._id} />)}
+          {summaryData.similarStories.map(story => <SimilarItem key={story._id} similarData={story} lastEnteredDate={lastEnteredDate} setRefreshDocument={setRefreshDocument} setCreatingSimilar={setCreatingSimilar} summaryId={summaryData._id} />)}
         </Stack>
-        {creatingSimilar && <SimilarForm summaryId={summaryData._id} lastEnteredDate={lastEnteredDate} creatingSimilar={creatingSimilar}setCreatingSimilar={setCreatingSimilar} setRefreshDocumentocument={setRefreshDocumentocument}/>}
+        {creatingSimilar && <SimilarForm summaryId={summaryData._id} lastEnteredDate={lastEnteredDate} creatingSimilar={creatingSimilar}setCreatingSimilar={setCreatingSimilar} setRefreshDocument={setRefreshDocument}/>}
         
     </Box>
   )

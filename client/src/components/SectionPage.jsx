@@ -6,7 +6,7 @@ import { useDocument } from '../context/document'
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 
-const SectionPage = ({sectionName, summaries, setRefreshDocumentocument, sectionsList}) => {
+const SectionPage = ({sectionName, summaries, setRefreshDocument, sectionsList}) => {
     const today = new Date();
     const document = useDocument()
     const [toggleForm, setToggleForm] = useState(false)
@@ -29,12 +29,13 @@ const SectionPage = ({sectionName, summaries, setRefreshDocumentocument, section
                section={sectionName}
                lastEnteredDate={lastEnteredDate}
                setLastEnteredDate={setLastEnteredDate}
-               setRefreshDocumentocument={setRefreshDocumentocument}
+               setRefreshDocument={setRefreshDocument}
               />
             }
           </Stack>
           <Stack className='scroll' sx={{width:(greaterThan900 || lessThan500) ? '90%' : '50%', overflowY: 'scroll', border:'1px solid lightgray', py: '5px', px: '15px', borderRadius:'10px', height: '400px' }}>
-            {summaries.map((item,i) => <SummaryItem key={i} summaryData={item} setRefreshDocumentocument={setRefreshDocumentocument}
+            {summaries.map((item,i) => <SummaryItem key={i} summaryData={item} setRefreshDocument={setRefreshDocument}
+            setLastEnteredDate={setLastEnteredDate}
             lastEnteredDate={lastEnteredDate} sectionsList={sectionsList.filter(name => name !== sectionName)}/>)}
           </Stack>
         </Box>
