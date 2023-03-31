@@ -23,7 +23,7 @@ const EditDocument = () => {
     const [pageNumber, setPageNumber] = useState(1);
     const [error, setError] = useState(null);
     const [summaries, setSummaries] = useState([])
-    const [refreshDocument, setRefreshDocumentocument] = useState(false)
+    const [refreshDocument, setRefreshDocument] = useState(false)
     const greaterThan900 = useMediaQuery('(min-width:900px)')
     const getSummaries = async () => {
       //fetch summaries for document from the database
@@ -106,7 +106,7 @@ const EditDocument = () => {
       <Stack sx={{flexDirection: 'row', alignItems:'center',  mb: '30px'}}>
         <TitleEditor
           updateDoc={updateDoc}
-          setRefreshDocumentocument={setRefreshDocumentocument}
+          setRefreshDocument={setRefreshDocument}
         />
         <Button 
           sx={{ml:'auto'}} 
@@ -137,7 +137,7 @@ const EditDocument = () => {
         </Stack>
         <SectionEditor
           summaries={summaries}
-          setRefreshDocumentocument={setRefreshDocumentocument}
+          setRefreshDocument={setRefreshDocument}
          />
       </Box>
     </Box>

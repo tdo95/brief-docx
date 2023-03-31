@@ -3,7 +3,7 @@ import { TextField, IconButton, Stack, Typography } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import { useDocument } from '../context/document'
 
-const TitleEditor = ({updateDoc,  setRefreshDocumentocument}) => {
+const TitleEditor = ({updateDoc,  setRefreshDocument}) => {
   const document = useDocument();
   const [editingTitle, setEditingTitle] = useState(false);
   const [documentForm, setDocumentForm] = useState({
@@ -34,7 +34,7 @@ const TitleEditor = ({updateDoc,  setRefreshDocumentocument}) => {
     //Update title in database
     updateDoc({title: documentForm.documentTitle})
     //Update document
-    setRefreshDocumentocument(prev => !prev)
+    setRefreshDocument(prev => !prev)
     //Set editing to false
     setEditingTitle(false)
   }

@@ -3,7 +3,7 @@ import { TextField, Stack, Button, Alert } from '@mui/material'
 import { useDocument } from '../context/document'
 import { isValidHttpUrl } from '../hooks/validateUrl'
 
-const Form = ({ section, lastEnteredDate, setLastEnteredDate, setRefreshDocumentocument, summaryData = {}, editingSummary = false }) => {
+const Form = ({ section, lastEnteredDate, setLastEnteredDate, setRefreshDocument, summaryData = {}, editingSummary = false }) => {
     const document = useDocument();
     const [alert, setAlert] = useState(false)
     const [message, setMessage] = useState({
@@ -99,7 +99,7 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setRefreshDocument
                 setAlert(prev => !prev)
                 setMessage({type: 'success', message: 'Success! Summary has been updated' })
 
-                setRefreshDocumentocument(prev => !prev)
+                setRefreshDocument(prev => !prev)
             }
 
         } else {
@@ -120,7 +120,7 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setRefreshDocument
             else if (res.warning) {
                 setAlert(prev => !prev)
                 setMessage({type: 'warning', message: `Warning: "${res.warning.document.toUpperCase()}" created on ${res.warning.date.toUpperCase()} references this link.`})
-                setRefreshDocumentocument(prev => !prev)
+                setRefreshDocument(prev => !prev)
             }
             else if (res.summary) {
                 setAlert(prev => !prev)
@@ -133,7 +133,7 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setRefreshDocument
                     description: '',
                     source: '',
                 }))
-                setRefreshDocumentocument(prev => !prev)
+                setRefreshDocument(prev => !prev)
             }  
         }
     }

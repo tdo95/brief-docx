@@ -5,7 +5,7 @@ import SectionPage from './SectionPage'
 import { useDocument } from '../context/document'
 import CloseIcon from '@mui/icons-material/Close';
 
-const SectionEditor = ({setRefreshDocumentocument, summaries}) => {
+const SectionEditor = ({setRefreshDocument, summaries}) => {
   const document = useDocument();
   const formatSections = () => {
     const list = document.editing.template.toLowerCase() === 'work' ? ['corp', 'competitor', 'industry', 'opinion'] : sections.list;
@@ -48,7 +48,7 @@ const SectionEditor = ({setRefreshDocumentocument, summaries}) => {
       //save form name
       sections.list.push(title)
       //trigger change to update
-      setRefreshDocumentocument(prev => !prev)
+      setRefreshDocument(prev => !prev)
       //close form
       setOpenForm(false)
     }
@@ -78,7 +78,7 @@ const SectionEditor = ({setRefreshDocumentocument, summaries}) => {
               <TabPanel key={i} value={value} index={i}>
                 <SectionPage 
                   sectionName={label}
-                  setRefreshDocumentocument={setRefreshDocumentocument}
+                  setRefreshDocument={setRefreshDocument}
                   summaries={(sections[label] || [])}
                   sectionsList={(sections?.list || [])}
                 />

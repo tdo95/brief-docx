@@ -5,7 +5,7 @@ import { useDocument } from '../context/document';
 import { isValidHttpUrl } from '../hooks/validateUrl';
 
 const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
-    creatingSimilar, setCreatingSimilar, setRefreshDocumentocument }) => {
+    creatingSimilar, setCreatingSimilar, setRefreshDocument }) => {
     const document = useDocument();
     const [open, setOpen] = useState(false)
     const [alert, setAlert] = useState(false)
@@ -74,7 +74,7 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
         }
         if (res.success) {
             showFeedback(res.success)
-            setRefreshDocumentocument(prev => !prev)
+            setRefreshDocument(prev => !prev)
         } else {
             showFeedback('', 'Opps. An error occured while trying to save, please try again later.')
         }
