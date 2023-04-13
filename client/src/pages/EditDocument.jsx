@@ -100,6 +100,7 @@ const EditDocument = () => {
         strokeWidth={5}
       />
     </Box>)
+    const DocumentErrorScreen = (<Box sx={{height: greaterThan900 ? '650px' : '500px', display: 'flex', alignItems:'center', justifyContent:'center', width: greaterThan900 ? '460px' : '360px', }}>Failed to Load File.</Box>)
   return (
     <Box>
       {error && <Alert severity='error'>{error}</Alert>}
@@ -121,9 +122,9 @@ const EditDocument = () => {
         <Stack sx={{alignItems: 'center', width: greaterThan900 ? '460px' : '360px', margin: 'auto'}}>
           <Button size='small' onClick={serverGen}>Refresh Document</Button>
           <Card sx={{width: 'fit-content', }} raised>
-              <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess} loading={DocumentLoadingScreen} noData={DocumentLoadingScreen} error={<Box sx={{height: greaterThan900 ? '650px' : '500px', display: 'flex', alignItems:'center', justifyContent:'center', width: greaterThan900 ? '460px' : '360px', }}>Failed to Load File.</Box>}>
+              <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess} loading={DocumentLoadingScreen} noData={DocumentLoadingScreen} error={DocumentErrorScreen}>
         
-                      <Page key={`page_${pageNumber}`} pageNumber={pageNumber} height={greaterThan900 ? 650 : 500}/>
+                      <Page key={`page_${pageNumber}`} pageNumber={pageNumber} height={greaterThan900 ? 650 : 500} loading={DocumentLoadingScreen} noData={DocumentLoadingScreen} error={DocumentErrorScreen}/>
         
               </Document>
           </Card>
