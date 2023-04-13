@@ -10,7 +10,6 @@ const connectDB = require("./config/database");
 const authRoutes = require("./routes/auth");
 const documentRoutes = require("./routes/documents");
 const summariesRoutes = require("./routes/summaries");
-const postRoutes = require("./routes/posts");
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -49,8 +48,6 @@ app.use(passport.session());
 app.use("/auth", authRoutes);
 app.use("/document", documentRoutes);
 app.use("/summaries", summariesRoutes);
-
-app.use("/post", postRoutes);
 
 //Server Running
 app.listen(process.env.PORT, () => {
