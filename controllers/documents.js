@@ -92,7 +92,7 @@ module.exports = {
           if (!obj.sections[item.section]) obj.sections[item.section] = [];
           //add formatted summary to section
           obj.sections[item.section].push({
-            description: item.description,
+            description: item.description.split('\n'),
             source: item.source,
             date: item.date.toLocaleDateString('en-US'),
             //TODO: Change this to be not so confusing in template and here
@@ -104,7 +104,6 @@ module.exports = {
           })  
           return obj
         }, {sections: {}})
-
         if (template.toLowerCase() === 'notes') {
           // Format sections into an array
           const sectionList = [];
