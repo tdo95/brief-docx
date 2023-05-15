@@ -83,7 +83,7 @@
 
 [![# Demo][product-screenshot]](https://github.com/tdo95/brief-docx/)
 
-Brief Docx is a document formating tool that allows you to create and edit document templates in real time.
+Brief Docx is a document formating tool that allows you to create and edit document in real time. Documents are generated from a template and populated based on the template structure.
 
 ### Features
 - Sign up for account and view document catalog
@@ -172,6 +172,7 @@ _Follow the steps below to set up the application locally._
 - Allow users to create/upload their own document templates
   - This would require third party file storage. Users can fill out a form to define the variables within the template. The values within the form can be use to dynamically create the form component needed to edit a document generated from the template.
 - Incorporate grammerly or some similar api for writing assistance
+- Add support for document sharing on various social medias and through email
 ### Future Improvements
 
 - There is some latency loading the pdf in the display modal on dashboard. The reasoning for this is 3-fold
@@ -188,9 +189,13 @@ _Follow the steps below to set up the application locally._
     I referenced these links when coming to this conclusion:
     
     [https://stackoverflow.com/questions/45314066/store-files-in-mongodb-with-nodejs](https://stackoverflow.com/questions/45314066/store-files-in-mongodb-with-nodejs)
+    
     [https://github.com/wojtekmaj/react-pdf/discussions/1212](https://github.com/wojtekmaj/react-pdf/discussions/1212)
+    
     [https://github.com/react-pdf-viewer/react-pdf-viewer/issues/389](https://github.com/react-pdf-viewer/react-pdf-viewer/issues/389)
+    
     [https://github.com/diegomura/react-pdf-site/pull/91](https://github.com/diegomura/react-pdf-site/pull/91)
+
 - Reduce loading time for document updates in editor
 - Use a more accurate docx to pdf converter
 - Ensure changes within title always register in document
