@@ -6,6 +6,7 @@ import { isValidHttpUrl } from '../hooks/validateUrl';
 
 const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
     creatingSimilar, setCreatingSimilar, setRefreshDocument }) => {
+    
     const document = useDocument();
     const [open, setOpen] = useState(false)
     const [alert, setAlert] = useState(false)
@@ -62,7 +63,7 @@ const SimilarForm = ({ summaryId, similarData = {}, lastEnteredDate,
                     url: form.link
                 },
                 title: form.title,
-                date: new Date(form.date)
+                date: new Date(form.formattedDate)
             }
         ]
         let res;

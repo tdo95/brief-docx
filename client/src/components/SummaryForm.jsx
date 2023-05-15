@@ -55,6 +55,7 @@ const Form = ({ section, lastEnteredDate, setLastEnteredDate, setRefreshDocument
         setMessage({type: type, message: message })
     }
     const saveForm = async () => {
+        console.log(summaryData.date, new Date(summaryData.date).toLocaleDateString())
         if (document.editing.template === 'work') {
             //Check if any form values are empty
             if(Object.values(form).some(value => !value)){
